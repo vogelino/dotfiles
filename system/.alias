@@ -1,0 +1,23 @@
+# Personal aliases
+alias htdocs="cd /Applications/MAMP/htdocs"
+alias vogelino="cd ~/Sites/vogelino/2017"
+alias Sites="cd ~/Sites"
+alias las='els -al --els-icons=fontawesome'
+alias vim='/usr/local/Cellar/vim/8.0.0295/bin/vim'
+
+# Npm aliases
+alias ni='npm install'
+alias nis='npm install --save'
+alias nid='npm install --save-dev'
+alias nig='npm install --global'
+alias nui='npm uninstall'
+alias nuis='npm uninstall --save'
+alias nuid='npm uninstall --save-dev'
+alias nuig='npm uninstall --global'
+alias ns='npm start'
+alias nt='npm test'
+alias nit='npm install && npm test'
+alias nk='npm link'
+alias nr='npm run'
+alias nf='npm cache clean && rm -rf node_modules && npm install'
+

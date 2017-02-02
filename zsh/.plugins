@@ -1,0 +1,8 @@
+# ZSH Plugins
+plugins=(git)
+plugins+=(brew)
+plugins+=(zsh-syntax-highlighting)
+plugins+=(zsh-autosuggestions)
+plugins+=(zsh-better-npm-completion)
+plugins+=(zsh-nvm)
+

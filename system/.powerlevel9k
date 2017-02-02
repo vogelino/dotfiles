@@ -1,0 +1,55 @@
+# Custom functions
+prompt_customfields () {
+	nodeversion=`node --version`;
+
+	if [ -d .git ]; then
+		branchName="· `git rev-parse --abbrev-ref HEAD | xargs`";
+		uncommitedAddedAmount=`git diff --cached --numstat | wc -l | xargs`;
+		uncommitedNotAddedAmount=`git status --porcelain 2>/dev/null| grep "^ M" | wc -l | xargs`;
+		untrackedAmount=`git status --porcelain 2>/dev/null| grep "^??" | wc -l | xargs`;
+
+		if [ $uncommitedAddedAmount = "0" ]; then
+			uncommitedAdded="";
+		else
+			uncommitedAdded=" +$uncommitedAddedAmount";
+		fi
+
+		if [ $uncommitedNotAddedAmount = "0" ]; then
+			uncommitedNotAdded="";
+		else
+			uncommitedNotAdded=" -$uncommitedNotAddedAmount";
+		fi
+
+		if [ $untrackedAmount = "0" ]; then
+			untracked="";
+		else
+			untracked=" ?$untrackedAmount";
+		fi
+
+		branch="$branchName$uncommitedAdded$uncommitedNotAdded$untracked";
+	fi
+
+	if [ $? -eq 0 ]; then
+
+	else
+		statusField="· ×";
+	fi
+
+	echo -n "$nodeversion $branch $statusField";
+}
+
+# Elements
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(customfields)
+
+# Icon
+POWERLEVEL9K_HIDE_BRANCH_ICON=true
+POWERLEVEL9K_HIDE_NVM_ICON=true
+
+# Misc
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=4
+POWERLEVEL9K_SHORTEN_STRATEGY=truncate_with_package_name
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=4
+POWERLEVEL9K_TIME_FORMAT="%D{%H:%M \uE868  %d.%m}"
+
+
