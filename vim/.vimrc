@@ -4,7 +4,16 @@ set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME
 syntax on
 set encoding=utf8
 let mapleader=","
+let g:mapleader = ","
 set number
+set so=7
+set cmdheight=2
+set showmatch
+set mat=2
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
 set nowrap
 set linebreak
 set relativenumber
@@ -45,6 +54,18 @@ set wildignore+=*.png,*.jpg,*.gif
 set incsearch
 set hlsearch
 set ignorecase
+
+" —— Delete trailing white space on save ————————————————————————————————————
+func! DeleteTrailingWS()
+  exe "normal mz"
+  %s/\s\+$//ge
+  exe "normal `z"
+endfunc
+autocmd BufWrite *.py :call DeleteTrailingWS()
+autocmd BufWrite *.coffee :call DeleteTrailingWS()
+
+" —— Spell checking —————————————————————————————————————————————————————————
+map <leader>ss :setlocal spell!<cr>
 
 " —— Pluginsettings —————————————————————————————————————————————————————————
 " —— delimitMate
