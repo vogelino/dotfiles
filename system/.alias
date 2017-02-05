@@ -3,7 +3,7 @@ alias htdocs="cd /Applications/MAMP/htdocs"
 alias vogelino="cd ~/Sites/vogelino/2017"
 alias Sites="cd ~/Sites"
 alias las='els -al --els-icons=fontawesome'
-alias vim='/usr/local/Cellar/vim/8.0.0295/bin/vim'
+alias vim='/usr/local/Cellar/vim/8.0.0295/bin/vim -u ~/.dotfiles/vim/.vimrc'
 
 # Npm aliases
 alias ni='npm install'
