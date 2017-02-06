@@ -29,6 +29,7 @@ Plugin 'epilande/vim-es2015-snippets'				" es2015
 Plugin 'epilande/vim-react-snippets'				" React
 
 " Utilities
+Plugin 'PeterRincker/vim-argumentative'				" Allows changing the order of function arguments
 Plugin 'easymotion/vim-easymotion'					" Easy and powerful motions for VIM
 Plugin 'tomtom/tlib_vim'							" Some utility functions for VIM
 Plugin 'Raimondi/delimitMate'						" Auto add ending quotes/brackets/ets
