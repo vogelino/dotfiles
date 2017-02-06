@@ -29,6 +29,8 @@ Plugin 'epilande/vim-es2015-snippets'				" es2015
 Plugin 'epilande/vim-react-snippets'				" React
 
 " Utilities
+Plugin 'tpope/vim-sensible'							" Universal set of default for vim
+Plugin 'tpope/vim-surround'							" Easier replacement of surrounding brackets and braces
 Plugin 'PeterRincker/vim-argumentative'				" Allows changing the order of function arguments
 Plugin 'easymotion/vim-easymotion'					" Easy and powerful motions for VIM
 Plugin 'tomtom/tlib_vim'							" Some utility functions for VIM
