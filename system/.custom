@@ -1,0 +1,7 @@
+# ZSH custom settings
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=4
+ZSH_THEME="powerlevel9k/powerlevel9k"
+COMPLETION_WAITING_DOTS="true"
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor root)
+DEFAULT_USER="lucasvogel"
+

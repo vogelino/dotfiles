@@ -19,6 +19,7 @@ Plugin 'othree/es.next.syntax.vim'					" es2015 highlighting
 Plugin 'mxw/vim-jsx'								" JSX highlighting
 Plugin 'elzr/vim-json'								" JSON highlighting
 Plugin 'othree/javascript-libraries-syntax.vim'		" Special highligh of known libraries
+Plugin 'wavded/vim-stylus'							" Syntax highlighting for stylus
 
 " Colorscheme
 Plugin 'altercation/vim-colors-solarized'
@@ -27,6 +28,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'SirVer/ultisnips'							" Main snippets plugin
 Plugin 'epilande/vim-es2015-snippets'				" es2015
 Plugin 'epilande/vim-react-snippets'				" React
+Plugin 'rstacruz/vim-hyperstyle'					" Css/stylus snippets
 
 " Utilities
 Plugin 'tpope/vim-sensible'							" Universal set of default for vim

@@ -51,6 +51,11 @@ set wildignore+=*.gem
 set wildignore+=log/**
 set wildignore+=tmp/**
 set wildignore+=*.png,*.jpg,*.gif
+set wildignore+=*/codemetrics/*
+set wildignore+=*/target/*
+set wildignore+=*/node_modules/*
+set wildignore+=*/node/*
+set wildignore+=*/.git/*
 set incsearch
 set hlsearch
 set ignorecase
@@ -75,6 +80,9 @@ imap <C-c> <CR><Esc>O
 let g:UltiSnipsExpandTrigger="<tab>"                                            
 let g:UltiSnipsJumpForwardTrigger="<tab>"                                       
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+	
+	" + Hyperstyle
+	let g:hyperstyle_use_colon=0
 
 " —— vim-jsx
 let g:jsx_ext_required = 0
