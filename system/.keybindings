@@ -1,0 +1,5 @@
+# Allows to delete everything before the cursor
+bindkey "^X\\x7f" backward-kill-line
+
+
+

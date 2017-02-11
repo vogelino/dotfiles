@@ -56,6 +56,8 @@ set wildignore+=*/target/*
 set wildignore+=*/node_modules/*
 set wildignore+=*/node/*
 set wildignore+=*/.git/*
+set wildignore+=*/.next/*
+set wildignore+=*/.tmp/*
 set incsearch
 set hlsearch
 set ignorecase
