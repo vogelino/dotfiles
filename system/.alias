@@ -1,6 +1,9 @@
 # els
 alias las='els -al --els-icons=fontawesome'
 
+# vim
+alias vim='vim -u $MYVIMRC'
+
 # Npm aliases
 alias ni='npm install'
 alias nis='npm install --save'

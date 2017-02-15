@@ -36240,13 +36240,13 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>2050 249 793 279 1920 -93 1440 900 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>410 365 620 392 0 0 1440 878 </string>
+	<string>650 500 620 392 0 0 1920 1058 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 139 606 456 0 0 1440 877 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>309 318 796 473 0 0 1440 878 </string>
+	<string>2008 337 918 381 1920 -93 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1 8 1438 867 0 0 1440 878 </string>
+	<string>0 11 1438 867 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>483 443 570 427 0 0 1440 878 </string>
 	<key>New Bookmarks</key>
@@ -36501,35 +36501,45 @@
 			<real>0.0</real>
 			<key>Cursor Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.51685798168182373</real>
+				<real>0.78853416442871094</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.50962930917739868</real>
+				<real>1</real>
 				<key>Red Component</key>
-				<real>0.44058024883270264</real>
+				<real>0.13138733804225922</real>
 			</dict>
 			<key>Cursor Guide Color</key>
 			<dict>
 				<key>Alpha Component</key>
-				<real>0.028472900390625</real>
+				<real>0.059356689453125</real>
 				<key>Blue Component</key>
-				<real>0.99847215414047241</real>
+				<real>0.78769892454147339</real>
 				<key>Color Space</key>
 				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.52201414108276367</real>
+				<real>1</real>
 				<key>Red Component</key>
-				<real>0.062365643680095673</real>
+				<real>0.13185180723667145</real>
 			</dict>
 			<key>Cursor Text Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.19370138645172119</real>
+				<real>0.78772568702697754</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.15575926005840302</real>
+				<real>1</real>
 				<key>Red Component</key>
-				<real>0.0</real>
+				<real>0.1313946396112442</real>
 			</dict>
+			<key>Cursor Type</key>
+			<integer>1</integer>
 			<key>Custom Command</key>
 			<string>No</string>
 			<key>Custom Directory</key>
@@ -36956,22 +36966,26 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.58516526222229004</real>
+				<real>0.11168910562992096</real>
 				<key>Color Space</key>
 				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.58696877956390381</real>
+				<real>0.086820021271705627</real>
 				<key>Red Component</key>
-				<real>0.49856400489807129</real>
+				<real>0.0047015282325446606</real>
 			</dict>
 			<key>Selection Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.19370138645172119</real>
+				<real>0.78769892454147339</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.15575926005840302</real>
+				<real>1</real>
 				<key>Red Component</key>
-				<real>0.0</real>
+				<real>0.13185180723667145</real>
 			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
@@ -36980,7 +36994,7 @@
 			<key>Silence Bell</key>
 			<false/>
 			<key>Smart Cursor Color</key>
-			<true/>
+			<false/>
 			<key>Sync Title</key>
 			<false/>
 			<key>Tags</key>
@@ -38360,7 +38374,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-02-11T00:38:45Z</date>
+	<date>2017-02-13T14:06:48Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>ShowBookmarkName</key>
@@ -38388,9 +38402,9 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.13</string>
+	<string>3.0.14</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
-	<integer>0</integer>
+	<integer>6</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
 	<true/>
 </dict>

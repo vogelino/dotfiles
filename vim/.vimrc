@@ -144,3 +144,7 @@ let NERDTreeShowHidden=1
 set guifont=3270MediumNerdFontC-Medium
 let g:airline_powerline_fonts = 1
 
+" —— Vim Markdown
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown wrap spell!
+
+

@@ -39,6 +39,9 @@ Plugin 'tomtom/tlib_vim'							" Some utility functions for VIM
 Plugin 'Raimondi/delimitMate'						" Auto add ending quotes/brackets/ets
 Plugin 'ctrlpvim/ctrlp.vim'							" Advanced fuzy file finder
 
+" Markdown
+Plugin 'suan/vim-instant-markdown'					" Live markdown preview for markdown in vim
+
 " NERDTree
 Plugin 'scrooloose/nerdtree'						" File structure tree/explorer
 Plugin 'jistr/vim-nerdtree-tabs'					" Enables NERDTree in all tabs
