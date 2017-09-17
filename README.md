@@ -7,23 +7,28 @@ Vim, Zsh and other terminal tools, configs and sugar.
 
 #### Vim built in
 
-**Bring next line up**: `shift` + `J`
+**Bring next line up**: <kbd>shift</kbd> + <kbd>J</kbd>
 
 #### [vim-surround](https://github.com/tpope/vim-surround)
 
 **Replace surrounding characters**: `cs<toReplace><replaceWith>`
 
-Move cursor inside quotes or brackets, type cs + the existing surround character + the character you which to replace with.
+Move cursor inside quotes or brackets, type <kbd>cs</kbd> + the existing surround character + the character you which to replace with.
 
 Tipp: _For brackets, use closing brackets as a replacement character if you want to avoid surrounding spaces._
 
-**Wrap selection with surrounding characters**: In visual mode > `S<surroundWith>`
+**Wrap selection with surrounding characters**: In selection mode > `S<surroundWith>`
 
-Move cursor inside quotes or brackets, type cs + the existing surround character + the character you which to replace with.
+Select the text you wish to wrap, type <kbd>S</kbd> + the existing surround character + the character you which to replace with.
 
 Tipp: _in both cases it is possible to use xml-like syntaxes such as HTML or JSX_
 
-### Vim utilsnips
+### [Vim argumentative](https://github.com/PeterRincker/vim-argumentative)
+- Shifting arguments with <kbd><,</kbd> and <kbd>>,</kbd>
+- Moving between argument boundaries with <kbd>[,</kbd> and <kbd>]</kbd>,
+- New text objects <kbd>a,</kbd> and <kbd>i,</kbd>
+
+### [Vim utilsnips](https://github.com/SirVer/ultisnips)
 To trigger a command press <kbd>→</kbd> (tab key)
 
 #### [vim-es2015-snippets](https://github.com/epilande/vim-es2015-snippets)
