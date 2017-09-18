@@ -28,6 +28,9 @@ Tipp: _in both cases it is possible to use xml-like syntaxes such as HTML or JSX
 - Moving between argument boundaries with <kbd>[,</kbd> and <kbd>]</kbd>,
 - New text objects <kbd>a,</kbd> and <kbd>i,</kbd>
 
+### [tComment]()
+- Press <kbd>leader</kbd> + <kbd>m</kbd> to toggle comments on a line, multiple lines or selected text
+
 ### [Vim utilsnips](https://github.com/SirVer/ultisnips)
 To trigger a command press <kbd>→</kbd> (tab key)
 
