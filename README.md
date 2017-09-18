@@ -115,7 +115,7 @@ To trigger a command press <kbd>→</kbd> (tab key)
 | <kbd>refd</kbd>   | `ref` |
 | <kbd>ppd</kbd>    | `${props => props}` |
 
-#### [vim-hyperstyle]()
+#### [vim-hyperstyle](https://github.com/rstacruz/vim-hyperstyle)
 
 ##### Properties
 
