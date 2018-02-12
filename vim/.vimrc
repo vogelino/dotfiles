@@ -1,4 +1,5 @@
 " —— General setting —————————————————————————————————————————————————————————
+inoremap <silent> <Esc> <Esc>`^
 set nocompatible
 set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME
 syntax on
@@ -75,8 +76,22 @@ autocmd BufWrite *.coffee :call DeleteTrailingWS()
 map <leader>ss :setlocal spell!<cr>
 
 " —— Pluginsettings —————————————————————————————————————————————————————————
+" —— Prettier
+let g:prettier#autoformat = 0
+
+let g:prettier#config#tab_width = 4
+let g:prettier#config#use_tabs = 'true'
+let g:prettier#config#single_quote = 'true'
+let g:prettier#config#arrow_parens = 'always'
+let g:prettier#config#trailing_comma = 'all'
+let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#config#jsx_bracket_same_line = 'false'
+
 " —— delimitMate
 imap <C-c> <CR><Esc>O
+
+" —— tComment ———————————————————————————————————————————————————————————————
+map <leader>m <c-_><c-_>
 
 " —— UtilSnips
 let g:UltiSnipsExpandTrigger="<tab>"                                            
@@ -130,7 +145,6 @@ let g:ctrlp_custom_ignore = {
 \}
 
 let g:ctrlp_working_path_mode = 'r'
-nmap <leader>p :CtrlP<cr>
 nmap <leader>bb :CtrlPBuffer<cr>
 nmap <leader>bm :CtrlPMixed<cr>
 nmap <leader>bs :CtrlPMRU<cr>
