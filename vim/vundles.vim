@@ -41,6 +41,7 @@ Plugin 'easymotion/vim-easymotion'					" Easy and powerful motions for VIM
 Plugin 'tomtom/tlib_vim'							" Some utility functions for VIM
 Plugin 'Raimondi/delimitMate'						" Auto add ending quotes/brackets/ets
 Plugin 'ctrlpvim/ctrlp.vim'							" Advanced fuzy file finder
+Plugin 'tComment'									" Helps commenting in and out
 
 " Markdown
 Plugin 'suan/vim-instant-markdown'					" Live markdown preview for markdown in vim
