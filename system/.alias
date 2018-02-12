@@ -20,3 +20,6 @@ alias nk='npm link'
 alias nr='npm run'
 alias nf='npm cache clean && rm -rf node_modules && npm install'
 
+# Source tree
+alias sourcetree='open -a SourceTree'
+
