@@ -45,9 +45,14 @@ source "$DOTFILES_DIR/zsh/.plugins"
 unset READLINK CURRENT_SCRIPT SCRIPT_PATH DOTFILE
 
 # Export
-
+export EDITOR='vim'
+export TERM="xterm-256color"
 export OS DOTFILES_DIR 
 
 # OH-MY-ZSH init
 source $ZSH/oh-my-zsh.sh
 
+export PATH="$HOME/.yarn/bin:$PATH"
+
+
+export PATH=/Users/lucasvogel/.local/bin:$PATH
