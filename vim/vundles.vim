@@ -31,7 +31,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'SirVer/ultisnips'							" Main snippets plugin
 Plugin 'epilande/vim-es2015-snippets'				" es2015
 Plugin 'epilande/vim-react-snippets'				" React
-Plugin 'rstacruz/vim-hyperstyle'					" Css/stylus snippets
+Plugin 'rstacruz/vim-hyperstyle'					" Autocomplition for CSS
 
 " Utilities
 Plugin 'tpope/vim-sensible'							" Universal set of default for vim
