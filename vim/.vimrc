@@ -77,9 +77,7 @@ map <leader>ss :setlocal spell!<cr>
 
 " —— Pluginsettings —————————————————————————————————————————————————————————
 " —— Prettier
-let g:prettier#autoformat = 0
-
-let g:prettier#config#tab_width = 4
+let g:prettier#autoformat = 1
 let g:prettier#config#use_tabs = 'true'
 let g:prettier#config#single_quote = 'true'
 let g:prettier#config#arrow_parens = 'always'
@@ -97,7 +95,10 @@ map <leader>m <c-_><c-_>
 let g:UltiSnipsExpandTrigger="<tab>"                                            
 let g:UltiSnipsJumpForwardTrigger="<tab>"                                       
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-	
+let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/my-snippets/Ultisnips', $HOME.'/.dotfiles/vim/UltiSnips/', 'UltiSnips']
+
+let g:UltiSnipsEditSplit="vertical"
+
 	" + Hyperstyle
 	let g:hyperstyle_use_colon=0
 
@@ -107,15 +108,14 @@ let g:jsx_ext_required = 0
 " —— airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_theme='solarized'
+let g:airline_theme='hybrid'
 
-" –— Colorscheme solarized
+" –— Colorscheme 
 set background=dark
-colorscheme solarized
-let g:solarized_termcolors = 16
-let g:solarized_visibility = "high"
-let g:solarized_contrast = "high"
-let g:lightline = { 'colorscheme': 'solarized'  }
+colorscheme hybrid_material
+let g:enable_bold_font = 1
+let g:enable_italic_font = 1
+let g:hybrid_transparent_background = 1
 
 " —— syntastic
 set statusline+=%#warningmsg#

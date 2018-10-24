@@ -45,7 +45,7 @@ source "$DOTFILES_DIR/zsh/.plugins"
 unset READLINK CURRENT_SCRIPT SCRIPT_PATH DOTFILE
 
 # Export
-export EDITOR='vim'
+export EDITOR='nvim'
 export TERM="xterm-256color"
 export OS DOTFILES_DIR 
 

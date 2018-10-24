@@ -1,0 +1,26 @@
+# React
+snippet rpc "React pure component"
+${1:export }const ${2:ComponentName} = (${3:props}) => (
+	$0
+);${8:
+
+$2.defaultProps = {
+	$7: ${8:''},
+};}${4:
+
+$2.propTypes = {
+	${7:className}: ${8:PropTypes.string.isRequired},
+};}
+endsnippet
+
+# Styled components
+snippet sce "An exported styled component" bw
+export const ${1:Container} = styled.${2:div}\`
+	$3
+\`;$0
+endsnippet
+
+snippet cssp "Adds a css property value pair"
+${1:property}: ${2:value};$0
+endsnippet
+

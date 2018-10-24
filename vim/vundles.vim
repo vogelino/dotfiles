@@ -6,6 +6,9 @@ call vundle#begin("$HOME/.vim/bundle")
 
 Plugin 'VundleVim/Vundle.vim'
 
+" Colorscheme
+Plugin 'kristijanhusak/vim-hybrid-material'			" Colorscheme
+
 " Status bar enhancement
 Plugin 'vim-airline/vim-airline'					" Shows additional informations in the status bar
 Plugin 'vim-airline/vim-airline-themes'				" Use specific themes for the enhanced status bar
@@ -24,14 +27,14 @@ Plugin 'wavded/vim-stylus'							" Syntax highlighting for stylus
 " Formatting
 Plugin 'prettier/vim-prettier'						" Automatically format code based on rules
 
-" Colorscheme
-Plugin 'altercation/vim-colors-solarized'
-
 " Snippets
 Plugin 'SirVer/ultisnips'							" Main snippets plugin
+Plugin 'honza/vim-snippets'							" ultisnips plugins
 Plugin 'epilande/vim-es2015-snippets'				" es2015
 Plugin 'epilande/vim-react-snippets'				" React
 Plugin 'rstacruz/vim-hyperstyle'					" Autocomplition for CSS
+Plugin 'joaohkfaria/vim-jest-snippets'				" Snippets for styled components
+Plugin 'cristianoliveira/vim-react-html-snippets'	" html plugins for react
 
 " Utilities
 Plugin 'tpope/vim-sensible'							" Universal set of default for vim
@@ -42,6 +45,7 @@ Plugin 'tomtom/tlib_vim'							" Some utility functions for VIM
 Plugin 'Raimondi/delimitMate'						" Auto add ending quotes/brackets/ets
 Plugin 'ctrlpvim/ctrlp.vim'							" Advanced fuzy file finder
 Plugin 'tComment'									" Helps commenting in and out
+Plugin 'terryma/vim-multiple-cursors'				" Enables mutiple cursors into 
 
 " Markdown
 Plugin 'suan/vim-instant-markdown'					" Live markdown preview for markdown in vim
