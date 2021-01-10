@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-10.15, macos-11.0, ubuntu-latest]
+        os: [macos-11.1]
 
     steps:
       - name: Clean up installed software
@@ -39,9 +39,9 @@ jobs:
             sudo make
           fi
 
-      # - name: Verify runcom setup
-      #   run: source $HOME/.bash_profile
-      #
+      - name: Verify runcom setup
+        run: source $HOME/.zshrc
+
       # - name: Run tests
       #   if: startsWith(matrix.os, 'macos')
       #   run: make test

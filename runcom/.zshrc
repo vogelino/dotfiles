@@ -43,6 +43,9 @@ source "$DOTFILES_DIR/zsh/.plugins"
 # Load bash completion (Added by vogelino as recommended by homebrew)
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
+# Load FZF
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # Clean up
 
 unset READLINK CURRENT_SCRIPT SCRIPT_PATH DOTFILE
@@ -60,3 +63,4 @@ export PATH=/Users/lucasvogel/.local/bin:$PATH
 export PATH=/user/local/bin:$PATH
 export LANG=en_US
 test -e /Users/lucasvogel/.iterm2_shell_integration.zsh && source /Users/lucasvogel/.iterm2_shell_integration.zsh || true
+

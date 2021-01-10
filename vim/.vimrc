@@ -171,4 +171,6 @@ let g:airline_powerline_fonts = 1
 " —— Vim Markdown
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown wrap spell!
 
+" -- FZF
+set rtp+=user/local/opt/fzf
 
