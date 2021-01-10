@@ -40,6 +40,9 @@ fi
 # Load zsh plugins
 source "$DOTFILES_DIR/zsh/.plugins"
 
+# Load bash completion (Added by vogelino as recommended by homebrew)
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+
 # Clean up
 
 unset READLINK CURRENT_SCRIPT SCRIPT_PATH DOTFILE
