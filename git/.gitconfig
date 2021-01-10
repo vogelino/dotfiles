@@ -1,0 +1,39 @@
+[user]
+	email = contact@vogelino.com
+	name = Lucas Vogel
+	signingkey = 0CBE189C71132A5E
+
+[core]
+	excludesfile = ~/.gitignore_global
+
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+
+[push]
+	default = simple
+
+[credential]
+	helper = osxkeychain
+
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+
+[merge]
+	tool = vimdiff
+
+[diff]
+	tool = vimdiff
+
+[commit]
+	gpgsign = true
+
+[gpg]
+	program = /usr/local/MacGPG2/bin/gpg2
+
+[pull]
+	ff = only
