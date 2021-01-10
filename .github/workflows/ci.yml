@@ -39,9 +39,9 @@ jobs:
             sudo make
           fi
 
-      - name: Verify runcom setup
-        run: source $HOME/.bash_profile
-
-      - name: Run tests
-        if: startsWith(matrix.os, 'macos')
-        run: make test
+      # - name: Verify runcom setup
+      #   run: source $HOME/.bash_profile
+      #
+      # - name: Run tests
+      #   if: startsWith(matrix.os, 'macos')
+      #   run: make test
