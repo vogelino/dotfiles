@@ -23,15 +23,23 @@ set showmode
 set noswapfile
 set nobackup
 set nowb
+
+" —— Fatser redrawing
+set ttyfast
+
+" —— Setup indentation
 set tabstop=4
 set shiftwidth=4
+
+" -- Yank into the regular clipboard
+set clipboard=unnamed
 
 " —— Tab simulation
 set hidden
 nmap <leader>T :enew<cr>
 nmap <leader>l :bnext<CR>
 nmap <leader>h :bprevious<CR>
-nmap <leader>bq :bp <BAR> bd #<CR>
+nmap <leader>w :bp <BAR> bd #<CR>
 nmap <leader>bl :ls<CR>
 
 " —— Load plugins ———————————————————————————————————————————————————————————
@@ -144,6 +152,7 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
 \}
 
+let g:ctrlp_show_hidden = 1
 let g:ctrlp_working_path_mode = 'r'
 nmap <leader>bb :CtrlPBuffer<cr>
 nmap <leader>bm :CtrlPMixed<cr>
@@ -153,6 +162,7 @@ nmap <leader>bs :CtrlPMRU<cr>
 nmap <leader>tt :NERDTreeToggle<cr>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let NERDTreeShowHidden=1
+let NERDTreeRespectWildIgnore=0
 
 " —— Vim Devicons
 set guifont=3270MediumNerdFontC-Medium

@@ -2,15 +2,39 @@
 snippet rpc "React pure component"
 ${1:export }const ${2:ComponentName} = (${3:props}) => (
 	$0
-);${8:
-
-$2.defaultProps = {
-	$7: ${8:''},
-};}${4:
+);${4:
 
 $2.propTypes = {
-	${7:className}: ${8:PropTypes.string.isRequired},
+	${5:className}: ${6:PropTypes.string.isRequired},
+};}${7:
+
+$2.defaultProps = {
+	$5: ${8:''},
 };}
+endsnippet
+
+# Imports
+snippet imr "Imports react" bw
+import React from 'react';$0
+endsnippet
+
+snippet impt "Imports prop-types" bw
+import PropTypes from 'prop-types';$0
+endsnippet
+
+snippet imsc "Imports styled-components" bw
+import styled from 'styled-components';$0
+endsnippet
+
+snippet imcp "Imports recompose" bw
+import ${1:{ ${2:compose}${3:,} }} from 'recompose';$0
+endsnippet
+
+# Recompose
+snippet rcomp "Export as default a composed react component with recompose" bw
+${1:export default} compose(
+	$0
+)($2);
 endsnippet
 
 # Styled components

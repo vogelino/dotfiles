@@ -17,9 +17,8 @@ Plugin 'vim-airline/vim-airline-themes'				" Use specific themes for the enhance
 Plugin 'scrooloose/syntastic'						" Main syntax highlighting plugin
 Plugin 'mtscout6/syntastic-local-eslint.vim'		" Enables use of local eslint
 Plugin 'othree/yajs.vim'							" Enhances javascript syntax
-Plugin 'pangloss/vim-javascript'					" Additional javascript highlighting
+Plugin 'chemzqm/vim-jsx-improve'					" Additional javascript highlighting
 Plugin 'othree/es.next.syntax.vim'					" es2015 highlighting
-Plugin 'mxw/vim-jsx'								" JSX highlighting
 Plugin 'elzr/vim-json'								" JSON highlighting
 Plugin 'othree/javascript-libraries-syntax.vim'		" Special highligh of known libraries
 Plugin 'wavded/vim-stylus'							" Syntax highlighting for stylus
@@ -46,6 +45,7 @@ Plugin 'Raimondi/delimitMate'						" Auto add ending quotes/brackets/ets
 Plugin 'ctrlpvim/ctrlp.vim'							" Advanced fuzy file finder
 Plugin 'tComment'									" Helps commenting in and out
 Plugin 'terryma/vim-multiple-cursors'				" Enables mutiple cursors into 
+Plugin 'Galooshi/vim-import-js'						" Auto import javascript files
 
 " Markdown
 Plugin 'suan/vim-instant-markdown'					" Live markdown preview for markdown in vim
@@ -53,6 +53,7 @@ Plugin 'suan/vim-instant-markdown'					" Live markdown preview for markdown in v
 " NERDTree
 Plugin 'scrooloose/nerdtree'						" File structure tree/explorer
 Plugin 'jistr/vim-nerdtree-tabs'					" Enables NERDTree in all tabs
+Plugin 'Xuyuanp/nerdtree-git-plugin'				" Add Git status to the nerd tree
 
 " Git
 Plugin 'airblade/vim-gitgutter'						" Shows added/edited/removed lines of git

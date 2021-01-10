@@ -5,4 +5,7 @@ plugins+=(zsh-syntax-highlighting)
 plugins+=(zsh-autosuggestions)
 plugins+=(zsh-better-npm-completion)
 plugins+=(zsh-nvm)
-
+plugins+=(ssh-agent)
+plugins+=(yarn)
+plugins+=(icd)
+plugins+=(yarn-autocompletions)

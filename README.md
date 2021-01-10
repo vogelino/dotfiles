@@ -15,13 +15,13 @@ Vim, Zsh and other terminal tools, configs and sugar.
 
 Move cursor inside quotes or brackets, type <kbd>cs</kbd> + the existing surround character + the character you which to replace with.
 
-Tipp: _For brackets, use closing brackets as a replacement character if you want to avoid surrounding spaces._
+Tip: _For brackets, use closing brackets as a replacement character if you want to avoid surrounding spaces._
 
 **Wrap selection with surrounding characters**: In selection mode > `S<surroundWith>`
 
 Select the text you wish to wrap, type <kbd>S</kbd> + the existing surround character + the character you which to replace with.
 
-Tipp: _in both cases it is possible to use xml-like syntaxes such as HTML or JSX_
+Tip: _in both cases it is possible to use xml-like syntaxes such as HTML or JSX_
 
 ### [Vim argumentative](https://github.com/PeterRincker/vim-argumentative)
 - Shifting arguments with <kbd><,</kbd> and <kbd>>,</kbd>

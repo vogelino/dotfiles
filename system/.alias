@@ -1,9 +1,3 @@
-# els
-alias las='els -al --els-icons=fontawesome'
-
-# vim
-alias vim='vim -u $MYVIMRC'
-
 # Npm aliases
 alias ni='npm install'
 alias nis='npm install --save'
@@ -20,6 +14,15 @@ alias nk='npm link'
 alias nr='npm run'
 alias nf='npm cache clean && rm -rf node_modules && npm install'
 
-# Source tree
-alias sourcetree='open -a SourceTree'
+# System aliases
+alias las='els -al --els-icons=fontawesome'
+alias ls="els -G"
+alias x='exit'
 
+# CD paths
+alias Sites="cd ~/Sites"
+
+# Apps
+alias c="code -n ." # Visual studio code
+alias vim='nvim -u $MYVIMRC' 
+alias sourcetree='open -a SourceTree'

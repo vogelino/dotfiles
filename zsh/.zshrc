@@ -53,6 +53,7 @@ export OS DOTFILES_DIR
 source $ZSH/oh-my-zsh.sh
 
 export PATH="$HOME/.yarn/bin:$PATH"
-
-
 export PATH=/Users/lucasvogel/.local/bin:$PATH
+export PATH=/user/local/bin:$PATH
+export LANG=en_US
+test -e /Users/lucasvogel/.iterm2_shell_integration.zsh && source /Users/lucasvogel/.iterm2_shell_integration.zsh || true
