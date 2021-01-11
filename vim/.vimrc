@@ -173,4 +173,5 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown wrap spell!
 
 " -- FZF
 set rtp+=user/local/opt/fzf
+nnoremap <expr> <C-p> (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
 

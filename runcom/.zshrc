@@ -27,7 +27,7 @@ fi
 
 # Finally we can source the dotfiles (order matters)
 
-for DOTFILE in "$DOTFILES_DIR"/system/.{env,alias,alias.custom,powerlevel9k,nvm,custom,keybindings}; do
+for DOTFILE in "$DOTFILES_DIR"/system/.{env,fzf,function,function_*,path,alias,alias.custom,powerlevel9k,nvm,custom,keybindings}; do
   [ -f "$DOTFILE" ] && . "$DOTFILE"
 done
 
@@ -37,6 +37,9 @@ if [ "$OS" = "MacOS" ]; then
   done
 fi
 
+# Set LSCOLORS
+eval "$(dircolors -b "$DOTFILES_DIR"/system/.dir_colors)"
+#
 # Load zsh plugins
 source "$DOTFILES_DIR/zsh/.plugins"
 

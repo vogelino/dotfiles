@@ -17,7 +17,11 @@ alias nf='npm cache clean && rm -rf node_modules && npm install'
 # System aliases
 alias las='els -al --els-icons=fontawesome'
 alias ls="els -G"
+alias e='nvim -u $MYVIMRC'
 alias x='exit'
+
+# Cat replacement with colors
+alias cat='bat'
 
 # CD paths
 alias Sites="cd ~/Sites"
