@@ -31,4 +31,261 @@ f() {
 
 fm() f "$@" --max-depth 1
 
+# fd - cd to selected directory
+fd() {
+  DIR=`find * -maxdepth 0 -type d -print 2> /dev/null | fzf-tmux --preview "tree -C {} | head -50"` \
+    && cd "$DIR"
+}
+#
+# fda - including hidden directories
+fda() {
+  local dir
+  dir=$(find ${1:-.} -type d 2> /dev/null | fzf --preview "tree -C {} | head -50" +m) && cd "$dir"
+}
+#
+# fdr - cd to selected parent directory
+fdr() {
+  local declare dirs=()
+  get_parent_dirs() {
+    if [[ -d "${1}" ]]; then dirs+=("$1"); else return; fi
+    if [[ "${1}" == '/' ]]; then
+      for _dir in "${dirs[@]}"; do echo $_dir; done
+    else
+      get_parent_dirs $(dirname "$1")
+    fi
+  }
+  local DIR=$(get_parent_dirs $(realpath "${1:-$PWD}") | fzf-tmux --tac)
+  cd "$DIR"
+}
+
+# fh - repeat history
+fh() {
+  eval $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
+}
+
+# ------------------
+# GIT
+# ------------------
+
+# fbr - checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
+fbr() {
+  local branches branch
+  branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
+  branch=$(echo "$branches" |
+           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+
+# fshow_preview - git commit browser with previews
+alias glNoGraph='git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"'
+_gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
+_viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
+
+fshow() {
+    glNoGraph |
+        fzf --no-sort --reverse --tiebreak=index --no-multi \
+            --ansi --preview="$_viewGitLogLine" \
+                --header "enter to view, alt-y to copy hash" \
+                --bind "enter:execute:$_viewGitLogLine   | less -R" \
+                --bind "alt-y:execute:$_gitLogLineToHash | xclip"
+}
+
+# -----------------
+# TMUX
+# -----------------
+
+# tm - create new tmux session, or switch to existing one. Works from within tmux too. (@bag-man)
+# `tm` will allow you to select your tmux session via fzf.
+# `tm irc` will attach to the irc session (if it exists), else it will create it.
+
+tm() {
+  [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
+  if [ $1 ]; then
+    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+  fi
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+}
+
+# fs [FUZZY PATTERN] - Select selected tmux session
+#   - Bypass fuzzy finder if there's only one match (--select-1)
+#   - Exit if there's no match (--exit-0)
+fs() {
+  local session
+  session=$(tmux list-sessions -F "#{session_name}" | \
+    fzf --query="$1" --select-1 --exit-0) &&
+  tmux switch-client -t "$session"
+}
+
+# ftpane - switch pane (@george-b)
+ftpane() {
+  local panes current_window current_pane target target_window target_pane
+  panes=$(tmux list-panes -s -F '#I:#P - #{pane_current_path} #{pane_current_command}')
+  current_pane=$(tmux display-message -p '#I:#P')
+  current_window=$(tmux display-message -p '#I')
+
+  target=$(echo "$panes" | grep -v "$current_pane" | fzf +m --reverse) || return
+
+  target_window=$(echo $target | awk 'BEGIN{FS=":|-"} {print$1}')
+  target_pane=$(echo $target | awk 'BEGIN{FS=":|-"} {print$2}' | cut -c 1)
+
+  if [[ $current_window -eq $target_window ]]; then
+    tmux select-pane -t ${target_window}.${target_pane}
+  else
+    tmux select-pane -t ${target_window}.${target_pane} &&
+    tmux select-window -t $target_window
+  fi
+}
+
+# In tmux.conf
+# bind-key 0 run "tmux split-window -l 12 'bash -ci ftpane'"
+
+# ---------------
+# HOMEBREW
+# ---------------
+
+# Install (one or multiple) selected application(s)
+# using "brew search" as source input
+# mnemonic [B]rew [I]nstall [P]lugin
+bip() {
+  local inst=$(brew search | fzf -m)
+
+  if [[ $inst ]]; then
+    for prog in $(echo $inst);
+    do; brew install $prog; done;
+  fi
+}
+
+# Update (one or multiple) selected application(s)
+# mnemonic [B]rew [U]pdate [P]lugin
+bup() {
+  local upd=$(brew leaves | fzf -m --preview 'brew info {}')
+
+  if [[ $upd ]]; then
+    for prog in $(echo $upd);
+    do; brew upgrade $prog; done;
+  fi
+}
+
+# Delete (one or multiple) selected application(s)
+# mnemonic [B]rew [C]lean [P]lugin (e.g. uninstall)
+bcp() {
+  local uninst=$(brew leaves | fzf -m)
+
+  if [[ $uninst ]]; then
+    for prog in $(echo $uninst);
+    do; brew uninstall $prog; done;
+  fi
+}
+
+# ----------
+# CASK
+# ----------
+
+# Install or open the webpage for the selected application 
+# using brew cask search as input source
+# and display a info quickview window for the currently marked application
+install() {
+    local token
+    token=$(brew search --casks | fzf-tmux --query="$1" +m --preview 'brew info --cask {}')
+
+    if [ "x$token" != "x" ]
+    then
+        echo "(I)nstall or open the (h)omepage of $token"
+        read input
+        if [ $input = "i" ] || [ $input = "I" ]; then
+            brew cask install $token
+        fi
+        if [ $input = "h" ] || [ $input = "H" ]; then
+            brew cask home $token
+        fi
+    fi
+}
+
+# Uninstall or open the webpage for the selected application 
+# using brew list as input source (all brew cask installed applications) 
+# and display a info quickview window for the currently marked application
+uninstall() {
+    local token
+    token=$(brew cask list | fzf-tmux --query="$1" +m --preview 'brew cask info {}')
+
+    if [ "x$token" != "x" ]
+    then
+        echo "(U)ninstall or open the (h)omepage of $token"
+        read input
+        if [ $input = "u" ] || [ $input = "U" ]; then
+            brew cask uninstall $token
+        fi
+        if [ $input = "h" ] || [ $token = "h" ]; then
+            brew cask home $token
+        fi
+    fi
+}
+
+# -----------
+# FS
+# -----------
+
+# Interactive cd
+function cd() {
+    if [[ "$#" != 0 ]]; then
+        builtin cd "$@";
+        return
+    fi
+    while true; do
+        local lsd=$(echo ".." && ls -p | grep '/$' | sed 's;/$;;')
+        local dir="$(printf '%s\n' "${lsd[@]}" |
+            fzf --reverse --preview '
+                __cd_nxt="$(echo {})";
+                __cd_path="$(echo $(pwd)/${__cd_nxt} | sed "s;//;/;")";
+                echo $__cd_path;
+                echo;
+                ls -p --color=always "${__cd_path}";
+        ')"
+        [[ ${#dir} != 0 ]] || return 0
+        builtin cd "$dir" &> /dev/null
+    done
+}
+
+# -----------
+# CHROME
+# -----------
+
+# c - browse chrome history
+ch() {
+  local cols sep google_history open
+  cols=$(( COLUMNS / 3 ))
+  sep='{::}'
+
+  if [ "$(uname)" = "Darwin" ]; then
+    google_history="$HOME/Library/Application Support/Google/Chrome/Profile 2/History"
+    open=open
+  else
+    google_history="$HOME/.config/google-chrome/Default/History"
+    open=xdg-open
+  fi
+  cp -f "$google_history" /tmp/h
+  sqlite3 -separator $sep /tmp/h \
+    "select substr(title, 1, $cols), url
+     from urls order by last_visit_time desc" |
+  awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
+  fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs $open > /dev/null 2> /dev/null
+}
+
+# -----------
+# NPM
+# -----------
+
+# run npm script (requires jq)
+fns() {
+  local script
+  script=$(cat package.json | jq -r '.scripts | keys[] ' | sort | fzf) && npm run $(echo "$script")
+}
+
+# -----------
+# LASTPASS
+# -----------
+
+lap() {
+	lpass show -c --password $(lpass ls  | fzf | awk '{print $(NF)}' | sed 's/\]//g')
+}
 
