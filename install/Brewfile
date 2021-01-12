@@ -1,6 +1,7 @@
 tap "goles/battery"
 tap "homebrew/bundle"
 tap "homebrew/core"
+tap sachaos/todoist
 
 brew "neovim"
 brew "yarn"
@@ -21,3 +22,7 @@ brew "bat"
 brew "fd"
 brew "rg"
 brew "diff-so-fancy"
+brew "tmuxinator"
+brew "tmuxinator-completion"
+brew "todoist"
+

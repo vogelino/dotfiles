@@ -64,6 +64,18 @@ fh() {
 }
 
 # ------------------
+# TODOIST
+# ------------------
+source $(brew --prefix)/share/zsh/site-functions/_todoist_fzf
+alias tdp="fzf-todoist-project"
+alias tdi="fzf-todoist-item"
+alias tdl="fzf-todoist-labels"
+alias tdd="fzf-todoist-date"
+alias tdc="fzf-todoist-close"
+alias tdr="fzf-todoist-delete"
+alias tdo="fzf-todoist-open"
+
+# ------------------
 # GIT
 # ------------------
 
@@ -138,6 +150,35 @@ ftpane() {
 
 # In tmux.conf
 # bind-key 0 run "tmux split-window -l 12 'bash -ci ftpane'"
+
+# ---------------
+# TMUXINATOR
+# ---------------
+tx() {
+	SELECTED_PROJECTS=$(tmuxinator list -n |
+    tail -n +2 |
+    fzf --prompt="Project: " -m -1 -q "$1")
+
+	if [ -n "$SELECTED_PROJECTS" ]; then
+		# Set the IFS to \n to iterate over \n delimited projects
+		IFS=$'\n'
+
+		# Start each project without attaching
+		for PROJECT in $SELECTED_PROJECTS; do
+			tmuxinator start "$PROJECT" --no-attach # force disable attaching
+		done
+
+		# If inside tmux then select session to switch, otherwise just attach
+		if [ -n "$TMUX" ]; then
+			SESSION=$(tmux list-sessions -F "#S" | fzf --prompt="Session: ")
+			if [ -n "$SESSION" ]; then
+				tmux switch-client -t "$SESSION"
+			fi
+		else
+			tmux attach-session
+		fi
+	fi
+}
 
 # ---------------
 # HOMEBREW
