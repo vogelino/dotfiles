@@ -22,6 +22,7 @@ Plugin 'othree/es.next.syntax.vim'					" es2015 highlighting
 Plugin 'elzr/vim-json'								" JSON highlighting
 Plugin 'othree/javascript-libraries-syntax.vim'		" Special highligh of known libraries
 Plugin 'wavded/vim-stylus'							" Syntax highlighting for stylus
+Plugin 'leafgarland/typescript-vim'
 
 " Formatting
 Plugin 'prettier/vim-prettier'						" Automatically format code based on rules
