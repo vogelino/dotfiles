@@ -43,6 +43,7 @@ cask "zoom"
 cask "the-unarchiver"
 cask "adobe-creative-cloud"
 cask "karabiner-elements"
+cask "miro"
 
 # Quick Look Plugins (https://github.com/sindresorhus/quick-look-plugins)
 cask "qlcolorcode"
