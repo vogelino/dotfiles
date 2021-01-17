@@ -1,7 +1,7 @@
 tap "goles/battery"
 tap "homebrew/bundle"
 tap "homebrew/core"
-tap sachaos/todoist
+tap "sachaos/todoist"
 
 brew "neovim"
 brew "yarn"
@@ -25,4 +25,6 @@ brew "diff-so-fancy"
 brew "tmuxinator"
 brew "tmuxinator-completion"
 brew "todoist"
+brew "dockutil"
+brew "romkatv/powerlevel10k/powerlevel10k"
 
