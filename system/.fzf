@@ -115,7 +115,7 @@ tm() {
   if [ $1 ]; then
     tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
   fi
-  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0 --preview='tmux_tree {}') &&  tmux $change -t "$session" || echo "No sessions found."
 }
 
 # fs [FUZZY PATTERN] - Select selected tmux session
@@ -157,7 +157,7 @@ ftpane() {
 tx() {
 	SELECTED_PROJECTS=$(tmuxinator list -n |
     tail -n +2 |
-    fzf --prompt="Project: " -m -1 -q "$1")
+    fzf --prompt="Project: " -m -1 -q "$1" --preview='tmux_tree {}')
 
 	if [ -n "$SELECTED_PROJECTS" ]; then
 		# Set the IFS to \n to iterate over \n delimited projects
@@ -170,7 +170,7 @@ tx() {
 
 		# If inside tmux then select session to switch, otherwise just attach
 		if [ -n "$TMUX" ]; then
-			SESSION=$(tmux list-sessions -F "#S" | fzf --prompt="Session: ")
+			SESSION=$(tmux list-sessions -F "#S" | fzf --prompt="Session: " --preview="tmux_tree {}")
 			if [ -n "$SESSION" ]; then
 				tmux switch-client -t "$SESSION"
 			fi
