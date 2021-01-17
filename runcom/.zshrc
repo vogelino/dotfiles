@@ -37,9 +37,6 @@ if [ "$OS" = "MacOS" ]; then
   done
 fi
 
-# Set LSCOLORS
-eval "$(dircolors -b "$DOTFILES_DIR"/system/.dir_colors)"
-#
 # Load zsh plugins
 source "$DOTFILES_DIR/zsh/.plugins"
 

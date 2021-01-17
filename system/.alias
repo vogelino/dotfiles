@@ -15,8 +15,8 @@ alias nr='npm run'
 alias nf='npm cache clean && rm -rf node_modules && npm install'
 
 # System aliases
-alias las='els -al --els-icons=fontawesome'
-alias ls="els -G"
+alias ls="nerd-ls"
+alias las="nerd-ls -aliT"
 alias e='nvim -u $MYVIMRC'
 alias x='exit'
 
