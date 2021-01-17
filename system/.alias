@@ -30,3 +30,4 @@ alias Sites="cd ~/Sites"
 alias c="code -n ." # Visual studio code
 alias vim='nvim -u $MYVIMRC' 
 alias sourcetree='open -a SourceTree'
+alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --kiosk'
