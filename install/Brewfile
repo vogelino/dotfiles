@@ -28,4 +28,5 @@ brew "todoist"
 brew "dockutil"
 brew "romkatv/powerlevel10k/powerlevel10k"
 brew "drn/homebrew-tap/nerd-ls"
+brew "gh"
 
