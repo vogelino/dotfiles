@@ -37,7 +37,7 @@ In insert mode, type the snippet trigger and hit <kbd>→</kbd> (tab key)
 #### [vim-es2015-snippets](https://github.com/epilande/vim-es2015-snippets)
 | Trigger               	| Content                                    |
 |---------------------------------:	|-------------------------------------------|
-| <kbd>c=></kbd>                           	| Arrow function                  |
+| <kbd>=></kbd>                           	| Arrow function                  |
 | <kbd>=>></kbd>                           	| Inline arrow function           |
 | <kbd>c=></kbd>                           	| Arrow function in a constant    |
 | <kbd>:</kbd>                             	| Key-value pair in object           |
