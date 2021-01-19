@@ -16,13 +16,16 @@ Plugin 'vim-airline/vim-airline-themes'				" Use specific themes for the enhance
 " Syntax highlighting
 Plugin 'scrooloose/syntastic'						" Main syntax highlighting plugin
 Plugin 'mtscout6/syntastic-local-eslint.vim'		" Enables use of local eslint
-Plugin 'othree/yajs.vim'							" Enhances javascript syntax
+" Plugin 'othree/yajs.vim'							" Enhances javascript syntax
 Plugin 'chemzqm/vim-jsx-improve'					" Additional javascript highlighting
-Plugin 'othree/es.next.syntax.vim'					" es2015 highlighting
+" Plugin 'othree/es.next.syntax.vim'					" es2015 highlighting
 Plugin 'elzr/vim-json'								" JSON highlighting
 Plugin 'othree/javascript-libraries-syntax.vim'		" Special highligh of known libraries
 Plugin 'wavded/vim-stylus'							" Syntax highlighting for stylus
-Plugin 'leafgarland/typescript-vim'
+Plugin 'pangloss/vim-javascript'					" Syntax highlighting for javascript
+Plugin 'leafgarland/typescript-vim'					" Syntax highlighting for typescript
+Plugin 'maxmellon/vim-jsx-pretty'					" Syntax highlighting for jsx
+Plugin 'jparise/vim-graphql'						" Syntax highlighting for graphql
 
 " Formatting
 Plugin 'prettier/vim-prettier'						" Automatically format code based on rules
@@ -43,13 +46,17 @@ Plugin 'PeterRincker/vim-argumentative'				" Allows changing the order of functi
 Plugin 'easymotion/vim-easymotion'					" Easy and powerful motions for VIM
 Plugin 'tomtom/tlib_vim'							" Some utility functions for VIM
 Plugin 'Raimondi/delimitMate'						" Auto add ending quotes/brackets/ets
-Plugin 'ctrlpvim/ctrlp.vim'							" Advanced fuzy file finder
+Plugin 'alvan/vim-closetag'							" Auto close the tags
 Plugin 'tComment'									" Helps commenting in and out
-Plugin 'terryma/vim-multiple-cursors'				" Enables mutiple cursors into 
 Plugin 'Galooshi/vim-import-js'						" Auto import javascript files
 
-" Markdown
-Plugin 'suan/vim-instant-markdown'					" Live markdown preview for markdown in vim
+" Fuzzy Search
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plugin 'junegunn/fzf.vim'
+
+" Intellisense
+Plugin 'neoclide/coc.nvim', {'branch': 'release'}	" Suggestions
+Plugin 'iamcco/coc-tailwindcss',  {'do': 'yarn install --frozen-lockfile && yarn run build'}
 
 " NERDTree
 Plugin 'scrooloose/nerdtree'						" File structure tree/explorer
