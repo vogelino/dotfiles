@@ -36204,25 +36204,29 @@
 			<false/>
 			<key>Ansi 0 Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.20179691910743713</real>
+				<real>0.10000000000000001</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.1818026602268219</real>
+				<real>0.10000000000000001</real>
 				<key>Red Component</key>
-				<real>0.1665644645690918</real>
+				<real>0.10000000000000001</real>
 			</dict>
 			<key>Ansi 1 Color</key>
 			<dict>
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.38823527097702026</real>
+				<real>0.221832275390625</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.32733154296875</real>
+				<real>0.0</real>
 				<key>Red Component</key>
-				<real>0.8622894287109375</real>
+				<real>1</real>
 			</dict>
 			<key>Ansi 10 Color</key>
 			<dict>
@@ -36354,13 +36358,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.2549019455909729</real>
+				<real>0.19280672073364258</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.1637420654296875</real>
+				<real>0.0</real>
 				<key>Red Component</key>
-				<real>0.5370330810546875</real>
+				<real>1</real>
 			</dict>
 			<key>BM Growl</key>
 			<true/>
@@ -36988,12 +36992,16 @@
 			</dict>
 			<key>Selection Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.13528014719486237</real>
+				<real>0.5</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.12312769144773483</real>
+				<real>0.5</real>
 				<key>Red Component</key>
-				<real>0.11772145330905914</real>
+				<real>0.5</real>
 			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
