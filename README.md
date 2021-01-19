@@ -9,7 +9,7 @@ Vim, Zsh and other terminal tools, configs and sugar.
 
 **Bring next line up**: <kbd>shift</kbd> + <kbd>J</kbd>
 
-#### [vim-surround](https://github.com/tpope/vim-surround)
+### [vim-surround](https://github.com/tpope/vim-surround)
 
 **Replace surrounding characters**: `cs<toReplace><replaceWith>`
 
@@ -32,7 +32,7 @@ Tip: _in both cases it is possible to use xml-like syntaxes such as HTML or JSX_
 - Press <kbd>leader</kbd> + <kbd>m</kbd> to toggle comments on a line, multiple lines or selected text
 
 ### [Vim utilsnips](https://github.com/SirVer/ultisnips)
-To trigger a command press <kbd>→</kbd> (tab key)
+In insert mode, type the snippet trigger and hit <kbd>→</kbd> (tab key)
 
 #### [vim-es2015-snippets](https://github.com/epilande/vim-es2015-snippets)
 | Trigger               	| Content                                    |
