@@ -57,63 +57,77 @@ In insert mode, type the snippet trigger and hit <kbd>→</kbd> (tab key)
 
 #### [vim-react-snippets](https://github.com/epilande/vim-react-snippets)
 
-##### Skeleton
+## Snippets
+
+#### Skeleton
 
 | Trigger  | Content |
 | -------: | ------- |
-| <kbd>rrccd</kbd>  | React Redux Class Component |
-| <kbd>rccd</kbd>   | React Class Component |
-| <kbd>rfcd</kbd>   | React Functional Component |
-| <kbd>rscd</kbd>   | React Styled Component |
-| <kbd>rscid</kbd>   | React Styled Component Interpolation |
+| `rrcc→`  | React Redux Class Component |
+| `rcc→`   | React Class Component |
+| `rfc→`   | React Functional Component |
+| `rsc→`   | React Styled Component |
+| `rsci→`   | React Styled Component Interpolation |
 
 
-##### Lifecycle
+#### Lifecycle
 
 | Trigger  | Content |
 | -------: | ------- |
-| <kbd>cwmd</kbd>   | `componentWillMount() {...}` |
-| <kbd>cdmd</kbd>   | `componentDidMount() {...}` |
-| <kbd>cwrpd</kbd>  | `componentWillReceiveProps(nextProps) {...}` |
-| <kbd>scupd</kbd>  | `shouldComponentUpdate(nextProps, nextState) {...}` |
-| <kbd>cwupd</kbd>  | `componentWillUpdate(nextProps, nextState) {...}` |
-| <kbd>cdupd</kbd>  | `componentDidUpdate(prevProps, prevState) {...}` |
-| <kbd>cwud</kbd>   | `componentWillUnmount() {...}` |
-| <kbd>rend</kbd>   | `render() {...}` |
+| `cwm→`   | `componentWillMount() {...}` |
+| `cdm→`   | `componentDidMount() {...}` |
+| `cwrp→`  | `componentWillReceiveProps(nextProps) {...}` |
+| `scup→`  | `shouldComponentUpdate(nextProps, nextState) {...}` |
+| `cwup→`  | `componentWillUpdate(nextProps, nextState) {...}` |
+| `cdup→`  | `componentDidUpdate(prevProps, prevState) {...}` |
+| `cwu→`   | `componentWillUnmount() {...}` |
+| `ren→`   | `render() {...}` |
 
 
-##### PropTypes
+#### PropTypes
 
 | Trigger    | Content |
 | -------:   | ------- |
-| <kbd>ptd</kbd>      | `propTypes {...}` |
-| <kbd>pt.ad</kbd>    | `PropTypes.array` |
-| <kbd>pt.bd</kbd>    | `PropTypes.bool` |
-| <kbd>pt.fd</kbd>    | `PropTypes.func` |
-| <kbd>pt.nd</kbd>    | `PropTypes.number` |
-| <kbd>pt.od</kbd>    | `PropTypes.object` |
-| <kbd>pt.sd</kbd>    | `PropTypes.string` |
-| <kbd>pt.nod</kbd>   | `PropTypes.node` |
-| <kbd>pt.ed</kbd>    | `PropTypes.element` |
-| <kbd>pt.iod</kbd>   | `PropTypes.instanceOf` |
-| <kbd>pt.oned</kbd>  | `PropTypes.oneOf` |
-| <kbd>pt.onetd</kbd> | `PropTypes.oneOfType (Union)` |
-| <kbd>pt.aod</kbd>   | `PropTypes.arrayOf (Instances)` |
-| <kbd>pt.ood</kbd>   | `PropTypes.objectOf` |
-| <kbd>pt.shd</kbd>   | `PropTypes.shape` |
-| <kbd>ird</kbd>      | `isRequired` |
+| `pt→`      | `propTypes {...}` |
+| `pt.a→`    | `PropTypes.array` |
+| `pt.b→`    | `PropTypes.bool` |
+| `pt.f→`    | `PropTypes.func` |
+| `pt.n→`    | `PropTypes.number` |
+| `pt.o→`    | `PropTypes.object` |
+| `pt.s→`    | `PropTypes.string` |
+| `pt.no→`   | `PropTypes.node` |
+| `pt.e→`    | `PropTypes.element` |
+| `pt.io→`   | `PropTypes.instanceOf` |
+| `pt.one→`  | `PropTypes.oneOf` |
+| `pt.onet→` | `PropTypes.oneOfType (Union)` |
+| `pt.ao→`   | `PropTypes.arrayOf (Instances)` |
+| `pt.oo→`   | `PropTypes.objectOf` |
+| `pt.sh→`   | `PropTypes.shape` |
+| `ir→`      | `isRequired` |
 
-##### Others
+#### Others
 
 | Trigger  | Content |
 | -------: | ------- |
-| <kbd>propsd</kbd> | `this.props` |
-| <kbd>stated</kbd> | `this.state` |
-| <kbd>setd</kbd>   | `this.setState(...)` |
-| <kbd>dpd</kbd>    | `defaultProps {...}` |
-| <kbd>cnd</kbd>    | `className` |
-| <kbd>refd</kbd>   | `ref` |
-| <kbd>ppd</kbd>    | `${props => props}` |
+| `props→` | `this.props` |
+| `state→` | `this.state` |
+| `set→`   | `this.setState(...)` |
+| `dp→`    | `defaultProps {...}` |
+| `cn→`    | `className` |
+| `ref→`   | `ref` |
+| `pp→`    | `${props => props}` |
+
+#### Hooks
+
+| Trigger  | Content |
+| -------: | ------- |
+| `us.s→`  | `const [state, setState] = useState('');` |
+| `us.e→`  | `useEffect(() => { });`                   |
+| `us.er→` | `useEffect(() => { return () => {}; });`  |
+| `us.c→`  | `const context = useContext(ctx);`        |
+| `us.r→`  | `const [store, dispatch] = useReducer(storeReducer, initialState);` |
+| `us.cb→` | `useCallback(() => {  }, []);` |
+| `us.m→`  | `const memo = useMemo(() => {  }, []);` |
 
 #### [vim-hyperstyle](https://github.com/rstacruz/vim-hyperstyle)
 
