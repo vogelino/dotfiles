@@ -25,3 +25,21 @@ prepend-path() {
   [ -d $1 ] && PATH="$1:$PATH"
 }
 
+command-exists() {
+    local exists=$(command -v "$1")
+    # command does not exist
+    if [[ -z $exists ]]; then
+        echo 0
+    else # command exists
+        echo 1
+    fi
+}
+
+# Commit using commitizen
+gcc() {
+  if [[ $(command-exists "git-cz") -eq 0 ]]; then
+    npm install --global commitizen
+  fi
+  git-cz
+}
+
