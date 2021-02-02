@@ -1,3 +1,7 @@
+function tmux-connect {
+    TERM=xterm-256color ssh -p ${3:-22} $1@$2 -t "tmux new-session -s $1 || tmux attach-session -t $1"
+}
+
 print-colors() {
   local X=$(tput op)
   local Y=$(printf %$((COLUMNS-6))s)
