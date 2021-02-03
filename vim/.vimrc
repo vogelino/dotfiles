@@ -1,5 +1,6 @@
 " —— General setting —————————————————————————————————————————————————————————
 inoremap <silent> <Esc> <Esc>`^
+set hidden
 set nocompatible
 set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME
 syntax on
@@ -37,8 +38,7 @@ set shiftwidth=4
 " -- Yank into the regular clipboard
 set clipboard=unnamed
 
-" —— Tab simulation
-set hidden
+" —— VIm tabs
 nmap <leader>T :enew<cr>
 nmap <leader>l :bnext<CR>
 nmap <leader>h :bprevious<CR>
@@ -165,11 +165,36 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown wrap spell!
 " -- FZF
 set rtp+=user/local/opt/fzf
 nnoremap <expr> <C-p> (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
-
-" Cntrl-P with FZF
+nnoremap <C-g> :Ag<Cr>
 let g:fzf_preview_window = ['right:50%', 'ctrl-p']
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+if has('nvim') && !exists('g:fzf_layout')
+  autocmd! FileType fzf
+  autocmd  FileType fzf set laststatus=0 noshowmode noruler
+    \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+endif
 
-" -- Vim Closetag
+" -- ack.vim
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+	" -- Vim Closetag
 " filenames like *.xml, *.html, *.xhtml, ...
 " These are the file extensions where this plugin is enabled.
 "

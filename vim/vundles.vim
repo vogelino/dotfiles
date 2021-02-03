@@ -49,6 +49,7 @@ Plugin 'Raimondi/delimitMate'						" Auto add ending quotes/brackets/ets
 Plugin 'alvan/vim-closetag'							" Auto close the tags
 Plugin 'tComment'									" Helps commenting in and out
 Plugin 'Galooshi/vim-import-js'						" Auto import javascript files
+Plugin 'mileszs/ack.vim'							" Search within files
 
 " Fuzzy Search
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -61,6 +62,7 @@ Plugin 'iamcco/coc-tailwindcss',  {'do': 'yarn install --frozen-lockfile && yarn
 " NERDTree
 Plugin 'scrooloose/nerdtree'						" File structure tree/explorer
 Plugin 'jistr/vim-nerdtree-tabs'					" Enables NERDTree in all tabs
+Plugin 'vim-ctrlspace/vim-ctrlspace'				" Manages buffers
 Plugin 'Xuyuanp/nerdtree-git-plugin'				" Add Git status to the nerd tree
 
 " Git
