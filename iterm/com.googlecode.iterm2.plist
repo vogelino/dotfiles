@@ -36474,7 +36474,7 @@
 			<key>Guid</key>
 			<string>704A80E5-B072-4ECC-A290-93B894475D03</string>
 			<key>Horizontal Spacing</key>
-			<real>0.90000000000000002</real>
+			<real>0.88</real>
 			<key>Idle Code</key>
 			<integer>0</integer>
 			<key>Jobs to Ignore</key>
