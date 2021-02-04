@@ -27,7 +27,7 @@ fi
 
 # Finally we can source the dotfiles (order matters)
 
-for DOTFILE in "$DOTFILES_DIR"/system/.{env,fzf,function,function_*,path,alias,alias.custom,powerlevel10k,nvm,custom,keybindings}; do
+for DOTFILE in "$DOTFILES_DIR"/system/.{env,fzf,function,function_*,path,alias,alias.custom,powerlevel10k,yvm,nvm,custom,keybindings}; do
   [ -f "$DOTFILE" ] && . "$DOTFILE"
 done
 
@@ -63,3 +63,4 @@ export PATH=/Users/lucasvogel/.local/bin:$PATH
 export PATH=/user/local/bin:$PATH
 export LANG=en_US
 test -e /Users/lucasvogel/.iterm2_shell_integration.zsh && source /Users/lucasvogel/.iterm2_shell_integration.zsh || true
+
