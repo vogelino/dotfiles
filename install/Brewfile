@@ -4,7 +4,7 @@ tap "homebrew/core"
 tap "sachaos/todoist"
 
 brew "neovim"
-brew "yarn"
+brew "tophat/bar/yvm"
 brew "zsh"
 brew "fzf"
 brew "watchman"
