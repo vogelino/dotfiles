@@ -1,8 +1,12 @@
 # Prepend new items to path (if directory exists)
+prepend-path() {
+  [ -d $1 ] && PATH="$1:$PATH"
+}
 
 prepend-path "/bin"
 prepend-path "/usr/bin"
 prepend-path "/usr/local/bin"
+prepend-path "/opt/homebrew/bin"
 prepend-path "/usr/local/opt/coreutils/libexec/gnubin"
 prepend-path "/usr/local/opt/gnu-sed/libexec/gnubin"
 prepend-path "/usr/local/opt/grep/libexec/gnubin"
@@ -14,7 +18,7 @@ prepend-path "$HOME/bin"
 prepend-path "/sbin"
 prepend-path "/usr/sbin"
 prepend-path "/usr/local/sbin"
-prepend-path "/Users/lucasvogel/.deno/bin"
+prepend-path "$HOME/.deno/bin"
 
 # Remove duplicates (preserving prepended items)
 # Source: http://unix.stackexchange.com/a/40755

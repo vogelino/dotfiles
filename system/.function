@@ -21,10 +21,6 @@ meteo() {
   curl -s "$LOCALE.wttr.in/$LOCATION"
 }
 
-prepend-path() {
-  [ -d $1 ] && PATH="$1:$PATH"
-}
-
 command-exists() {
     local exists=$(command -v "$1")
     # command does not exist
