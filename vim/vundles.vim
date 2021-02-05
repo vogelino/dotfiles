@@ -7,7 +7,7 @@ call vundle#begin("$HOME/.vim/bundle")
 Plugin 'VundleVim/Vundle.vim'
 
 " Colorscheme
-Plugin 'kristijanhusak/vim-hybrid-material'			" Colorscheme
+Plugin 'sonph/onehalf', { 'rtp': 'vim' }			" Colorscheme
 
 " Status bar enhancement
 Plugin 'vim-airline/vim-airline'					" Shows additional informations in the status bar

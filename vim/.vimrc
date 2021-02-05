@@ -122,11 +122,16 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme='hybrid'
 
 " –— Colorscheme 
-set background=dark
-colorscheme hybrid_material
-let g:enable_bold_font = 1
-let g:enable_italic_font = 1
-let g:hybrid_transparent_background = 1
+set t_Co=256
+set cursorline
+colorscheme onehalfdark
+let g:airline_theme='onehalfdark'
+" let g:lightline = { 'colorscheme': 'onehalfdark' }
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
 
 " —— syntastic
 set statusline+=%#warningmsg#
