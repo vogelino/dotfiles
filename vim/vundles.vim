@@ -9,6 +9,9 @@ Plugin 'VundleVim/Vundle.vim'
 " Colorscheme
 Plugin 'sonph/onehalf', { 'rtp': 'vim' }			" Colorscheme
 
+" Color utils
+Plugin 'chrisbra/Colorizer'							" Color hex codes and color names
+
 " Status bar enhancement
 Plugin 'vim-airline/vim-airline'					" Shows additional informations in the status bar
 Plugin 'vim-airline/vim-airline-themes'				" Use specific themes for the enhanced status bar
