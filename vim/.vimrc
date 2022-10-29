@@ -115,6 +115,7 @@ let g:UltiSnipsEditSplit="vertical"
 
 " —— vim-jsx
 let g:jsx_ext_required = 0
+let g:vim_jsx_pretty_colorful_config = 1
 
 " —— airline
 let g:airline#extensions#tabline#enabled = 1
