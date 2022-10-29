@@ -1,8 +1,8 @@
 # Npm aliases
 alias ni='npm install'
-alias nis='npm install --save'
-alias nid='npm install --save-dev'
-alias nig='npm install --global'
+alias nis='npm install --save --save-exact'
+alias nid='npm install --save-dev --save-exact'
+alias nig='npm install --global --save-exact'
 alias nui='npm uninstall'
 alias nuis='npm uninstall --save'
 alias nuid='npm uninstall --save-dev'
