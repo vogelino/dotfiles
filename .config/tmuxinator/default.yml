@@ -1,5 +1,5 @@
 name: default
-root: ~/
+root: ~/repos/
 
 # Optional tmux socket
 # socket_name: foo
