@@ -24,7 +24,7 @@ alias x='exit'
 alias cat='bat'
 
 # CD paths
-alias Sites="cd ~/Sites"
+alias repos="cd ~/repos"
 
 # Apps
 alias c="code -n ." # Visual studio code
