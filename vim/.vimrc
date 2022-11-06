@@ -23,10 +23,11 @@ set backspace=indent,eol,start
 set showmode
 set noswapfile
 set nobackup
+set nowritebackup
+set updatetime=300
 set nowb
+set signcolumn=yes
 
-" —— CoC extensions
-let g:coc_global_extensions = ['coc-tsserver', 'coc-tailwindcss']
 
 " —— Fatser redrawing
 set ttyfast
@@ -44,11 +45,6 @@ nmap <leader>l :bnext<CR>
 nmap <leader>h :bprevious<CR>
 nmap <leader>w :bp <BAR> bd #<CR>
 nmap <leader>bl :ls<CR>
-
-" —— Load plugins ———————————————————————————————————————————————————————————
-if filereadable(expand("$DOTFILES_DIR/vim/vundles.vim"))
-  source $DOTFILES_DIR/vim/vundles.vim
-endif
 
 " —— Ignores ————————————————————————————————————————————————————————————————
 set wildmode=list:longest
@@ -103,9 +99,9 @@ imap <C-c> <CR><Esc>O
 map <leader>m <c-_><c-_>
 
 " —— UtilSnips
-let g:UltiSnipsExpandTrigger="<tab>"                                            
-let g:UltiSnipsJumpForwardTrigger="<tab>"                                       
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsExpandTrigger="<nop>"
+let g:UltiSnipsJumpForwardTrigger="<nop>"                                       
+let g:UltiSnipsJumpBackwardTrigger="<nop>"
 let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/my-snippets/Ultisnips', $DOTFILES_DIR.'/vim/UltiSnips/', 'UltiSnips']
 
 let g:UltiSnipsEditSplit="vertical"
@@ -121,39 +117,6 @@ let g:vim_jsx_pretty_colorful_config = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme='hybrid'
-
-" –— Colorscheme 
-set t_Co=256
-set cursorline
-colorscheme onehalfdark
-let g:airline_theme='onehalfdark'
-" let g:lightline = { 'colorscheme': 'onehalfdark' }
-if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
-
-" —— syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_loc_list_height = 5
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_error_symbol = '⊗'
-let g:syntastic_style_error_symbol = '⊛'
-let g:syntastic_warning_symbol = '⦾'
-let g:syntastic_style_warning_symbol = '⦿'
-
-highlight link SyntasticErrorSign SignColumn
-highlight link SyntasticWarningSign SignColumn
-highlight link SyntasticStyleErrorSign SignColumn
-highlight link SyntasticStyleWarningSign SignColumn
 
 " —— NERDTree
 nmap <leader>tt :NERDTreeToggle<cr>
@@ -200,45 +163,37 @@ if executable('ag')
 endif
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
-	" -- Vim Closetag
-" filenames like *.xml, *.html, *.xhtml, ...
-" These are the file extensions where this plugin is enabled.
-"
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.tsx,*.js,*.jsx'
+" —— Load closetag config ———————————————————————————————————————————————————————————
+if filereadable(expand("$DOTFILES_DIR/vim/colsetag.vim"))
+  source $DOTFILES_DIR/vim/colsetag.vim
+endif
 
-" filenames like *.xml, *.xhtml, ...
-" This will make the list of non-closing tags self-closing in the specified files.
-"
-let g:closetag_xhtml_filenames = '*.xhtml,*.jsx,*.tsx,*.js,*.jsx'
+" —— Load COC config ———————————————————————————————————————————————————————————
+if filereadable(expand("$DOTFILES_DIR/vim/coc.vim"))
+  source $DOTFILES_DIR/vim/coc.vim
+endif
 
-" filetypes like xml, html, xhtml, ...
-" These are the file types where this plugin is enabled.
+" —— Load plugins ———————————————————————————————————————————————————————————
+if filereadable(expand("$DOTFILES_DIR/vim/vundles.vim"))
+  source $DOTFILES_DIR/vim/vundles.vim
+endif
 "
-let g:closetag_filetypes = 'html,xhtml,phtml,*.tsx,*.js,*.jsx'
+" –— Colorscheme 
+set t_Co=256
+set cursorline
+colorscheme sonokai
+let g:airline_theme='sonokai'
+let g:lightline = { 'colorscheme': 'sonokai' }
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
 
-" filetypes like xml, xhtml, ...
-" This will make the list of non-closing tags self-closing in the specified files.
-"
-let g:closetag_xhtml_filetypes = 'xhtml,jsx,*.tsx,*.js,*.jsx'
-
-" integer value [0|1]
-" This will make the list of non-closing tags case-sensitive (e.g. `<Link>` will be closed while `<link>` won't.)
-"
-let g:closetag_emptyTags_caseSensitive = 1
-
-" dict
-" Disables auto-close if not in a "valid" region (based on filetype)
-"
-let g:closetag_regions = {
-    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
-    \ 'javascript.jsx': 'jsxRegion',
-    \ }
-
-" Shortcut for closing tags, default is '>'
-"
-let g:closetag_shortcut = '>'
-
-" Add > at current position without closing the current tag, default is ''
-"
-let g:closetag_close_shortcut = '<leader>>'
+" Load all plugins now.
+" Plugins need to be added to runtimepath before helptags can be generated.
+packloadall
+" Load all of the helptags now, after plugins have been loaded.
+" All messages and errors will be ignored.
+silent! helptags ALL
 

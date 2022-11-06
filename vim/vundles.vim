@@ -7,7 +7,8 @@ call vundle#begin("$HOME/.vim/bundle")
 Plugin 'VundleVim/Vundle.vim'
 
 " Colorscheme
-Plugin 'sonph/onehalf', { 'rtp': 'vim' }			" Colorscheme
+" Plugin 'joshdick/onedark.vim' 						" OneDark Colorscheme
+Plugin 'sainnhe/sonokai' 						" Sonokai Colorscheme
 
 " Color utils
 Plugin 'chrisbra/Colorizer'							" Color hex codes and color names
@@ -17,21 +18,18 @@ Plugin 'vim-airline/vim-airline'					" Shows additional informations in the stat
 Plugin 'vim-airline/vim-airline-themes'				" Use specific themes for the enhanced status bar
 
 " Syntax highlighting
-Plugin 'scrooloose/syntastic'						" Main syntax highlighting plugin
-Plugin 'mtscout6/syntastic-local-eslint.vim'		" Enables use of local eslint
-" Plugin 'othree/yajs.vim'							" Enhances javascript syntax
+Plugin 'dense-analysis/ale' 						" Syntax highlighting
+Plugin 'othree/yajs.vim'							" Enhances javascript syntax
 Plugin 'chemzqm/vim-jsx-improve'					" Additional javascript highlighting
-" Plugin 'othree/es.next.syntax.vim'					" es2015 highlighting
 Plugin 'elzr/vim-json'								" JSON highlighting
 Plugin 'othree/javascript-libraries-syntax.vim'		" Special highligh of known libraries
-Plugin 'wavded/vim-stylus'							" Syntax highlighting for stylus
 Plugin 'pangloss/vim-javascript'					" Syntax highlighting for javascript
 Plugin 'leafgarland/typescript-vim'					" Syntax highlighting for typescript
 Plugin 'maxmellon/vim-jsx-pretty'					" Syntax highlighting for jsx
-Plugin 'jparise/vim-graphql'						" Syntax highlighting for graphql
+Plugin 'rajasegar/vim-astro'						" Syntax highlighting for astro
 
 " Formatting
-Plugin 'prettier/vim-prettier'						" Automatically format code based on rules
+" Plugin 'prettier/vim-prettier'						" Automatically format code based on rules
 
 " Snippets
 Plugin 'SirVer/ultisnips'							" Main snippets plugin
@@ -41,13 +39,14 @@ Plugin 'epilande/vim-react-snippets'				" React
 Plugin 'rstacruz/vim-hyperstyle'					" Autocomplition for CSS
 Plugin 'joaohkfaria/vim-jest-snippets'				" Snippets for styled components
 Plugin 'cristianoliveira/vim-react-html-snippets'	" html plugins for react
+Plugin 'adriaanzon/vim-emmet-ultisnips'				" emmet plugin for ultispins
 
 " Utilities
 Plugin 'tpope/vim-sensible'							" Universal set of default for vim
 Plugin 'tpope/vim-surround'							" Easier replacement of surrounding brackets and braces
 Plugin 'PeterRincker/vim-argumentative'				" Allows changing the order of function arguments
 Plugin 'easymotion/vim-easymotion'					" Easy and powerful motions for VIM
-Plugin 'tomtom/tlib_vim'							" Some utility functions for VIM
+" Plugin 'tomtom/tlib_vim'							" Some utility functions for VIM
 Plugin 'Raimondi/delimitMate'						" Auto add ending quotes/brackets/ets
 Plugin 'alvan/vim-closetag'							" Auto close the tags
 Plugin 'tComment'									" Helps commenting in and out
@@ -59,7 +58,7 @@ Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plugin 'junegunn/fzf.vim'
 
 " Intellisense
-Plugin 'neoclide/coc.nvim', {'branch': 'release'}	" Suggestions
+Plugin 'neoclide/coc.nvim', { 'branch': 'release' }	" Suggestions
 Plugin 'iamcco/coc-tailwindcss',  {'do': 'yarn install --frozen-lockfile && yarn run build'}
 
 " NERDTree
