@@ -5,8 +5,8 @@ set nocompatible
 set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME
 syntax on
 set encoding=utf8
-let mapleader=","
-let g:mapleader = ","
+let mapleader=" "
+let g:mapleader = " "      
 set number
 set so=7
 set cmdheight=2
@@ -19,28 +19,33 @@ set tm=500
 set nowrap
 set linebreak
 set relativenumber
+set nohlsearch
 set backspace=indent,eol,start
 set showmode
 set noswapfile
 set nobackup
-set nowritebackup
+set undodir=~/.vim/undodir
+set undofile
 set updatetime=300
 set nowb
 set signcolumn=yes
-
+set smartcase
+set colorcolumn=80  
 
 " —— Fatser redrawing
 set ttyfast
 
 " —— Setup indentation
-set tabstop=4
-set shiftwidth=4
+set tabstop=2 softtabstop=2
+set shiftwidth=2
+set expandtab
+set smartindent
 
 " -- Yank into the regular clipboard
 set clipboard=unnamed
 
 " —— VIm tabs
-nmap <leader>T :enew<cr>
+nmap <leader>t :enew<cr>
 nmap <leader>l :bnext<CR>
 nmap <leader>h :bprevious<CR>
 nmap <leader>w :bp <BAR> bd #<CR>
@@ -67,6 +72,7 @@ set wildignore+=*/.git/*
 set wildignore+=*/.next/*
 set wildignore+=*/.tmp/*
 set incsearch
+set scrolloff=8
 set hlsearch
 set ignorecase
 
@@ -174,8 +180,8 @@ if filereadable(expand("$DOTFILES_DIR/vim/coc.vim"))
 endif
 
 " —— Load plugins ———————————————————————————————————————————————————————————
-if filereadable(expand("$DOTFILES_DIR/vim/vundles.vim"))
-  source $DOTFILES_DIR/vim/vundles.vim
+if filereadable(expand("$DOTFILES_DIR/vim/plugins.vim"))
+  source $DOTFILES_DIR/vim/plugins.vim
 endif
 "
 " –— Colorscheme 
