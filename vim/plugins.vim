@@ -7,8 +7,7 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " Colorscheme
-" Plug 'joshdick/onedark.vim' 						      " OneDark Colorscheme
-Plug 'sainnhe/sonokai' 						              " Sonokai Colorscheme
+Plug 'gruvbox-community/gruvbox'   						    " Colorscheme
 
 " Color utils
 Plug 'chrisbra/Colorizer'					    		      " Color hex codes and color names
@@ -27,9 +26,11 @@ Plug 'pangloss/vim-javascript'					        " Syntax highlighting for javascript
 Plug 'leafgarland/typescript-vim'					      " Syntax highlighting for typescript
 Plug 'maxmellon/vim-jsx-pretty'	        				" Syntax highlighting for jsx
 Plug 'rajasegar/vim-astro'						          " Syntax highlighting for astro
+Plug 'styled-components/vim-styled-components'  " Syntax highlighting for styles-components
+
 
 " Formatting
-" Plug 'prettier/vim-prettier'						      " Automatically format code based on rules
+Plug 'prettier/vim-prettier'						        " Automatically format code based on rules
 
 " Snippets
 Plug 'SirVer/ultisnips'							            " Main snippets Plug

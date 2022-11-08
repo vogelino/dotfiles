@@ -1,12 +1,10 @@
-" —— General setting —————————————————————————————————————————————————————————
+" —— General setting ——————————————————————————————————————————————————————————
 inoremap <silent> <Esc> <Esc>`^
 set hidden
 set nocompatible
 set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME
 syntax on
 set encoding=utf8
-let mapleader=" "
-let g:mapleader = " "      
 set number
 set so=7
 set cmdheight=2
@@ -30,7 +28,7 @@ set updatetime=300
 set nowb
 set signcolumn=yes
 set smartcase
-set colorcolumn=80  
+set colorcolumn=80
 
 " —— Fatser redrawing
 set ttyfast
@@ -41,8 +39,9 @@ set shiftwidth=2
 set expandtab
 set smartindent
 
-" -- Yank into the regular clipboard
-set clipboard=unnamed
+" —— Leader
+let mapleader=" "
+let g:mapleader = " "
 
 " —— VIm tabs
 nmap <leader>t :enew<cr>
@@ -51,7 +50,7 @@ nmap <leader>h :bprevious<CR>
 nmap <leader>w :bp <BAR> bd #<CR>
 nmap <leader>bl :ls<CR>
 
-" —— Ignores ————————————————————————————————————————————————————————————————
+" —— Ignores ——————————————————————————————————————————————————————————————————
 set wildmode=list:longest
 set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
 set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
@@ -76,19 +75,37 @@ set scrolloff=8
 set hlsearch
 set ignorecase
 
-" —— Delete trailing white space on save ————————————————————————————————————
+" —— Delete trailing white space on save ——————————————————————————————————————
 func! DeleteTrailingWS()
   exe "normal mz"
   %s/\s\+$//ge
   exe "normal `z"
 endfunc
-autocmd BufWrite *.py :call DeleteTrailingWS()
-autocmd BufWrite *.coffee :call DeleteTrailingWS()
+autocmd BufWrite * :call DeleteTrailingWS()
 
-" —— Spell checking —————————————————————————————————————————————————————————
+" —— Spell checking ———————————————————————————————————————————————————————————
 map <leader>ss :setlocal spell!<cr>
 
-" —— Pluginsettings —————————————————————————————————————————————————————————
+" —— Load closetag config —————————————————————————————————————————————————————
+if filereadable(expand("$DOTFILES_DIR/vim/colsetag.vim"))
+  source $DOTFILES_DIR/vim/colsetag.vim
+endif
+
+" —— Load COC config ——————————————————————————————————————————————————————————
+if filereadable(expand("$DOTFILES_DIR/vim/coc.vim"))
+  source $DOTFILES_DIR/vim/coc.vim
+endif
+
+" —— Load plugins —————————————————————————————————————————————————————————————
+if filereadable(expand("$DOTFILES_DIR/vim/plugins.vim"))
+  source $DOTFILES_DIR/vim/plugins.vim
+endif
+
+" —— Make sure syntax highlighting works well on large t/js(x) files ——————————
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+
+" —— Pluginsettings ———————————————————————————————————————————————————————————
 " —— Prettier
 let g:prettier#autoformat = 1
 let g:prettier#config#use_tabs = 'true'
@@ -98,22 +115,29 @@ let g:prettier#config#trailing_comma = 'all'
 let g:prettier#config#bracket_spacing = 'true'
 let g:prettier#config#jsx_bracket_same_line = 'false'
 
+" —— ALE
+let g:ale_fix_on_save = 1
+
 " —— delimitMate
 imap <C-c> <CR><Esc>O
 
-" —— tComment ———————————————————————————————————————————————————————————————
+" —— tComment
 map <leader>m <c-_><c-_>
 
 " —— UtilSnips
 let g:UltiSnipsExpandTrigger="<nop>"
-let g:UltiSnipsJumpForwardTrigger="<nop>"                                       
+let g:UltiSnipsJumpForwardTrigger="<nop>"
 let g:UltiSnipsJumpBackwardTrigger="<nop>"
-let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/my-snippets/Ultisnips', $DOTFILES_DIR.'/vim/UltiSnips/', 'UltiSnips']
+let g:UltiSnipsSnippetDirectories = [
+\  $HOME.'/.vim/my-snippets/Ultisnips',
+\  $DOTFILES_DIR.'/vim/UltiSnips/',
+\  'UltiSnips'
+\ ]
 
 let g:UltiSnipsEditSplit="vertical"
 
-	" + Hyperstyle
-	let g:hyperstyle_use_colon=0
+" —— Hyperstyle
+let g:hyperstyle_use_colon=0
 
 " —— vim-jsx
 let g:jsx_ext_required = 0
@@ -141,7 +165,7 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown wrap spell!
 set rtp+=user/local/opt/fzf
 nnoremap <expr> <C-p> (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
 nnoremap <C-g> :Ag<Cr>
-let g:fzf_preview_window = ['right:50%', 'ctrl-p']
+let g:fzf_preview_window = ['right:52%', 'ctrl-p']
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
@@ -169,36 +193,25 @@ if executable('ag')
 endif
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
-" —— Load closetag config ———————————————————————————————————————————————————————————
-if filereadable(expand("$DOTFILES_DIR/vim/colsetag.vim"))
-  source $DOTFILES_DIR/vim/colsetag.vim
-endif
 
-" —— Load COC config ———————————————————————————————————————————————————————————
-if filereadable(expand("$DOTFILES_DIR/vim/coc.vim"))
-  source $DOTFILES_DIR/vim/coc.vim
-endif
-
-" —— Load plugins ———————————————————————————————————————————————————————————
-if filereadable(expand("$DOTFILES_DIR/vim/plugins.vim"))
-  source $DOTFILES_DIR/vim/plugins.vim
-endif
-"
-" –— Colorscheme 
+" –— Colorscheme ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 set t_Co=256
 set cursorline
-colorscheme sonokai
-let g:airline_theme='sonokai'
-let g:lightline = { 'colorscheme': 'sonokai' }
+colorscheme gruvbox
+let g:airline_theme='gruvbox'
+let g:lightline = { 'colorscheme': 'gruvbox' }
 if exists('+termguicolors')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
 
+" –– Plugins runtimepath ––––––––––––––––––––––––––––––––––––––––––––––––––––––
 " Load all plugins now.
 " Plugins need to be added to runtimepath before helptags can be generated.
 packloadall
+
+" –– Helptags –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 " Load all of the helptags now, after plugins have been loaded.
 " All messages and errors will be ignored.
 silent! helptags ALL
