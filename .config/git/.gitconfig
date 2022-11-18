@@ -4,8 +4,9 @@
 	signingkey = 0D4B07B3208AFAB9
 
 [core]
-	excludesfile = /Users/lucasvogel/.gitignore_global
+	# excludesfile = /Users/lucasvogel/.gitignore_global
 	autocrlf = input
+  editor = nvim
 
 [filter "media"]
 	required = true
@@ -32,7 +33,7 @@
 
 [commit]
 	gpgsign = true
-	template = /Users/lucasvogel/.stCommitMsg
+	# template = /Users/lucasvogel/.stCommitMsg
 
 [gpg]
 	program = gpg2
