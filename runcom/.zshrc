@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If not running interactively, don't do anything
 
 [ -z "$PS1" ] && return
@@ -6,6 +13,8 @@
 
 if [ "$(uname -s)" = "Darwin" ]; then
   OS="MacOS"
+elif [ "$(uname -s)" = "Linux" ]; then
+  OS="Linux"
 else
   OS=$(uname -s)
 fi
@@ -52,7 +61,11 @@ export TERM="xterm-256color"
 export OS DOTFILES_DIR 
 
 # OH-MY-ZSH init
-source $ZSH/oh-my-zsh.sh
+if [ "$OS" = "MacOS" ]; then
+  source $ZSH/oh-my-zsh.sh
+elif [ "$OS" = "Linux" ]; then
+  source $HOME/.oh-my-zsh/oh-my-zsh.sh
+fi
 
 test -e /Users/lucasvogel/.iterm2_shell_integration.zsh && source /Users/lucasvogel/.iterm2_shell_integration.zsh || true
 
@@ -65,3 +78,6 @@ eval "$(rbenv init - zsh)"
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
