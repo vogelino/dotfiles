@@ -4,8 +4,9 @@
 	signingkey = 9B1D528A9C606C0B
 
 [core]
-	excludesfile = /Users/lucasvogel/.gitignore_global
+	# excludesfile = /Users/lucasvogel/.gitignore_global
 	autocrlf = input
+  editor = nvim
 
 [filter "media"]
 	required = true
@@ -32,7 +33,7 @@
 
 [commit]
 	gpgsign = true
-	template = /Users/lucasvogel/.stCommitMsg
+	# template = /Users/lucasvogel/.stCommitMsg
 
 [gpg]
 	program = gpg2
@@ -43,7 +44,7 @@
 	defaultBranch = main
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
