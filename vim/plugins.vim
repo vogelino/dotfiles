@@ -6,13 +6,16 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
+" –– Learn Vim ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+Plug 'ThePrimeagen/vim-be-good'
+
 " –– Colorscheme ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 Plug 'gruvbox-community/gruvbox'   						    " Colorscheme
 
 " –– Color utils ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 Plug 'chrisbra/Colorizer'					    		      " Color hex codes and color names
 
-" Status bar enhancement
+" –– Status bar enhancement –––––––––––––––––––––––––––––––––––––––––––––––––––
 Plug 'vim-airline/vim-airline'				  	      " Shows additional informations in the status bar
 Plug 'vim-airline/vim-airline-themes'		        " Use specific themes for the enhanced status bar
 
@@ -51,6 +54,7 @@ Plug 'alvan/vim-closetag'							          " Auto close the tags
 Plug 'tomtom/tcomment_vim'			                " Helps commenting in and out
 Plug 'Galooshi/vim-import-js'						        " Auto import javascript files
 Plug 'mileszs/ack.vim'			            				" Search within files
+Plug 'easymotion/vim-easymotion'                " Easily find matching vim movements
 
 " –– Fuzzy Search –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }

@@ -37071,26 +37071,26 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.73299998044967651</real>
+				<real>0.7807578444480896</real>
 				<key>Color Space</key>
-				<string>Calibrated</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.73299998044967651</real>
+				<real>0.61645987947031244</real>
 				<key>Red Component</key>
-				<real>0.73299998044967651</real>
+				<real>0.7807578444480896</real>
 			</dict>
 			<key>Cursor Guide Color</key>
 			<dict>
 				<key>Alpha Component</key>
-				<real>0.25</real>
+				<real>0.103790283203125</real>
 				<key>Blue Component</key>
 				<real>1</real>
 				<key>Color Space</key>
-				<string>Calibrated</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.9100000262260437</real>
+				<real>0.9753003283367857</real>
 				<key>Red Component</key>
-				<real>0.64999997615814209</real>
+				<real>0.89947509765625</real>
 			</dict>
 			<key>Cursor Text Color</key>
 			<dict>
@@ -37677,7 +37677,7 @@
 			<key>Silence Bell</key>
 			<false/>
 			<key>Smart Cursor Color</key>
-			<false/>
+			<true/>
 			<key>Status Bar Layout</key>
 			<dict>
 				<key>advanced configuration</key>
