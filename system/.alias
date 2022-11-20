@@ -15,7 +15,7 @@ alias nr='npm run'
 alias nf='npm cache clean && rm -rf node_modules && npm install'
 
 # System aliases
-alias las="nerd-ls -aliT"
+alias las="ls -al"
 alias e='nvim -u $MYVIMRC'
 alias x='exit'
 
@@ -27,6 +27,13 @@ alias repos="cd ~/repos"
 
 # Apps
 alias c="code -n ." # Visual studio code
-# alias vim='nvim -u $MYVIMRC' 
+# alias vim='nvim -u $MYVIMRC'
 alias sourcetree='open -a SourceTree'
 alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --kiosk'
+
+# ProtonVPN
+alias pt="protonvpn-cli"
+alias ptc="protonvpn-cli c --fastest"
+alias ptd="protonvpn-cli d"
+alias pts="protonvpn-cli status"
+
