@@ -58,7 +58,7 @@ unset READLINK CURRENT_SCRIPT SCRIPT_PATH DOTFILE
 # Export
 export EDITOR='nvim'
 export TERM="xterm-256color"
-export OS DOTFILES_DIR 
+export OS DOTFILES_DIR
 
 # OH-MY-ZSH init
 if [ "$OS" = "MacOS" ]; then

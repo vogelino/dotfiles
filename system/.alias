@@ -40,3 +40,7 @@ alias ptc="protonvpn-cli c --fastest"
 alias ptd="protonvpn-cli d"
 alias pts="protonvpn-cli status"
 
+# list processes running on specific port (takes port as additional arg)
+# eg. pp 3000
+alias pp="lsof -nP -iTCP -sTCP:LISTEN | grep "
+

@@ -1,7 +1,7 @@
 [user]
 	email = contact@vogelino.com
 	name = Lucas Vogel
-	signingkey = 9B1D528A9C606C0B
+	signingkey = 0D4B07B3208AFAB9
 
 [core]
 	# excludesfile = /Users/lucasvogel/.gitignore_global
