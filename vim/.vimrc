@@ -1,5 +1,4 @@
 " —— General setting ——————————————————————————————————————————————————————————
-inoremap <silent> <Esc> <Esc>`^
 set hidden
 set nocompatible
 set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME
@@ -38,6 +37,13 @@ set tabstop=2 softtabstop=2
 set shiftwidth=2
 set expandtab
 set smartindent
+
+" —— Remaps
+noremap <silent> <C-s> :update<CR>
+vnoremap <silent> <C-s> <C-C>:update<CR>
+inoremap <silent> <C-s> <C-O>:update<CR>
+inoremap <silent> <Esc> <Esc>`^
+nnoremap <silent> <Esc> :nohl<CR>
 
 " —— Leader
 let mapleader=" "
@@ -150,6 +156,7 @@ let g:airline_theme='hybrid'
 
 " —— NERDTree
 nmap <leader>tt :NERDTreeToggle<cr>
+nmap <leader>ff :NERDTreeFind<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let NERDTreeShowHidden=1
 let NERDTreeRespectWildIgnore=0
@@ -164,7 +171,16 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown wrap spell!
 " -- FZF
 set rtp+=user/local/opt/fzf
 nnoremap <expr> <C-p> (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
-nnoremap <C-g> :Ag<Cr>
+nnoremap <silent> <Leader>b :Buffers<CR>
+nnoremap <silent> <Leader>F:Files<CR>
+nnoremap <silent> <Leader>f :Ag<CR>
+nnoremap <silent> <Leader>/ :BLines<CR>
+nnoremap <silent> <Leader>' :Marks<CR>
+nnoremap <silent> <Leader>g :Commits<CR>
+nnoremap <silent> <Leader>H :Helptags<CR>
+nnoremap <silent> <Leader>hh :History<CR>
+nnoremap <silent> <Leader>h: :History:<CR>
+nnoremap <silent> <Leader>h/ :History/<CR>
 let g:fzf_preview_window = ['right:52%', 'ctrl-p']
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
