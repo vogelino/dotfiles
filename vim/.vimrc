@@ -209,7 +209,6 @@ if executable('ag')
 endif
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
-
 " –— Colorscheme ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 set t_Co=256
 set cursorline

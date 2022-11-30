@@ -54,7 +54,6 @@ Plug 'alvan/vim-closetag'							          " Auto close the tags
 Plug 'tomtom/tcomment_vim'			                " Helps commenting in and out
 Plug 'Galooshi/vim-import-js'						        " Auto import javascript files
 Plug 'mileszs/ack.vim'			            				" Search within files
-Plug 'easymotion/vim-easymotion'                " Easily find matching vim movements
 
 " –– Fuzzy Search –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
