@@ -1,0 +1,14 @@
+# /Users/lucasvogel/.config/tmuxinator/baumblick-qtrees.yml
+
+name: Baumblick (Qtrees)
+root: ~/repos/baumblick-frontend
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - e .
+        - clear
+  - scripts:
+      panes:
+        - npm run dev

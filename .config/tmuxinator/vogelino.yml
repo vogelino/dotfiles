@@ -1,0 +1,11 @@
+# /Users/lucasvogel/.config/tmuxinator/vogelino.yml
+
+name: vogelino
+root: ~/repos/vogelino2022
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - npm run dev
+        - code .

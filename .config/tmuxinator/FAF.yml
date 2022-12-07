@@ -1,5 +1,7 @@
-name: default
-root: ~/repos/
+# /Users/lucasvogel/.config/tmuxinator/FAF.yml
+
+name: FAF
+root: ~/repos/fast-assembled-furniture
 
 # Optional tmux socket
 # socket_name: foo
@@ -8,22 +10,24 @@ root: ~/repos/
 # project hooks.
 
 # Project hooks
+
 # Runs on project start, always
 # on_project_start: command
+
 # Run on project start, the first time
 # on_project_first_start: command
+
 # Run on project start, after the first time
 # on_project_restart: command
+
 # Run on project exit ( detaching from tmux session )
 # on_project_exit: command
+
 # Run on project stop
 # on_project_stop: command
 
 # Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
 # pre_window: rbenv shell 2.0.0-p247
-
-# tmuxinator won't use my tmux conf upon session start
-pre_window: tmux source ~/.tmux.conf
 
 # Pass command line options to tmux. Useful for specifying a different tmux.conf.
 # tmux_options: -f ~/.tmux.mac.conf
@@ -41,12 +45,15 @@ pre_window: tmux source ~/.tmux.conf
 # attach: false
 
 windows:
-  - Editor:
+  - editor:
       panes:
         - e .
-  - Scripts:
-      layout: even-horizontal
+  - scripts:
+      panes:
+        - npm run dev
+        - npm run test:watch
+  - playground:
       panes:
         - clear
-        - clear
+
 

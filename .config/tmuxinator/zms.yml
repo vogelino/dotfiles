@@ -1,0 +1,13 @@
+# /Users/lucasvogel/.config/tmuxinator/zms.yml
+
+name: zms
+root: ~/repos/zms-frontend
+
+windows:
+  - editor:
+      - e .
+  - scripts:
+      layout: main-vertical
+      panes:
+        - npm run dev
+        - clear

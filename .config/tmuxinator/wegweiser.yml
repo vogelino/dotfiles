@@ -1,0 +1,14 @@
+# /Users/lucasvogel/.config/tmuxinator/wegweiser.yml
+
+name: wegweiser
+root: ~/repos/wegweiser-frontend
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - e .
+        - clear
+  - scripts:
+      panes:
+        - npm run dev

@@ -1,0 +1,16 @@
+# /Users/lucasvogel/.config/tmuxinator/GiessDenKiez.yml
+
+name: GiessDenKiez
+root: ~/repos/giessdenkiez-de
+
+windows:
+  - editor:
+      panes:
+        - e .
+  - scripts:
+      panes:
+        - npm run dev
+        - npm run test:watch
+  - playground:
+      panes:
+        - clear

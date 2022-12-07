@@ -1,0 +1,11 @@
+# /Users/lucasvogel/.config/tmuxinator/p5js-playground.yml
+
+name: p5js-playground
+root: ~/repos/p5js-playground
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - e .
+        - npm run dev

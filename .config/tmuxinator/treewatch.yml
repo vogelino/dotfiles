@@ -1,0 +1,13 @@
+# /Users/lucasvogel/.config/tmuxinator/treewatch.yml
+
+name: qtrees
+root: ~/repos/treewatch-frontend
+
+windows:
+  - editor:
+      layout: tiled
+      panes:
+        - npm run dev
+        - npm run test:watch
+        - npm run storybook
+        - code .

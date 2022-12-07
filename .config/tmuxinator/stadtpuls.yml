@@ -1,0 +1,18 @@
+# /Users/lucasvogel/.config/tmuxinator/stadtpuls.yml
+
+name: stadtpuls
+root: ~/repos/stadtpuls-frontend
+
+windows:
+  - editor:
+      layout: tiled
+      panes:
+        - npm run dev
+        - npm run test:watch
+        - npm run storybook
+        - code .
+  - backend:
+      layout: split-v
+      panes:
+        - cd supabase/supabase-docker-compose/ && ./compose.sh -u
+        - clear
