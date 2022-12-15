@@ -5,19 +5,7 @@ root: ~/repos/stadtpuls-frontend
 
 windows:
   - editor:
-      layout: main-vertical
-      panes:
-        - e .
-        - git fetch --prune
-  - scripts:
-      layout: tiled
-      panes:
-        - npm run dev
-        - npm run test:watch
-        - npm run storybook
-        - clear
-  - backend:
-      layout: split-v
-      panes:
-        - cd supabase/supabase-docker-compose/ && ./compose.sh -u
-        - clear
+    layout: main-vertical
+    panes:
+      - e .
+      - npm run dev

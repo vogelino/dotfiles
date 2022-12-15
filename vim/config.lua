@@ -13,7 +13,7 @@ vim.opt.relativenumber = true
 
 -- general
 lvim.log.level = "warn"
-lvim.format_on_save.enabled = false
+lvim.format_on_save.enabled = true
 lvim.colorscheme = "lunar"
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
@@ -27,7 +27,9 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- unmap a default keymapping
 -- vim.keymap.del("n", "<C-Up>")
 -- override a default keymapping
--- lvim.keys.normal_mode["<C-q>"] = ":q<cr>" -- or vim.keymap.set("n", "<C-q>", ":q<cr>" )
+lvim.keys.normal_mode["<C-q>"] = ":q<cr>" -- or vim.keymap.set("n", "<C-q>", ":q<cr>" )
+lvim.keys.normal_mode["<C-h>"] = ":bp<cr>"
+lvim.keys.normal_mode["<C-l>"] = ":bn<cr>"
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
@@ -166,12 +168,13 @@ lvim.builtin.treesitter.highlight.enable = true
 -- }
 
 -- Additional Plugins
--- lvim.plugins = {
---     {
---       "folke/trouble.nvim",
---       cmd = "TroubleToggle",
---     },
--- }
+lvim.plugins = {
+  "machakann/vim-sandwich"
+  -- {
+  --   "folke/trouble.nvim",
+  --   cmd = "TroubleToggle",
+  -- },
+}
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- vim.api.nvim_create_autocmd("BufEnter", {
@@ -186,4 +189,3 @@ lvim.builtin.treesitter.highlight.enable = true
 --     require("nvim-treesitter.highlight").attach(0, "bash")
 --   end,
 -- })
-
