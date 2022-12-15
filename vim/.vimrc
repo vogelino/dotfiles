@@ -44,6 +44,14 @@ vnoremap <silent> <C-s> <C-C>:update<CR>
 inoremap <silent> <C-s> <C-O>:update<CR>
 inoremap <silent> <Esc> <Esc>`^
 nnoremap <silent> <Esc> :nohl<CR>
+" Jump one half page below/up while centering the cursor on the screen
+nnoremap <silent> <C-d> <C-d>zz
+nnoremap <silent> <C-u> <C-u>zz
+" Center view on next/prev match
+nnoremap <silent> n nzzzv
+nnoremap <silent> N Nzzzv
+" Copy selection in visual mode
+vmap <C-c> y: call system("xclip -i -selection clipboard", getreg("\""))<CR>
 
 " —— Leader
 let mapleader=" "
