@@ -6,12 +6,6 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-" –– Learn Vim ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-Plug 'ThePrimeagen/vim-be-good'
-
-" –– Colorscheme ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-Plug 'gruvbox-community/gruvbox'   						    " Colorscheme
-
 " –– Color utils ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 Plug 'chrisbra/Colorizer'					    		      " Color hex codes and color names
 
