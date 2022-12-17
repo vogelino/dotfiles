@@ -55,3 +55,12 @@ end
 vim.keymap.set("n", "<leader>nn", _NODE_TOGGLE, {
   desc = "Node"
 })
+
+local htop = Terminal:new({ cmd = "htop", hidden = true })
+function _HTOP_TOGGLE()
+  htop:toggle()
+end
+
+vim.keymap.set("n", "<leader>hh", _HTOP_TOGGLE, {
+  desc = "Htop"
+})
