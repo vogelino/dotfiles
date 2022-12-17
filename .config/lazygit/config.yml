@@ -1,0 +1,19 @@
+gui:
+  theme:
+    activeBorderColor:
+      - "#c0caf5"
+      - bold
+    inactiveBorderColor:
+      - "#3b4261"
+    selectedLineBgColor:
+      - "#3b4261"
+    selectedRangeBgColor:
+      - "#3b4261"
+  showBottomLine: false # for hiding the bottom information line (unless it has important information to tell you)
+  showIcons: true
+  authorColors:
+    'Lucas Vogel': 'red'
+git:
+  merging:
+    args: '--no-ff'
+  parseEmoji: true
