@@ -34,7 +34,6 @@ function _G.set_terminal_keymaps()
   vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
 end
 
--- if you only want these mappings for toggle term use term://*toggleterm#* instead
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
 local Terminal = require("toggleterm.terminal").Terminal
@@ -44,11 +43,15 @@ function _LAZYGIT_TOGGLE()
   lazygit:toggle()
 end
 
-vim.keymap.set("n", "<C-g>", _LAZYGIT_TOGGLE)
+vim.keymap.set("n", "<leader>gg", _LAZYGIT_TOGGLE, {
+  desc = "Lazygit"
+})
 
 local node = Terminal:new({ cmd = "node", hidden = true })
 function _NODE_TOGGLE()
   node:toggle()
 end
 
-vim.keymap.set("n", "<C-f>", _NODE_TOGGLE)
+vim.keymap.set("n", "<leader>nn", _NODE_TOGGLE, {
+  desc = "Node"
+})
