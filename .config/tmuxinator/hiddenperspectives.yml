@@ -1,0 +1,15 @@
+# /Users/lucasvogel/.config/tmuxinator/hiddenperspectives.yml
+
+name: hiddenperspectives
+root: ~/repos/hidden-perspectives-app
+
+windows:
+  - editor:
+    panes:
+      - e .
+  - scripts:
+    panes:
+      - npm run dev
+  - data:
+    panes:
+      - cd ../hidden-perspectives-data
