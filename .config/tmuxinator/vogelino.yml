@@ -8,4 +8,4 @@ windows:
       layout: main-vertical
       panes:
         - npm run dev
-        - code .
+        - tmux resize-pane -Z && e .

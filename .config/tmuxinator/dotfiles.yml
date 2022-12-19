@@ -5,8 +5,5 @@ root: ~/.dotfiles
 
 windows:
   - editor:
-      layout: main-vertical
-      panes:
-        - e .
-        - clear
+    - tmux resize-pane -Z && e .
 

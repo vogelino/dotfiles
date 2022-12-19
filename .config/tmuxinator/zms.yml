@@ -5,7 +5,7 @@ root: ~/repos/zms-frontend
 
 windows:
   - editor:
-      - e .
+      - tmux resize-pane -Z && e .
   - scripts:
       layout: main-vertical
       panes:

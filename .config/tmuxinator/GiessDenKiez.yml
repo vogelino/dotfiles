@@ -5,12 +5,12 @@ root: ~/repos/giessdenkiez-de
 
 windows:
   - editor:
-      panes:
-        - e .
+    panes:
+      - tmux resize-pane -Z && e .
   - scripts:
-      panes:
-        - npm run dev
-        - npm run test:watch
+    panes:
+      - npm run dev
+      - npm run test:watch
   - playground:
-      panes:
-        - clear
+    panes:
+      - clear

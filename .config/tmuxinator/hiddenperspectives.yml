@@ -6,7 +6,7 @@ root: ~/repos/hidden-perspectives-app
 windows:
   - editor:
     panes:
-      - e .
+      - tmux resize-pane -Z && e .
   - scripts:
     panes:
       - npm run dev

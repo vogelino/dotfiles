@@ -7,5 +7,5 @@ windows:
   - editor:
     layout: main-vertical
     panes:
-      - e .
+      - tmux resize-pane -Z && e .
       - npm run dev
