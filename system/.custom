@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # ZSH custom settings
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=4
 ZSH_THEME="powerlevel10k/powerlevel10k"

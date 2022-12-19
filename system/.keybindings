@@ -1,7 +1,9 @@
+#!/usr/bin/env bash
+
 # Allows to delete everything before the cursor
 bindkey "^X\\x7f" backward-kill-line
 
-if [ "$OS" = "MacOS" ]; then
+if [ "$OS" = "Linux" ]; then
   gsettings set org.gnome.mutter overlay-key ''
 fi
 
