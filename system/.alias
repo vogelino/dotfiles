@@ -21,6 +21,7 @@ alias ls='nnn -de'
 # alias e='nvim -u $MYVIMRC'
 alias e='$EDITOR'
 alias x='exit'
+alias r='renamer' 
 
 # Cat replacement with colors
 alias cat='bat'
