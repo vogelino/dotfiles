@@ -19,7 +19,7 @@ alias las="ls -al"
 alias ls='nnn -de'
 
 # alias e='nvim -u $MYVIMRC'
-alias e='lvim'
+alias e='$EDITOR'
 alias x='exit'
 
 # Cat replacement with colors
