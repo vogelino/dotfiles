@@ -172,7 +172,8 @@ lvim.plugins = {
         -- Configuration here, or leave empty to use defaults
       })
     end
-  }
+  },
+  "fladson/vim-kitty"
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
