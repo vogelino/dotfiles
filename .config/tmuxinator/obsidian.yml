@@ -1,0 +1,11 @@
+# /Users/lucasvogel/.config/tmuxinator/obsidian.yml
+
+name: obsidian
+root: ~/repos/obsidian
+
+windows:
+  - editor:
+    - e .
+  - glow:
+    - mdn
+

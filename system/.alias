@@ -16,13 +16,15 @@ alias nf='npm cache clean && rm -rf node_modules && npm install'
 
 # System aliases
 alias las="ls -al"
-alias ls='nnn -de'
+# alias ls='nnn -de'
+# alias lf='lfcd'
 
 # alias e='nvim -u $MYVIMRC'
 alias e='$EDITOR'
 alias x='exit'
 alias r='renamer' 
 alias icat="kitty +kitten icat"
+alias mdn="glow --style ~/.dotfiles/.config/glow/glow.styles.json"
 
 # Cat replacement with colors
 alias cat='bat'

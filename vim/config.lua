@@ -163,17 +163,31 @@ formatters.setup {
 -- Additional Plugins
 lvim.plugins = {
   "easymotion/vim-easymotion",
-  "norcalli/nvim-colorizer.lua",
   {
-    "kylechui/nvim-surround",
-    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    "norcalli/nvim-colorizer.lua",
     config = function()
-      require("nvim-surround").setup({
-        -- Configuration here, or leave empty to use defaults
+      require("colorizer").setup({
+        "css",
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+        "html",
+        "json",
+        "lua",
       })
     end
   },
-  "fladson/vim-kitty"
+  -- {
+  --   "kylechui/nvim-surround",
+  --   tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+  --   config = function()
+  --     require("nvim-surround").setup({
+  --       -- Configuration here, or leave empty to use defaults
+  --     })
+  --   end
+  -- },
+  "fladson/vim-kitty",
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
