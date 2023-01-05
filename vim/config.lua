@@ -188,6 +188,7 @@ lvim.plugins = {
   --   end
   -- },
   "fladson/vim-kitty",
+  "pantharshit00/vim-prisma",
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)

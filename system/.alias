@@ -19,12 +19,15 @@ alias las="ls -al"
 # alias ls='nnn -de'
 # alias lf='lfcd'
 
+# Random cmdline apps
 # alias e='nvim -u $MYVIMRC'
 alias e='$EDITOR'
 alias x='exit'
 alias r='renamer' 
 alias icat="kitty +kitten icat"
 alias mdn="glow --style ~/.dotfiles/.config/glow/glow.styles.json"
+alias json="jless"
+alias xcd='cd "$(xplr --print-pwd-as-result)"'
 
 # Cat replacement with colors
 alias cat='bat'

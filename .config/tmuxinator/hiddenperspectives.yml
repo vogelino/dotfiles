@@ -4,12 +4,17 @@ name: hiddenperspectives
 root: ~/repos/hidden-perspectives-app
 
 windows:
-  - editor:
-    panes:
-      - tmux resize-pane -Z && e .
-  - scripts:
-    panes:
-      - npm run dev
-  - data:
-    panes:
-      - cd ../hidden-perspectives-data
+  - App:
+      layout: main-vertical
+      panes:
+        - tmux resize-pane -Z && e .
+        - npm run dev
+  - Scripts:
+      panes:
+        - cd ~/repos/hidden-perspectives-data-sandbox && e .
+  - Data:
+      panes:
+        - cd ~/repos/hidden-perspective-data && ls -al
+  - Pocketbase:
+      panes:
+        - cd ~/repos/hidden-perspectives-pocketbase && ./pocketbase serve
