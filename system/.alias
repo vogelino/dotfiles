@@ -23,6 +23,7 @@ alias las="ls -al"
 # alias e='nvim -u $MYVIMRC'
 alias e='$EDITOR'
 alias x='exit'
+alias k='clear'
 alias r='renamer' 
 alias icat="kitty +kitten icat"
 alias mdn="glow --style ~/.dotfiles/.config/glow/glow.styles.json"
