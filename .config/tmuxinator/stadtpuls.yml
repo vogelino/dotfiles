@@ -9,3 +9,9 @@ windows:
     panes:
       - tmux resize-pane -Z && e .
       - npm run dev
+  - scripts:
+    layout: vertical
+    panes:
+      - npm run dev
+      - npm run test
+      - npm run storybook

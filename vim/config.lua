@@ -189,6 +189,7 @@ lvim.plugins = {
   -- },
   "fladson/vim-kitty",
   "pantharshit00/vim-prisma",
+  "ixru/nvim-markdown"
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)

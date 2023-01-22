@@ -1,0 +1,12 @@
+# /Users/lucasvogel/.config/tmuxinator/rewali-supabase-next13.yml
+
+name: Rewali (Supabase & Next13)
+root: ~/repos/rewali-supabase-next13
+
+windows:
+  - editor:
+      panes:
+        - tmux resize-pane -Z && e .
+  - scripts:
+      panes:
+        - npm run dev
