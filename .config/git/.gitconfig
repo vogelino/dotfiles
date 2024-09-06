@@ -33,11 +33,12 @@
   tool = vimdiff
 
 [commit]
-  gpgsign = true
+	gpgsign = true
   # template = /Users/lucasvogel/.stCommitMsg
 
 [gpg]
-  program = gpg2
+	program = /opt/homebrew/bin/gpg
+	format = openpgp
 
 [pull]
   ff = only
@@ -57,3 +58,5 @@
   plus-empty-line-marker-style  = syntax "#20303b"
   line-numbers-plus-style       = "#399a96"
   line-numbers-zero-style       = "#3b4261"
+[user]
+	signingkey = D580889DA91AF4DA

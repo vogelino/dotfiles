@@ -81,3 +81,56 @@ complete -o nospace -C /opt/homebrew/bin/terraform terraform
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# bun completions
+[ -s "/Users/lucasvogel/.bun/_bun" ] && source "/Users/lucasvogel/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export GPG_TTY=$(tty)
+
+# bun completions
+[ -s "/Users/vogelino/.bun/_bun" ] && source "/Users/vogelino/.bun/_bun"
+
+# direnv
+eval "$(direnv hook zsh)"
+
+# pnpm
+export PNPM_HOME="/Users/vogelino/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# Shopify Hydrogen alias to local projects
+alias h2='$(npm prefix -s)/node_modules/.bin/shopify hydrogen'
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/vogelino/python/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/vogelino/python/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/Users/vogelino/python/miniforge3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/vogelino/python/miniforge3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+
+if [ -f "/Users/vogelino/python/miniforge3/etc/profile.d/mamba.sh" ]; then
+    . "/Users/vogelino/python/miniforge3/etc/profile.d/mamba.sh"
+fi
+# <<< conda initialize <<<
+

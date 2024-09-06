@@ -15,7 +15,8 @@ alias nr='npm run'
 alias nf='npm cache clean && rm -rf node_modules && npm install'
 
 # System aliases
-alias las="ls -al"
+alias ls="eza"
+alias las="eza -al"
 # alias ls='nnn -de'
 # alias lf='lfcd'
 
@@ -34,7 +35,7 @@ alias xcd='cd "$(xplr --print-pwd-as-result)"'
 alias cat='bat'
 
 # CD paths
-alias repos="cd ~/repos"
+alias r="cd ~/repos"
 
 # Apps
 alias c="code -n ." # Visual studio code

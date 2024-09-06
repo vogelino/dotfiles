@@ -83,22 +83,6 @@ fh() {
 }
 
 # ------------------
-# TODOIST
-# ------------------
-case `uname` in
-  Darwin)
-    source $(brew --prefix)/share/zsh/site-functions/_todoist_fzf
-  ;;
-esac
-alias tdp="fzf-todoist-project"
-alias tdi="fzf-todoist-item"
-alias tdl="fzf-todoist-labels"
-alias tdd="fzf-todoist-date"
-alias tdc="fzf-todoist-close"
-alias tdr="fzf-todoist-delete"
-alias tdo="fzf-todoist-open"
-
-# ------------------
 # GIT
 # ------------------
 
