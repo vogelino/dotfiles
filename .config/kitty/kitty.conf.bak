@@ -2338,6 +2338,6 @@ map ctrl+alt+,   load_config_file
 
 
 # BEGIN_KITTY_THEME
-# Catppuccin-Macchiato
+# Catppuccin-Mocha
 include current-theme.conf
 # END_KITTY_THEME
