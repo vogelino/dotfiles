@@ -104,6 +104,7 @@ export GPG_TTY=$(tty)
 
 # direnv
 eval "$(direnv hook zsh)"
+eval "$(zoxide init zsh)"
 
 # pnpm
 export PNPM_HOME="/Users/vogelino/Library/pnpm"
@@ -113,8 +114,6 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# Shopify Hydrogen alias to local projects
-alias h2='$(npm prefix -s)/node_modules/.bin/shopify hydrogen'
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"

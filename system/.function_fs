@@ -11,3 +11,8 @@ t() {
   tree -AdL ${1:-1}
 }
 
+# TMUX & SESH
+ss() {
+  sesh connect $(sesh list | fzf)
+}
+

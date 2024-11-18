@@ -1,0 +1,9 @@
+[default_session]
+startup_command = "k"
+
+[[session]]
+name = "Downloads 📥"
+path = "~/Downloads"
+startup_command = "k"
+
+
