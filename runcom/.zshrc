@@ -129,3 +129,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+
+# Added by Windsurf
+export PATH="/Users/vogelino/.codeium/windsurf/bin:$PATH"
