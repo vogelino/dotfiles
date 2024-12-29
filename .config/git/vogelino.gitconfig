@@ -17,6 +17,7 @@
 	required = true
 [core]
 	excludesfile = /Users/vogelino/.gitignore_global
+	editor = nvim
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 

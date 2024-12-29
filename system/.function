@@ -1,11 +1,84 @@
 #!/usr/bin/env bash
 
-function opsi() {
-	eval $(op signin --account technologiestiftung)
-}
-
 function tmux-connect {
     TERM=xterm-256color ssh -p ${3:-22} $1@$2 -t "tmux new-session -s $1 || tmux attach-session -t $1"
+}
+
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
+function tms() {
+  local base_path="$1"
+  local session_name="$2"
+
+  # Check if the path is provided
+  if [ -z "$base_path" ]; then
+    echo "Usage: start_tmux_session [session_name] <path>"
+    return 1
+  fi
+
+  # If no session name is provided, use the last folder name from the path
+  if [ -z "$session_name" ]; then
+    session_name=$(basename "$base_path")
+  fi
+
+  # Determine the JavaScript runtime to use
+  local dev_command=""
+  if [ -f "$base_path/bun.lockb" ]; then
+    dev_command="bun run dev"
+  elif [ -f "$base_path/pnpm-lock.yaml" ]; then
+    dev_command="pnpm run dev"
+  elif [ -f "$base_path/yarn.lock" ]; then
+    dev_command="yarn run dev"
+  elif [ -f "$base_path/package-lock.json" ]; then
+    dev_command="npm run dev"
+  elif [ -f "$base_path/deno.json" ] || [ -f "$base_path/deno.jsonc" ]; then
+    dev_command="deno task dev"
+  else
+    dev_command="clear"
+  fi
+
+  if [ -n "$TMUX" ]; then
+    # If already in a tmux session, get the current session name
+    session_name=$(tmux display-message -p '#S')
+
+    # Create and configure new windows in the existing session
+    tmux new-window -t "$session_name" -c "$base_path" -n EDITOR 'nvim .'
+    tmux new-window -t "$session_name" -c "$base_path" -n PROCESSES
+    tmux send-keys -t "$session_name":PROCESSES "$dev_command" C-m
+    tmux split-window -h -t "$session_name":PROCESSES
+    tmux send-keys -t "$session_name":PROCESSES.1 'clear' C-m
+    tmux select-window -t "$session_name":EDITOR
+
+    # Cleanup: Close all other windows except EDITOR and PROCESSES
+    local window_list
+    window_list=$(tmux list-windows -t "$session_name" -F '#{window_name}' | grep -v -E 'EDITOR|PROCESSES')
+    for window_name in $window_list; do
+      tmux kill-window -t "$session_name:$window_name"
+    done
+  else
+    # Check if session is already running and attach if so
+    if tmux has-session -t "$session_name" 2>/dev/null; then
+      tmux attach -t "$session_name"
+      # Stop here if the session is already running
+      return
+    else
+      # Start the tmux session with the given session name and path
+      tmux new-session -d -s "$session_name" -c "$base_path" -n EDITOR 'nvim .'
+      tmux new-window -t "$session_name" -c "$base_path" -n PROCESSES
+      tmux send-keys -t "$session_name":PROCESSES "$dev_command" C-m
+      tmux split-window -h -t "$session_name":PROCESSES
+      tmux send-keys -t "$session_name":PROCESSES.1 'clear' C-m
+      tmux select-window -t "$session_name":EDITOR
+      tmux attach-session -t "$session_name"
+    fi
+  fi
 }
 
 print-colors() {
@@ -20,7 +93,7 @@ print-colors() {
 meteo() {
   local LOCALE=$(echo ${LANG:-en} | cut -c1-2)
   if [ $# -eq 0 ]; then
-    local LOCATION=$(curl -s ipinfo.io/loc)
+    Local LOCATION=$(curl -s ipinfo.io/loc)
   else
     local LOCATION=$1
   fi

@@ -2,8 +2,18 @@
 startup_command = "k"
 
 [[session]]
+name = "Dotfiles ⚙️"
+path = "~/.dotfiles"
+startup_command = "nvim ."
+
+[[session]]
 name = "Downloads 📥"
 path = "~/Downloads"
 startup_command = "k"
+
+[[session]]
+name = "vogelino-portfolio"
+path = "~/repos/vogelino-portfolio"
+startup_command = "tms ~/repos/vogelino-portfolio"
 
 

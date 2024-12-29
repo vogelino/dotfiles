@@ -28,11 +28,16 @@ alias k='clear'
 alias r='renamer' 
 alias icat="kitty +kitten icat"
 alias mdn="glow --style ~/.dotfiles/.config/glow/glow.styles.json"
-alias json="jless"
+alias json="fx"
 alias lg='lazygit'
 
+# Dotfiles aliases
+alias dota='e ~/.dotfiles/system/.alias'
+alias dotf='e ~/.dotfiles/system/.function'
+alias dots='e ~/.dotfiles/.config/sesh/sesh.toml'
+
 # Cat replacement with colors
-alias cat='bat'
+alias cat='bat --style="grid"'
 
 # CD paths
 alias r="cd ~/repos"
@@ -56,3 +61,5 @@ alias pts="protonvpn-cli status"
 # eg. pp 3000
 alias pp="lsof -nP -iTCP -sTCP:LISTEN | grep "
 
+# Source the zsh config
+alias so='source ~/.zshrc && clear'
