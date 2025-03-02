@@ -1,13 +1,13 @@
-[includeIf "gitdir:/Users/lucasvogel/**/.git"]
-  path = .dotfiles/.config/git/citylab.gitconfig
-
-[includeIf "gitdir:/home/vogelino/**/.git"]
-  path = .dotfiles/.config/git/vogelino.gitconfig
-
 [core]
-  # excludesfile = /Users/lucasvogel/.gitignore_global
+  excludesfile = /Users/lucasvogel/.gitignore_global
   autocrlf = input
-  editor = lvim
+  editor = nvim
+
+[column]
+   ui = auto
+
+[branch]
+   sort = -committerdate
 
 [filter "media"]
   required = true
@@ -16,6 +16,13 @@
 
 [push]
   default = simple
+  autoSetupRemote = true
+  followTags = true
+
+[fetch]
+  prune = true
+  pruneTags = true
+  all = true
 
 [credential]
   helper = osxkeychain
@@ -31,17 +38,31 @@
 
 [diff]
   tool = vimdiff
+  algorithm = histogram
+  colorMoved = plain
+  mnemonicPrefix = true
+  renames = true
+
+[tag]
+  sort = version:refname
 
 [commit]
 	gpgsign = true
+  verbose = true
   # template = /Users/lucasvogel/.stCommitMsg
 
 [gpg]
 	program = /opt/homebrew/bin/gpg
-	format = openpgp
+	format = ssh
 
 [pull]
-  ff = only
+  ff = false
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 
 [init]
   defaultBranch = main
@@ -58,5 +79,20 @@
   plus-empty-line-marker-style  = syntax "#20303b"
   line-numbers-plus-style       = "#399a96"
   line-numbers-zero-style       = "#3b4261"
+
 [user]
-	signingkey = D580889DA91AF4DA
+	email = contact@vogelino.com
+	name = Lucas Vogel
+	signingkey = /Users/vogelino/.ssh/id_vogelino_macbook_air
+
+[help]
+  autocorrect = prompt
+
+[rerere]
+  enabled = true
+  autoupdate = true
+
+[rebase]
+  autoSquash = true
+  autoStash = true
+  updateRefs = true
