@@ -44,40 +44,19 @@ function tms() {
     dev_command="clear"
   fi
 
-  if [ -n "$TMUX" ]; then
-    # If already in a tmux session, get the current session name
-    session_name=$(tmux display-message -p '#S')
-
-    # Create and configure new windows in the existing session
-    tmux new-window -t "$session_name" -c "$base_path" -n EDITOR 'nvim .'
-    tmux new-window -t "$session_name" -c "$base_path" -n PROCESSES
-    tmux send-keys -t "$session_name":PROCESSES "$dev_command" C-m
-    tmux split-window -h -t "$session_name":PROCESSES
-    tmux send-keys -t "$session_name":PROCESSES.1 'clear' C-m
-    tmux select-window -t "$session_name":EDITOR
-
-    # Cleanup: Close all other windows except EDITOR and PROCESSES
-    local window_list
-    window_list=$(tmux list-windows -t "$session_name" -F '#{window_name}' | grep -v -E 'EDITOR|PROCESSES')
-    for window_name in $window_list; do
-      tmux kill-window -t "$session_name:$window_name"
-    done
+  # Check if session is already running and attach if so
+  if tmux has-session -t "$session_name" 2>/dev/null; then
+    tmux attach -t "$session_name"
+    # Stop here if the session is already running
+    return
+  elif [ -n "$TMUX" ]; then
+    # If already in a tmux session abort
+    echo "Already in a tmux session"
   else
-    # Check if session is already running and attach if so
-    if tmux has-session -t "$session_name" 2>/dev/null; then
-      tmux attach -t "$session_name"
-      # Stop here if the session is already running
-      return
-    else
-      # Start the tmux session with the given session name and path
-      tmux new-session -d -s "$session_name" -c "$base_path" -n EDITOR 'nvim .'
-      tmux new-window -t "$session_name" -c "$base_path" -n PROCESSES
-      tmux send-keys -t "$session_name":PROCESSES "$dev_command" C-m
-      tmux split-window -h -t "$session_name":PROCESSES
-      tmux send-keys -t "$session_name":PROCESSES.1 'clear' C-m
-      tmux select-window -t "$session_name":EDITOR
-      tmux attach-session -t "$session_name"
-    fi
+    # Start the tmux session with the given session name and path
+    tmux new-session -d -s "$session_name" -c "$base_path" -n $session_name "code . && $dev_command"
+    tmux split-window -h -t "$session_name":$session_name -c "$base_path"
+    tmux attach-session -t "$session_name"
   fi
 }
 
