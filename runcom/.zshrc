@@ -100,14 +100,14 @@ export NVM_DIR="$HOME/.nvm"
 export GPG_TTY=$(tty)
 
 # bun completions
-[ -s "/Users/vogelino/.bun/_bun" ] && source "/Users/vogelino/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # direnv
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 
 # pnpm
-export PNPM_HOME="/Users/vogelino/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -131,4 +131,4 @@ unset __conda_setup
 
 
 # Added by Windsurf
-export PATH="/Users/vogelino/.codeium/windsurf/bin:$PATH"
+export PATH="$HOME/.codeium/windsurf/bin:$PATH"

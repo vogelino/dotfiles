@@ -1,53 +1,55 @@
-tap "homebrew/cask"
-tap "homebrew/cask-drivers"
-tap "homebrew/cask-fonts"
-tap "homebrew/cask-versions"
+# To install from a Brewfile, you use the ⁠brew bundle command. Here are the most common ways to use it:
+# 1. If you're in the same directory as the Brewfile:
+#    brew bundle --cask
+# 2. If your Brewfile is in a different location, specify the path:
+#    brew bundle --cask --file=/path/to/Caskfile
 
+# Browsers
 cask "firefox"
-cask "protonmail-bridge"
+cask "google-chrome"
+cask "arc"
+cask "orion"
+
+# Fonts
 cask "font-fira-code"
 cask "font-hack"
-cask "glimmerblocker"
-cask "google-chrome"
-cask "hammerspoon"
-cask "kaleidoscope"
-cask "maccy"
-cask "sourcetree"
+
+# Editors
 cask "visual-studio-code"
-cask "vlc"
-cask "spark"
-cask "1password"
-cask "memory"
-cask "sketch"
-cask "signal"
-cask "appcleaner"
-cask "authy"
-cask "blender"
-cask "calibre"
-cask "deepl"
-cask "docker"
-cask "google-backup-and-sync"
-cask "dropbox"
+cask "zed"
+
+# Work Tools
 cask "figma"
-cask "handbrake"
-cask "little-snitch"
-cask "nordvpn"
-cask "notion"
-cask "numi"
-cask "onyx"
-cask "skype"
-cask "spectacle"
-cask "zoom"
-cask "the-unarchiver"
-cask "adobe-creative-cloud"
+cask "proton-drive"
+cask "proton-mail"
+cask "proton-pass"
+cask "protonvpn"
+
+# Messaging Apps
+cask "signal"
+cask "telegram"
+cask "whatsapp"
+
+# Utilities
+cask "appcleaner"
+cask "hammerspoon"
 cask "karabiner-elements"
+cask "little-snitch"
+cask "numi"
+cask "raycast"
+cask "the-unarchiver"
+
+# Entertainment
+cask "calibre"
+cask "vlc"
+
+# Development Tools
+cask "docker"
+cask "ghostty"
 
 # Quick Look Plugins (https://github.com/sindresorhus/quick-look-plugins)
 cask "qlcolorcode"
-cask "qlstephen"
 cask "qlmarkdown"
-cask "quicklook-json"
-cask "qlimagesize"
-cask "suspicious-package"
-cask "quicklookase"
+cask "qlstephen"
 cask "qlvideo"
+cask "quicklook-json"

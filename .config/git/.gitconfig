@@ -83,7 +83,7 @@
 [user]
 	email = contact@vogelino.com
 	name = Lucas Vogel
-	signingkey = /Users/vogelino/.ssh/id_vogelino_macbook_air
+	signingkey = ~/.ssh/id_vogelino_macbook_air
 
 [help]
   autocorrect = prompt
