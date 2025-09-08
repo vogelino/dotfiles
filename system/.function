@@ -13,51 +13,109 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+# Detect the appropriate development command based on project files
+function detect_dev_command() {
+  local project_path="$1"
+  
+  if [ -f "$project_path/bun.lockb" ]; then
+    echo "bun run dev"
+  elif [ -f "$project_path/pnpm-lock.yaml" ]; then
+    echo "pnpm run dev"
+  elif [ -f "$project_path/yarn.lock" ]; then
+    echo "yarn run dev"
+  elif [ -f "$project_path/package-lock.json" ]; then
+    echo "npm run dev"
+  elif [ -f "$project_path/deno.json" ] || [ -f "$project_path/deno.jsonc" ]; then
+    echo "deno task dev"
+  else
+    echo "clear"
+  fi
+}
+
+# Get the session name from path if not provided
+function get_session_name() {
+  local base_path="$1"
+  local provided_name="$2"
+  
+  if [ -z "$provided_name" ]; then
+    basename "$base_path"
+  else
+    echo "$provided_name"
+  fi
+}
+
+# Configure the tmux window layout and commands
+function setup_tmux_layout() {
+  local session_name="$1"
+  local base_path="$2"
+  local dev_command="$3"
+  local target_window="${session_name}:1"
+  
+  # Rename the first window
+  tmux rename-window -t "${session_name}:1" "$session_name"
+  
+  # Create a new pane with the dev command
+  tmux split-window -h -t "$target_window" -c "$base_path"
+  
+  # Select the first pane and wait for shell initialization
+  tmux select-pane -t "$target_window.2"
+  
+  # Send dev command to second pane
+  tmux send-keys -t "$target_window.1" "$dev_command" Enter
+  
+  # Open VS Code in first pane
+  tmux send-keys -t "$target_window.2" "code . && clear" Enter
+}
+
+# Handle tmux session attachment
+function attach_to_session() {
+  local session_name="$1"
+  
+  if [ -n "$TMUX" ]; then
+    tmux switch-client -t "$session_name"
+  else
+    tmux attach-session -t "$session_name"
+  fi
+}
+
+# Create or attach to tmux session and set it up
+function handle_tmux_session() {
+  local session_name="$1"
+  local base_path="$2"
+  local dev_command="$3"
+  
+  if tmux has-session -t "$session_name" 2>/dev/null; then
+    if [ -n "$TMUX" ]; then
+      tmux switch-client -t "$session_name"
+      setup_tmux_layout "$session_name" "$base_path" "$dev_command"
+    else
+      tmux attach -t "$session_name"
+      setup_tmux_layout "$session_name" "$base_path" "$dev_command"
+    fi
+  else
+    tmux new-session -d -s "$session_name" -c "$base_path"
+    setup_tmux_layout "$session_name" "$base_path" "$dev_command"
+    attach_to_session "$session_name"
+  fi
+}
+
+# Main function
 function tms() {
   local base_path="$1"
   local session_name="$2"
 
-  # Check if the path is provided
+  # Validate input
   if [ -z "$base_path" ]; then
     echo "Usage: start_tmux_session [session_name] <path>"
     return 1
   fi
 
-  # If no session name is provided, use the last folder name from the path
-  if [ -z "$session_name" ]; then
-    session_name=$(basename "$base_path")
-  fi
+  # Initialize session variables
+  session_name=$(get_session_name "$base_path" "$session_name")
+  local dev_command=$(detect_dev_command "$base_path")
 
-  # Determine the JavaScript runtime to use
-  local dev_command=""
-  if [ -f "$base_path/bun.lockb" ]; then
-    dev_command="bun run dev"
-  elif [ -f "$base_path/pnpm-lock.yaml" ]; then
-    dev_command="pnpm run dev"
-  elif [ -f "$base_path/yarn.lock" ]; then
-    dev_command="yarn run dev"
-  elif [ -f "$base_path/package-lock.json" ]; then
-    dev_command="npm run dev"
-  elif [ -f "$base_path/deno.json" ] || [ -f "$base_path/deno.jsonc" ]; then
-    dev_command="deno task dev"
-  else
-    dev_command="clear"
-  fi
-
-  # Check if session is already running and attach if so
-  if tmux has-session -t "$session_name" 2>/dev/null; then
-    tmux attach -t "$session_name"
-    # Stop here if the session is already running
-    return
-  elif [ -n "$TMUX" ]; then
-    # If already in a tmux session abort
-    echo "Already in a tmux session"
-  else
-    # Start the tmux session with the given session name and path
-    tmux new-session -d -s "$session_name" -c "$base_path" -n $session_name "code . && $dev_command"
-    tmux split-window -h -t "$session_name":$session_name -c "$base_path"
-    tmux attach-session -t "$session_name"
-  fi
+  # Create/attach to session and set up layout
+  handle_tmux_session "$session_name" "$base_path" "$dev_command"
 }
 
 print-colors() {
