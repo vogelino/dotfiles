@@ -16,4 +16,9 @@ name = "vogelino-portfolio"
 path = "~/repos/vogelino-portfolio"
 startup_command = "tms ~/repos/vogelino-portfolio"
 
+[[session]]
+name = "a-roh"
+path = "~/repos/a-roh"
+startup_command = "tms ~/repos/a-roh"
+
 
