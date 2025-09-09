@@ -67,7 +67,7 @@ elif [ "$OS" = "Linux" ]; then
   source $HOME/.oh-my-zsh/oh-my-zsh.sh
 fi
 
-test -e /Users/lucasvogel/.iterm2_shell_integration.zsh && source /Users/lucasvogel/.iterm2_shell_integration.zsh || true
+test -e $HOME/.iterm2_shell_integration.zsh && source $HOME/.iterm2_shell_integration.zsh || true
 
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
@@ -83,7 +83,7 @@ complete -o nospace -C /opt/homebrew/bin/terraform terraform
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # bun completions
-[ -s "/Users/lucasvogel/.bun/_bun" ] && source "/Users/lucasvogel/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -100,14 +100,14 @@ export NVM_DIR="$HOME/.nvm"
 export GPG_TTY=$(tty)
 
 # bun completions
-[ -s "/Users/vogelino/.bun/_bun" ] && source "/Users/vogelino/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # direnv
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 
 # pnpm
-export PNPM_HOME="/Users/vogelino/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -131,4 +131,10 @@ unset __conda_setup
 
 
 # Added by Windsurf
-export PATH="/Users/vogelino/.codeium/windsurf/bin:$PATH"
+export PATH="$HOME/.codeium/windsurf/bin:$PATH"
+
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=($HOME/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
