@@ -14,11 +14,14 @@ startup_command = "k"
 [[session]]
 name = "vogelino-portfolio"
 path = "~/repos/vogelino-portfolio"
-startup_command = "tms ~/repos/vogelino-portfolio"
+startup_command = "zed ."
 
 [[session]]
 name = "a-roh"
 path = "~/repos/a-roh"
 startup_command = "tms ~/repos/a-roh"
 
-
+[[session]]
+name = "deepjudge"
+path = "~/repos/dj2"
+startup_command = "tilt up --context docker-desktop -- --config-path config/dev-tilt.local.jsonnet"
