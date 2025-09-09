@@ -16,7 +16,7 @@ function y() {
 # Detect the appropriate development command based on project files
 function detect_dev_command() {
   local project_path="$1"
-  
+
   if [ -f "$project_path/bun.lockb" ]; then
     echo "bun run dev"
   elif [ -f "$project_path/pnpm-lock.yaml" ]; then
@@ -36,12 +36,41 @@ function detect_dev_command() {
 function get_session_name() {
   local base_path="$1"
   local provided_name="$2"
-  
+
   if [ -z "$provided_name" ]; then
     basename "$base_path"
   else
     echo "$provided_name"
   fi
+}
+
+# Display the tmux tree layout
+function tmux_tree() {
+	# Usage: tmux_tree [session_name_to_highlight]
+	local target_name="$1"
+
+	tmux ls -F '#{session_id}' | while IFS= read -r s; do
+		# Get full "id + name + tree format" for the session, then strip the id prefix
+		local S session_info session_name
+		S=$(tmux ls -F '#{session_id}#{session_name}: #{T:tree_mode_format}' | grep "^${s}") || continue
+		session_info="${S##${s}}"
+		session_name=$(printf '%s' "$session_info" | cut -d ':' -f 1)
+
+		if [[ -n "$target_name" && "$target_name" == "$session_name" ]]; then
+			# Bold blue for the chosen session
+			printf '\033[1;34m%s\033[0m\n' "$session_info"
+		else
+			# Bold for other sessions
+			printf '\033[1m%s\033[0m\n' "$session_info"
+		fi
+
+		# List windows for the session
+		tmux lsw -t "$s" -F '#{window_id}' | while IFS= read -r w; do
+			local W
+			W=$(tmux lsw -t "$s" -F '#{window_id}#{T:tree_mode_format}' | grep "^${w}") || continue
+			printf '  ﬌ %s\n' "${W##${w}}"
+		done
+	done
 }
 
 # Configure the tmux window layout and commands
@@ -50,19 +79,19 @@ function setup_tmux_layout() {
   local base_path="$2"
   local dev_command="$3"
   local target_window="${session_name}:1"
-  
+
   # Rename the first window
   tmux rename-window -t "${session_name}:1" "$session_name"
-  
+
   # Create a new pane with the dev command
   tmux split-window -h -t "$target_window" -c "$base_path"
-  
+
   # Select the first pane and wait for shell initialization
   tmux select-pane -t "$target_window.2"
-  
+
   # Send dev command to second pane
   tmux send-keys -t "$target_window.1" "$dev_command" Enter
-  
+
   # Open VS Code in first pane
   tmux send-keys -t "$target_window.2" "code . && clear" Enter
 }
@@ -70,7 +99,7 @@ function setup_tmux_layout() {
 # Handle tmux session attachment
 function attach_to_session() {
   local session_name="$1"
-  
+
   if [ -n "$TMUX" ]; then
     tmux switch-client -t "$session_name"
   else
@@ -83,7 +112,7 @@ function handle_tmux_session() {
   local session_name="$1"
   local base_path="$2"
   local dev_command="$3"
-  
+
   if tmux has-session -t "$session_name" 2>/dev/null; then
     if [ -n "$TMUX" ]; then
       tmux switch-client -t "$session_name"
@@ -154,4 +183,3 @@ gcc() {
   fi
   git-cz
 }
-
