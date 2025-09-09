@@ -229,7 +229,7 @@ bcp() {
 # CASK
 # ----------
 
-# Install or open the webpage for the selected application 
+# Install or open the webpage for the selected application
 # using brew cask search as input source
 # and display a info quickview window for the currently marked application
 install() {
@@ -249,8 +249,8 @@ install() {
     fi
 }
 
-# Uninstall or open the webpage for the selected application 
-# using brew list as input source (all brew cask installed applications) 
+# Uninstall or open the webpage for the selected application
+# using brew list as input source (all brew cask installed applications)
 # and display a info quickview window for the currently marked application
 uninstall() {
     local token
@@ -356,3 +356,27 @@ bindkey -M emacs '\es' sesh-sessions
 bindkey -M vicmd '\es' sesh-sessions
 bindkey -M viins '\es' sesh-sessions
 
+# -----------
+# ALIASES
+# -----------
+
+FZF_ALIAS_OPTS=${FZF_ALIAS_OPTS:-"--preview-window up:3:hidden:wrap"}
+
+function fa() {
+  local selection
+  # use sed with column to work around MacOS/BSD column not having a -l option
+  if selection=$(alias |
+                  sed 's/=/\t/' |
+                  column -s '	' -t |
+                  FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS $FZF_ALIAS_OPTS" fzf --preview "echo {2..}" --query="$BUFFER" |
+                  awk '{ print $1 }'); then
+    BUFFER=$selection
+    CURSOR=$#BUFFER
+  fi
+  zle redisplay
+}
+
+zle -N fa
+bindkey -M emacs '\ea' fa
+bindkey -M vicmd '\ea' fa
+bindkey -M viins '\ea' fa
