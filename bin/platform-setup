@@ -1,0 +1,294 @@
+#!/usr/bin/env zsh
+
+# Platform Setup Script
+# This script helps set up the appropriate environment for different platforms
+
+# Set colors for output
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[0;33m'
+RED='\033[0;31m'
+BOLD='\033[1m'
+NC='\033[0m' # No Color
+
+# Detect platform
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  PLATFORM="macos"
+elif [[ "$(uname -s)" == "Linux" ]]; then
+  PLATFORM="linux"
+else
+  PLATFORM="unknown"
+fi
+
+# Print header
+print_header() {
+  echo "${BLUE}${BOLD}===================================================${NC}"
+  echo "${BLUE}${BOLD}       Platform Setup Script for $PLATFORM${NC}"
+  echo "${BLUE}${BOLD}===================================================${NC}"
+  echo ""
+}
+
+# Print help
+print_help() {
+  echo "Usage: platform-setup [OPTION]"
+  echo "Sets up environment for the current platform ($PLATFORM)"
+  echo ""
+  echo "Options:"
+  echo "  -i, --install    Install platform-specific packages"
+  echo "  -c, --configure  Configure platform-specific settings"
+  echo "  -a, --all        Perform both installation and configuration"
+  echo "  -h, --help       Display this help message"
+  echo ""
+  echo "Examples:"
+  echo "  platform-setup --install    # Install packages"
+  echo "  platform-setup --configure  # Configure settings"
+  echo "  platform-setup --all        # Do everything"
+}
+
+# macOS installation
+macos_install() {
+  echo "${BLUE}${BOLD}Installing macOS packages...${NC}"
+
+  # Check if Homebrew is installed
+  if ! command -v brew &>/dev/null; then
+    echo "${YELLOW}Installing Homebrew...${NC}"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  else
+    echo "${GREEN}Homebrew is already installed${NC}"
+    echo "${YELLOW}Updating Homebrew...${NC}"
+    brew update
+  fi
+
+  # Install essential packages
+  echo "${YELLOW}Installing essential packages...${NC}"
+  brew install \
+    git \
+    zsh \
+    coreutils \
+    findutils \
+    gnu-sed \
+    grep \
+    fzf \
+    ripgrep \
+    bat \
+    fd \
+    tree \
+    neovim \
+    tmux \
+    htop \
+    jq
+
+  # Install GUI applications
+  echo "${YELLOW}Installing GUI applications...${NC}"
+  brew install --cask \
+    iterm2 \
+    visual-studio-code \
+    rectangle \
+    alt-tab
+
+  echo "${GREEN}${BOLD}✓ macOS packages installed successfully${NC}"
+}
+
+# macOS configuration
+macos_configure() {
+  echo "${BLUE}${BOLD}Configuring macOS settings...${NC}"
+
+  # Load default configuration
+  if [[ -f "$HOME/.dotfiles/zsh/tools/macos/defaults.zsh" ]]; then
+    source "$HOME/.dotfiles/zsh/tools/macos/defaults.zsh"
+    apply_recommended_defaults
+  else
+    echo "${RED}macOS defaults configuration not found${NC}"
+  fi
+
+  # Configure iTerm2 if installed
+  if [[ -d "/Applications/iTerm.app" ]]; then
+    echo "${YELLOW}Configuring iTerm2...${NC}"
+    # Set custom preferences directory
+    defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$HOME/.dotfiles/.config/iterm2"
+    # Tell iTerm2 to use the custom preferences
+    defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+  fi
+
+  echo "${GREEN}${BOLD}✓ macOS configured successfully${NC}"
+}
+
+# Linux installation
+linux_install() {
+  echo "${BLUE}${BOLD}Installing Linux packages...${NC}"
+
+  # Detect distribution
+  if [[ -f /etc/os-release ]]; then
+    . /etc/os-release
+    DISTRO=$ID
+  else
+    DISTRO="unknown"
+  fi
+
+  case "$DISTRO" in
+    ubuntu|debian)
+      echo "${YELLOW}Detected Debian/Ubuntu-based distribution${NC}"
+      echo "${YELLOW}Updating package lists...${NC}"
+      sudo apt update
+
+      echo "${YELLOW}Installing essential packages...${NC}"
+      sudo apt install -y \
+        git \
+        zsh \
+        curl \
+        wget \
+        neovim \
+        tmux \
+        fzf \
+        ripgrep \
+        bat \
+        fd-find \
+        tree \
+        htop \
+        jq \
+        build-essential
+      ;;
+
+    fedora|centos|rhel)
+      echo "${YELLOW}Detected Fedora/RHEL-based distribution${NC}"
+      echo "${YELLOW}Updating package lists...${NC}"
+      sudo dnf check-update
+
+      echo "${YELLOW}Installing essential packages...${NC}"
+      sudo dnf install -y \
+        git \
+        zsh \
+        curl \
+        wget \
+        neovim \
+        tmux \
+        fzf \
+        ripgrep \
+        bat \
+        fd-find \
+        tree \
+        htop \
+        jq \
+        gcc \
+        gcc-c++ \
+        make
+      ;;
+
+    arch|manjaro)
+      echo "${YELLOW}Detected Arch-based distribution${NC}"
+      echo "${YELLOW}Updating package lists...${NC}"
+      sudo pacman -Sy
+
+      echo "${YELLOW}Installing essential packages...${NC}"
+      sudo pacman -S --noconfirm \
+        git \
+        zsh \
+        curl \
+        wget \
+        neovim \
+        tmux \
+        fzf \
+        ripgrep \
+        bat \
+        fd \
+        tree \
+        htop \
+        jq \
+        base-devel
+      ;;
+
+    *)
+      echo "${RED}Unsupported Linux distribution: $DISTRO${NC}"
+      echo "${YELLOW}Please install packages manually${NC}"
+      return 1
+      ;;
+  esac
+
+  echo "${GREEN}${BOLD}✓ Linux packages installed successfully${NC}"
+}
+
+# Linux configuration
+linux_configure() {
+  echo "${BLUE}${BOLD}Configuring Linux settings...${NC}"
+
+  # Set ZSH as default shell if it's not already
+  if [[ "$SHELL" != *"zsh"* ]]; then
+    echo "${YELLOW}Setting ZSH as default shell...${NC}"
+    chsh -s $(which zsh)
+  fi
+
+  # Configure Gnome settings if running Gnome
+  if [[ "$XDG_CURRENT_DESKTOP" == *"GNOME"* ]]; then
+    echo "${YELLOW}Configuring GNOME settings...${NC}"
+
+    # Set dark theme
+    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+
+    # Set reasonable font scaling
+    gsettings set org.gnome.desktop.interface text-scaling-factor 1.0
+
+    # Set reasonable click policy
+    gsettings set org.gnome.desktop.peripherals.mouse click-method 'default'
+
+    echo "${GREEN}GNOME settings configured${NC}"
+  fi
+
+  echo "${GREEN}${BOLD}✓ Linux configured successfully${NC}"
+}
+
+# Unknown platform
+unknown_platform() {
+  echo "${RED}${BOLD}Unsupported platform: $(uname -s)${NC}"
+  echo "${YELLOW}This script only supports macOS and Linux${NC}"
+  exit 1
+}
+
+# Main function
+main() {
+  print_header
+
+  # If no arguments provided, print help
+  if [[ $# -eq 0 ]]; then
+    print_help
+    exit 0
+  fi
+
+  # Parse arguments
+  case "$1" in
+    -i|--install)
+      if [[ "$PLATFORM" == "macos" ]]; then
+        macos_install
+      elif [[ "$PLATFORM" == "linux" ]]; then
+        linux_install
+      else
+        unknown_platform
+      fi
+      ;;
+
+    -c|--configure)
+      if [[ "$PLATFORM" == "macos" ]]; then
+        macos_configure
+      elif [[ "$PLATFORM" == "linux" ]]; then
+        linux_configure
+      else
+        unknown_platform
+      fi
+      ;;
+
+    -a|--all)
+      if [[ "$PLATFORM" == "macos" ]]; then
+        macos_install
+        echo ""
+        macos_configure
+      elif [[ "$PLATFORM" == "linux" ]]; then
+        linux_install
+        echo ""
+        linux_configure
+      else
+        unknown_platform
+      fi
+      ;;
+
+    -h|--help)
+      print_help
+      ;;
