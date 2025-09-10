@@ -82,9 +82,9 @@
   line-numbers-zero-style       = "#3b4261"
 
 [user]
-	email = contact@vogelino.com
+	email = lucas@deepjudge.ai
 	name = Lucas Vogel
-	signingkey = /Users/vogelino/.ssh/id_vogelino_macbook_air
+	signingkey = ~/.ssh/id_ed25519
 
 [help]
   autocorrect = prompt

@@ -1,4 +1,4 @@
-COMPUTER_NAME="MamaGolomia"
+COMPUTER_NAME="lucasvogel"
 
 osascript -e 'tell application "System Preferences" to quit'
 
@@ -336,4 +336,3 @@ defaults write com.apple.commerce AutoUpdateRestartRequired -bool true
 for app in "Address Book" "Calendar" "Contacts" "Dock" "Finder" "Mail" "Safari" "SystemUIServer" "iCal"; do
   killall "${app}" &> /dev/null
 done
-

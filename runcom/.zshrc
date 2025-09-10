@@ -40,12 +40,6 @@ for DOTFILE in "$DOTFILES_DIR"/system/.{path,env,fzf,function,function_*,alias,a
   [ -f "$DOTFILE" ] && . "$DOTFILE"
 done
 
-if [ "$OS" = "MacOS" ]; then
-  for DOTFILE in "$DOTFILES_DIR"/system/.{env,alias}.macos; do
-    [ -f "$DOTFILE" ] && . "$DOTFILE"
-  done
-fi
-
 # Load zsh plugins
 source "$DOTFILES_DIR/zsh/.plugins"
 
