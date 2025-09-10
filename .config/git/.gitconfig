@@ -5,6 +5,7 @@
   excludesfile = ~/.gitignore_global
   autocrlf = input
   editor = nvim
+	attributesfile = ~/.gitattributes
 
 [column]
    ui = auto
@@ -38,6 +39,7 @@
 
 [merge]
   tool = vimdiff
+  ff = false
 
 [diff]
   tool = vimdiff
@@ -58,7 +60,7 @@
 	format = ssh
 
 [pull]
-  ff = false
+  rebase = true
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
@@ -82,7 +84,6 @@
   line-numbers-plus-style       = "#399a96"
   line-numbers-zero-style       = "#3b4261"
 
-
 [help]
   autocorrect = prompt
 
@@ -94,3 +95,9 @@
   autoSquash = true
   autoStash = true
   updateRefs = true
+
+[alias]
+	diff-image = "!f() { cd -- \"${GIT_PREFIX:-.}\"; GIT_DIFF_IMAGE_ENABLED=1 git diff \"$@\"; }; f"
+
+[diff "image"]
+	command = ~/Desktop/git-diff-image/git_diff_image
