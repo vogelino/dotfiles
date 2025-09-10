@@ -1,0 +1,4 @@
+[user]
+	email = myemail@example.com
+	name = Jane Doe
+	signingkey = ~/.ssh/id_rsa

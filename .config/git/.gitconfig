@@ -1,5 +1,8 @@
+[include]
+  path = ~/.gitconfig.local
+
 [core]
-  excludesfile = /Users/lucasvogel/.gitignore_global
+  excludesfile = ~/.gitignore_global
   autocrlf = input
   editor = nvim
 
@@ -49,7 +52,6 @@
 [commit]
 	gpgsign = true
   verbose = true
-  # template = /Users/lucasvogel/.stCommitMsg
 
 [gpg]
 	program = /opt/homebrew/bin/gpg
@@ -80,10 +82,6 @@
   line-numbers-plus-style       = "#399a96"
   line-numbers-zero-style       = "#3b4261"
 
-[user]
-	email = contact@vogelino.com
-	name = Lucas Vogel
-	signingkey = ~/.ssh/id_vogelino_macbook_air
 
 [help]
   autocorrect = prompt

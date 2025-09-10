@@ -86,7 +86,8 @@ mkdir -p "$HOME/Library/Application Support/com.mitchellh.ghostty"
 backup_and_symlink_file "$DOTFILES_DIR/.config/ghostty/config" "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
 
 # GIT
-backup_and_symlink_dir "$DOTFILES_DIR/.config/git" "$HOME/.config/git"
+backup_and_symlink_file "$DOTFILES_DIR/.config/git/.gitconfig.local" "$HOME/.gitconfig.local"
+backup_and_symlink_file "$DOTFILES_DIR/.config/git/.gitconfig" "$HOME/.gitconfig"
 
 # GLOW
 backup_and_symlink_dir "$DOTFILES_DIR/.config/glow" "$HOME/.config/glow"
