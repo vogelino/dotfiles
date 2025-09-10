@@ -5,7 +5,8 @@
 #    brew bundle --file=/path/to/Brewfile
 
 tap "goles/battery"
-tap "homebrew/bundle"
+tap "joshmedeski/sesh"
+tap "romkatv/powerlevel10k"
 tap "sachaos/todoist"
 tap "drn/tap"
 
