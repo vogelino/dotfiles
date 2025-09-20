@@ -40,6 +40,7 @@ alias dots='e ~/.dotfiles/.config/sesh/sesh.toml'
 alias cat='bat --style="grid"'
 
 # CD paths
+alias cd="z" # Remap cd to use the z command from zoxide, a better cd command
 alias r="cd ~/repos"
 
 # Apps
