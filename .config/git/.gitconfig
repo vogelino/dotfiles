@@ -100,4 +100,4 @@
 	diff-image = "!f() { cd -- \"${GIT_PREFIX:-.}\"; GIT_DIFF_IMAGE_ENABLED=1 git diff \"$@\"; }; f"
 
 [diff "image"]
-	command = ~/Desktop/git-diff-image/git_diff_image
+	command = ~/bin/diff-image
