@@ -22,6 +22,10 @@
   default = simple
   autoSetupRemote = true
   followTags = true
+  force-with-lease = true
+
+[status]
+  showUntrackedFiles = all
 
 [fetch]
   prune = true
@@ -39,7 +43,7 @@
 
 [merge]
   tool = vimdiff
-  ff = false
+  ff = only
 
 [diff]
   tool = vimdiff
@@ -61,6 +65,7 @@
 
 [pull]
   rebase = true
+  ff = only
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
@@ -95,6 +100,7 @@
   autoSquash = true
   autoStash = true
   updateRefs = true
+  missingCommitsCheck = error
 
 [alias]
 	diff-image = "!f() { cd -- \"${GIT_PREFIX:-.}\"; GIT_DIFF_IMAGE_ENABLED=1 git diff \"$@\"; }; f"
