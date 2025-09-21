@@ -6,6 +6,10 @@
   autocrlf = input
   editor = nvim
 	attributesfile = ~/.gitattributes
+	pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
 
 [column]
    ui = auto
@@ -42,22 +46,30 @@
   smudge = git-lfs smudge -- %f
 
 [merge]
-  tool = vimdiff
+  tool = sourcetree
   ff = only
+  conflictStyle = zdiff3
+
+[mergetool]
+  prompt = false
 
 [diff]
-  tool = vimdiff
+  tool = sourcetree
   algorithm = histogram
   colorMoved = plain
   mnemonicPrefix = true
   renames = true
+
+[difftool]
+  prompt = false
 
 [tag]
   sort = version:refname
 
 [commit]
 	gpgsign = true
-  verbose = true
+	verbose = true
+	template = ~/.stCommitMsg
 
 [gpg]
 	program = /opt/homebrew/bin/gpg
@@ -77,6 +89,8 @@
   defaultBranch = main
 
 [delta]
+  navigate = true  # use n and N to move between diff sections
+  dark = true      # or light = true, or omit for auto-detection
   minus-style                   = syntax "#37222c"
   minus-non-emph-style          = syntax "#37222c"
   minus-emph-style              = syntax "#713137"
@@ -88,6 +102,7 @@
   plus-empty-line-marker-style  = syntax "#20303b"
   line-numbers-plus-style       = "#399a96"
   line-numbers-zero-style       = "#3b4261"
+  line-numbers = true
 
 [help]
   autocorrect = prompt
@@ -107,3 +122,12 @@
 
 [diff "image"]
 	command = ~/bin/diff-image
+
+[difftool "sourcetree"]
+	cmd = opendiff "$LOCAL" "$REMOTE"
+	path = 
+
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh "$LOCAL" "$REMOTE" -ancestor "$BASE" -merge "$MERGED"
+	trustExitCode = true
+

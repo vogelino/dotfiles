@@ -45,6 +45,7 @@ cask "vlc"
 # Development Tools
 cask "docker"
 cask "ghostty"
+cask "sourcetree"
 
 # Quick Look Plugins (https://github.com/sindresorhus/quick-look-plugins)
 cask "qlcolorcode"
