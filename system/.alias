@@ -25,7 +25,7 @@ alias e='nvim'
 # alias e='$EDITOR'
 alias x='exit'
 alias k='clear'
-alias r='renamer' 
+alias r='renamer'
 alias icat="kitty +kitten icat"
 alias mdn="glow --style ~/.dotfiles/.config/glow/glow.styles.json"
 alias json="fx"
@@ -64,3 +64,6 @@ alias pp="lsof -nP -iTCP -sTCP:LISTEN | grep "
 
 # Source the zsh config
 alias so='source ~/.zshrc && clear'
+
+# Git overrides
+alias glsr='serie -p kitty'

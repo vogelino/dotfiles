@@ -54,3 +54,5 @@ brew "yazi"
 brew "yq"
 brew "zsh"
 brew "git-delta"
+brew "serie"
+
