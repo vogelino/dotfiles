@@ -1,2 +1,3 @@
 system/.alias.custom
 .config/git/.gitconfig.local
+.config/ssh/config.local

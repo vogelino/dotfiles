@@ -89,6 +89,10 @@ backup_and_symlink_file "$DOTFILES_DIR/.config/ghostty/config" "$HOME/Library/Ap
 backup_and_symlink_file "$DOTFILES_DIR/.config/git/.gitconfig.local" "$HOME/.gitconfig.local"
 backup_and_symlink_file "$DOTFILES_DIR/.config/git/.gitconfig" "$HOME/.gitconfig"
 
+# SSH
+backup_and_symlink_file "$DOTFILES_DIR/.config/ssh/config.local" "$HOME/.ssh/config.local"
+backup_and_symlink_file "$DOTFILES_DIR/.config/ssh/config" "$HOME/.ssh/config"
+
 # GLOW
 backup_and_symlink_dir "$DOTFILES_DIR/.config/glow" "$HOME/.config/glow"
 
