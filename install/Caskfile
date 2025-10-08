@@ -23,6 +23,7 @@ cask "proton-drive"
 cask "proton-mail"
 cask "proton-pass"
 cask "protonvpn"
+cask "obidian"
 
 # Messaging Apps
 cask "signal"
