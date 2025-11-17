@@ -26,7 +26,7 @@ name = "DeepJudge"
 path = "~/repos/dj2"
 startup_command = "tilt up --context docker-desktop -- --config-path config/dev-tilt.local.jsonnet"
 
-[[obsidian]]
+[[session]]
 name = "Obsidian"
 path = "~/repos/obsidian"
 startup_command = "e ."
