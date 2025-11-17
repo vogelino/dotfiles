@@ -109,7 +109,7 @@
   autocorrect = prompt
 
 [rerere]
-  enabled = true
+	enabled = true
   autoupdate = true
 
 [rebase]
