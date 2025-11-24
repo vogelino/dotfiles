@@ -196,3 +196,74 @@ gcc() {
   fi
   git-cz
 }
+
+glas() {
+  local branch
+
+  # AWK script to format file changes with colors
+  local awk_format_files='
+  {
+    # Parse git diff output
+    if ($1 == "-" && $2 == "-") {
+      file = $3
+    } else {
+      added = $1
+      deleted = $2
+      file = $3
+    }
+
+    # Check if file is an image (push to end)
+    is_image = (file ~ /\.(png|jpg|jpeg|gif|svg|webp|bmp|ico|tiff)$/)
+    sort_key = (is_image ? "1" : "0") "\t" file
+
+    # Format output with colors
+    if ($1 == "-" && $2 == "-") {
+      printf "%s\t\033[36mR  %s\033[0m\n", sort_key, file
+    } else if (added == "0" && deleted > 0) {
+      printf "%s\t\033[31mD  -%s %s\033[0m\n", sort_key, deleted, file
+    } else if (deleted == "0" && added > 0) {
+      printf "%s\t\033[32mA  +%s %s\033[0m\n", sort_key, added, file
+    } else {
+      printf "%s\t\033[33mM  +%s -%s %s\033[0m\n", sort_key, added, deleted, file
+    }
+  }'
+
+  # Build the preview command
+  local preview_cmd='
+    BRANCH=$(echo {1} | sed "s/\x1b\[[0-9;]*m//g")
+    BASE=$(git rev-parse --verify main 2>/dev/null && echo "main" || echo "master")
+
+    echo "Branch: $BRANCH"
+    echo
+
+    git log --oneline --color=always -n 5 "$BRANCH"
+    echo
+
+    echo "Changed files from $BASE:"
+    echo
+
+    git diff --numstat "$BASE"..."$BRANCH" 2>/dev/null \
+      | awk '"'"''"${awk_format_files}"''"'"' \
+      | sort -k1,2 \
+      | cut -f3- \
+      | head -100
+
+    echo
+    git diff --stat --color=always "$BASE"..."$BRANCH" 2>/dev/null | tail -1 \
+      || echo "No changes from $BASE"
+  '
+
+  # Get list of branches and let user select with fzf
+  branch=$(git for-each-ref \
+    --sort=-committerdate \
+    refs/heads/ \
+    --format='%(color:yellow)%(refname:short)%(color:reset)' \
+    | fzf --ansi \
+      --preview-window=right:50%:wrap \
+      --preview "$preview_cmd"
+  ) || return
+
+  # Clean ANSI codes and switch to selected branch
+  branch=$(echo "$branch" | sed 's/\x1b\[[0-9;]*m//g')
+  git switch "$branch"
+}

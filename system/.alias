@@ -67,7 +67,7 @@ alias so='source ~/.zshrc && clear'
 
 # Git overrides
 alias glsr='serie -p kitty'
-alias glb="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(align:35)%(color:yellow)%(refname:short)%(color:reset)%(end) - %(color:red)%(objectname:short)%(color:reset) - %(align:40)%(contents:subject)%(end) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
+alias glb="git for-each-ref --sort=-committerdate refs/heads/ --format='%(color:yellow)%(refname:short)%(color:reset)'"
 
 # Workmux
 alias wma="workmux add"
