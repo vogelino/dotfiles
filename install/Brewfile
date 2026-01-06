@@ -34,7 +34,7 @@ brew "joshmedeski/sesh/sesh"
 brew "jq"
 brew "lazygit"
 brew "neovim"
-brew "nvm"
+brew "fnm" # Fast Node Manager
 brew "ollama"
 brew "parallel"
 brew "pipe-rename"

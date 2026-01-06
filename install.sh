@@ -156,14 +156,6 @@ else
     git clone https://github.com/lukechilds/zsh-better-npm-completion "$ZSH_CUSTOM/plugins/zsh-better-npm-completion"
 fi
 
-# zsh-nvm
-if [ -d "$ZSH_CUSTOM/plugins/zsh-nvm" ]; then
-    echo "zsh-nvm is already installed. Updating..."
-    cd "$ZSH_CUSTOM/plugins/zsh-nvm" && git pull
-else
-    echo "Installing zsh-nvm..."
-    git clone https://github.com/lukechilds/zsh-nvm "$ZSH_CUSTOM/plugins/zsh-nvm"
-fi
 
 # -------------------------------------------------------
 # MACOS SCRIPTS
