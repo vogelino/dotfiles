@@ -63,11 +63,26 @@ fi
 
 test -e $HOME/.iterm2_shell_integration.zsh && source $HOME/.iterm2_shell_integration.zsh || true
 
+# Lazy-load pyenv - only initialize when actually used
 if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  pyenv() {
+    unset -f pyenv
+    eval "$(command pyenv init -)"
+    pyenv "$@"
+  }
 fi
 
-eval "$(rbenv init - zsh)"
+# Lazy-load rbenv - only initialize when actually used
+if command -v rbenv 1>/dev/null 2>&1; then
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  rbenv() {
+    unset -f rbenv
+    eval "$(command rbenv init - zsh)"
+    rbenv "$@"
+  }
+fi
 
 
 autoload -U +X bashcompinit && bashcompinit
@@ -83,14 +98,7 @@ complete -o nospace -C /opt/homebrew/bin/terraform terraform
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
 export GPG_TTY=$(tty)
-
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # direnv
 eval "$(direnv hook zsh)"
@@ -126,12 +134,12 @@ export PATH="$HOME/.codeium/windsurf/bin:$PATH"
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=($HOME/.docker/completions $fpath)
 autoload -Uz compinit
-compinit
-# End of Docker CLI completions
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/lucasvogel/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
+# Only check cache once per day for faster startup
+if [[ -n ${HOME}/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
 # End of Docker CLI completions
 
 # Kiro editor
