@@ -133,6 +133,9 @@ export PATH="$HOME/.codeium/windsurf/bin:$PATH"
 
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=($HOME/.docker/completions $fpath)
+# End of Docker CLI completions
+
+# Speed up compinit by checking cache only once daily
 autoload -Uz compinit
 # Only check cache once per day for faster startup
 if [[ -n ${HOME}/.zcompdump(#qN.mh+24) ]]; then
@@ -140,7 +143,6 @@ if [[ -n ${HOME}/.zcompdump(#qN.mh+24) ]]; then
 else
   compinit -C
 fi
-# End of Docker CLI completions
 
 # Kiro editor
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
