@@ -24,6 +24,7 @@ prepend-path "$HOME/.deno/bin"
 prepend-path "$HOME/.cargo/bin"
 prepend-path "$PYENV_ROOT/bin"
 prepend-path "$HOME/.local/bin"
+prepend-path "$HOME/.opencode/bin"
 prepend-path "/usr/local/go/bin"
 prepend-path "$GOPATH/bin"
 
