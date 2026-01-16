@@ -56,4 +56,5 @@ brew "zsh"
 brew "git-delta"
 brew "serie"
 brew "raine/workmux/workmux"
+brew "reattach-to-user-namespace"
 
