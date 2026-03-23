@@ -1,8 +1,15 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  // Theme configuration
   "theme": "opencode",
-  "model": "anthropic/claude-sonnet-4-5",
   "autoupdate": true,
+  "mcp": {
+    "chrome-devtools": {
+      "type": "local",
+      "command": ["npx", "-y", "chrome-devtools-mcp@latest"]
+    },
+    "shadcn": {
+      "type": "local",
+      "command": ["npx", "shadcn@latest", "mcp"]
+    }
+  }
 }
-
