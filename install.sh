@@ -33,7 +33,7 @@ backup_and_symlink_file() {
 
         # It exists but isn't the correct symlink, so back it up
         echo "⚠️ Backing up existing $dst to ${dst}.bak"
-        cp -r "$dst" "${dst}.bak"
+        mv -r "$dst" "${dst}.bak"
     fi
 
     # Create the symlink
@@ -55,7 +55,7 @@ backup_and_symlink_dir() {
 
         # It exists but isn't the correct symlink, so back it up
         echo "⚠️ Backing up existing $dst to ${dst}.bak"
-        cp -r "$dst" "${dst}.bak"
+        mv -r "$dst" "${dst}.bak"
     fi
 
     # Create the symlink
