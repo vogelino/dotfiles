@@ -4,6 +4,7 @@ startup_command = "k"
 [[session]]
 name = "Dotfiles ⚙️"
 path = "~/.dotfiles"
+windows = ["LAZYGIT"]
 startup_command = "nvim ."
 
 [[session]]
@@ -27,6 +28,16 @@ path = "~/repos/dj2"
 windows = ["LAZYGIT", "CLAUDE"]
 startup_command = "~/.dotfiles/.config/sesh/scripts/dj2-window-processes.sh"
 
+[[session]]
+name = "Olfactive Quiz Game Celia"
+path = "~/repos/quiz-olfactif-celia/"
+windows = ["EDITOR", "LAZYGIT"]
+startup_command = "pnpm run dev"
+
+[[window]]
+name = "EDITOR"
+startup_script = "nvim ."
+
 [[window]]
 name = "LAZYGIT"
 startup_script = "lazygit"
@@ -38,5 +49,4 @@ startup_script = "~/.dotfiles/.config/sesh/scripts/dj2-window-claude.sh"
 [[obsidian]]
 name = "Obsidian"
 path = "~/repos/obsidian"
-
 
