@@ -15,14 +15,5 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.wrap = true
     vim.opt_local.spell = true
     vim.opt_local.spelllang = { "en_us" }
-
-    -- Auto-enable zen-mode for better reading experience
-    vim.defer_fn(function()
-      require("zen-mode").open({
-        window = {
-          width = .6
-        }
-      })
-    end, 100)
   end,
 })
