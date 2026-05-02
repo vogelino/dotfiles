@@ -4,7 +4,7 @@ return {
   "nvimtools/none-ls.nvim",
   opts = function(_, opts)
     -- opts variable is the default configuration table for the setup function call
-    -- local null_ls = require "null-ls"
+    local null_ls = require "null-ls"
 
     -- Check supported formatters and linters
     -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/formatting
@@ -16,6 +16,22 @@ return {
       -- Set a formatter
       -- null_ls.builtins.formatting.stylua,
       -- null_ls.builtins.formatting.prettier,
+      null_ls.builtins.diagnostics.stylelint.with {
+        condition = function(utils)
+          return utils.root_has_file {
+            ".stylelintrc",
+            ".stylelintrc.cjs",
+            ".stylelintrc.js",
+            ".stylelintrc.json",
+            ".stylelintrc.mjs",
+            ".stylelintrc.yaml",
+            ".stylelintrc.yml",
+            "stylelint.config.cjs",
+            "stylelint.config.js",
+            "stylelint.config.mjs",
+          }
+        end,
+      },
     })
   end,
 }

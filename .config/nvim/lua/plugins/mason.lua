@@ -8,7 +8,9 @@ return {
     -- overrides `require("mason-lspconfig").setup(...)`
     opts = {
       ensure_installed = {
+        "eslint",
         "lua_ls",
+        "tailwindcss",
         "ts_ls",
         -- add more arguments for adding more language servers
       },
@@ -20,6 +22,7 @@ return {
     -- overrides `require("mason-null-ls").setup(...)`
     opts = {
       ensure_installed = {
+        "stylelint",
         "stylua",
         -- add more arguments for adding more null-ls sources
       },
