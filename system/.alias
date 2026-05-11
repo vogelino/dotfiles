@@ -77,6 +77,7 @@ alias wml="workmux list"
 
 # GitHub Stack CLI
 alias gs="gh stack"
+alias gsv="gh stack view"
 alias gsa="gh stack add"
 alias gdu="gh stack up"
 alias gsd="gh stack down"
