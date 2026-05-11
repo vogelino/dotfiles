@@ -75,3 +75,18 @@ alias wmr="workmux remove"
 alias wmm="workmux merge"
 alias wml="workmux list"
 
+# GitHub Stack CLI
+alias gs="gh stack"
+alias gsa="gh stack add"
+alias gdu="gh stack up"
+alias gsd="gh stack down"
+alias gst="gh stack top"
+alias gsb="gh stack bottom"
+alias gsi="gh stack inint"
+alias gsp="gh stack push"
+alias gsr="gh stack rebase"
+alias gss="gh stack sync"
+alias gsw="gh stack switch"
+alias gsc="gh stack checkout"
+alias gsm="gh stack merge"
+
