@@ -17,3 +17,4 @@ git:
   merging:
     args: '--no-ff'
   parseEmoji: true
+  overrideGpg: true
