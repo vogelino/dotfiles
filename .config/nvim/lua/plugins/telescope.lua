@@ -3,6 +3,17 @@ return {
   "nvim-telescope/telescope.nvim",
   opts = function(_, opts)
     opts.defaults = opts.defaults or {}
+    opts.defaults.mappings = vim.tbl_deep_extend("force", opts.defaults.mappings or {}, {
+      i = {
+        ["<C-j>"] = "move_selection_next",
+        ["<C-k>"] = "move_selection_previous",
+      },
+      n = {
+        ["<C-j>"] = "move_selection_next",
+        ["<C-k>"] = "move_selection_previous",
+      },
+    })
+
     opts.defaults.qflist_previewer = function(previewer_opts)
       local previewer = require("telescope.previewers").vim_buffer_qflist.new(previewer_opts)
       if not previewer_opts.show_path_in_preview then return previewer end

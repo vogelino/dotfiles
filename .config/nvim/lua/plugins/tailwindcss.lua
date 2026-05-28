@@ -78,14 +78,7 @@ return {
     },
   },
   {
-    "NvChad/nvim-colorizer.lua",
-    opts = function(_, opts)
-      opts.user_default_options = require("astrocore").extend_tbl(opts.user_default_options, {
-        tailwind = "lsp",
-        tailwind_opts = {
-          update_names = true,
-        },
-      })
-    end,
+    "brenoprata10/nvim-highlight-colors",
+    opts = function(_, opts) opts.enable_tailwind = true end,
   },
 }

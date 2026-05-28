@@ -38,7 +38,6 @@ end
 local function lsp_location_picker_opts()
   return {
     entry_maker = code_first_lsp_entry_maker(),
-    jump_type = "never",
     show_path_in_preview = true,
   }
 end
