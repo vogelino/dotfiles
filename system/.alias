@@ -91,3 +91,6 @@ alias gsw="gh stack switch"
 alias gsc="gh stack checkout"
 alias gsm="gh stack merge"
 
+# DeepJudge Specific
+alias djl="pnpm exec eslint components pages features lib state scripts --ext .js,.jsx,.ts,.tsx,.mjs --cache --cache-location .next/cache/eslint/ --quiet --rule 'import/namespace: off' --rule 'import/default: off' --rule 'import/no-named-as-default: off' --rule 'import/no-named-as-default-member: off'"
+
