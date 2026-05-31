@@ -30,9 +30,8 @@ tmux_exec() {
   return 1
 }
 
-# Create the 2x2 pane layout (top 30%, bottom 70%)
-tmux split-window -v -p 70
-tmux split-window -h
+# Create layout: 2 panes side by side on top, 1 full-width pane on bottom
+tmux split-window -v -p 50
 tmux select-pane -U
 tmux split-window -h
 
@@ -42,20 +41,14 @@ sleep 0.5
 # Get pane IDs
 pane_ids=($(tmux list-panes -F '#{pane_id}'))
 
-# Execute commands in each pane
-# Customize these commands for your needs:
-
 # Pane 1 (top-left): Tilt
 tmux_exec "${pane_ids[0]}" "tilt up --context docker-desktop -- --config-path config/dev-tilt.local.jsonnet"
 
-# Pane 2 (top-right): Logs or monitoring
+# Pane 2 (top-right): Storybook
 tmux_exec "${pane_ids[1]}" "pnpm install && cd web/search && pnpm run storybook"
 
-# Pane 3 (bottom-left): Database or other service
+# Pane 3 (bottom, full width): Database or other service
 tmux_exec "${pane_ids[2]}" "bazel run //:venv .venv && source .venv/bin/activate && pip install -e . && alembic upgrade head && clear"
 
-# Pane 4 (bottom-right): General terminal
-tmux_exec "${pane_ids[3]}" "cd web/search && clear"
-
-# Select the first pane
+# Select the bottom pane
 tmux select-pane -t "${pane_ids[2]}"
