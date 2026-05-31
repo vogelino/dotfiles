@@ -96,9 +96,6 @@ backup_and_symlink_file "$DOTFILES_DIR/.config/ssh/config" "$HOME/.ssh/config"
 # GLOW
 backup_and_symlink_dir "$DOTFILES_DIR/.config/glow" "$HOME/.config/glow"
 
-# HERDR
-backup_and_symlink_dir "$DOTFILES_DIR/.config/herdr" "$HOME/.config/herdr"
-
 # LAZYGIT
 backup_and_symlink_dir "$DOTFILES_DIR/.config/lazygit" "$HOME/.config/lazygit"
 
