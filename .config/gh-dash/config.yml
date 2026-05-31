@@ -91,8 +91,13 @@ keybindings:
     - key: C
       name: code review
       command: >
-        tmux new-window -n "PR-{{.PrNumber}}" 
-        'wt switch pr:{{.PrNumber}} -x "opencode --prompt `@code-reviewer: review-pr-for-this-branch`"'
+        tmux new-window -n "PR-{{.PrNumber}}"
+        "wt switch pr:{{.PrNumber}} -x 'claude \"/review {{.PrNumber}}\"'"
+    - key: O
+      name: octo review
+      command: >
+        tmux new-window -n "PR-{{.PrNumber}}"
+        "cd {{.RepoPath}} && nvim -n -c \"lua vim.api.nvim_create_autocmd('FileType',{pattern='octo',once=true,callback=function() vim.defer_fn(function() local n=tonumber(vim.fn.system('gh pr view {{.PrNumber}} --json reviews | grep -c PENDING')) or 0;vim.cmd(n>0 and 'Octo review resume' or 'Octo review start') end,500) end})\" -c 'Octo pr edit {{.PrNumber}}'"
 
 theme:
   ui:
