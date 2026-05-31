@@ -3,7 +3,7 @@
 
 # Show first-run notification setup on startup.
 # Missing also shows onboarding; set false after you've chosen.
-# onboarding = true
+onboarding = false
 
 [theme]
 # Built-in themes: catppuccin, terminal, tokyo-night, dracula, nord,
@@ -39,7 +39,6 @@
 # Most reliable direct bindings are ctrl+letter, function keys, and explicit modified chords.
 # alt+..., cmd/super, and punctuation-with-modifiers may depend on your terminal/tmux setup.
 prefix = "ctrl+a"
-i
 
 # Prefix-mode actions
 # help = "prefix+?"
@@ -48,7 +47,7 @@ i
 # reload_config = "prefix+shift+r"
 # open_notification_target = "prefix+o"
 # workspace_picker = "prefix+w"
-# goto = "prefix+g"
+goto = "prefix+o"
 # new_workspace = "prefix+shift+n"
 # new_worktree = "prefix+shift+g"
 # open_worktree = ""    # optional, unset by default
@@ -99,6 +98,21 @@ i
 # key = "prefix+alt+g"
 # type = "pane"
 # command = "lazygit"
+
+[[keys.command]]
+key = "prefix+shift+s"
+type = "pane"
+command = "~/.config/herdr/scripts/herdr-preset pick"
+
+[[keys.command]]
+key = "prefix+shift+a"
+type = "shell"
+command = "~/.config/herdr/scripts/herdr-preset apply all"
+
+[[keys.command]]
+key = "prefix+alt+g"
+type = "pane"
+command = "lazygit"
 
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
@@ -160,7 +174,7 @@ i
 # herdr = show top-right in-app toasts
 # terminal = ask the outer terminal to show a desktop notification
 # system = ask the OS notification service directly
-# delivery = "off"
+delivery = "herdr"
 
 # Play sounds when agents change state in background workspaces
 [ui.sound]
