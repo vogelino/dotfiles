@@ -25,13 +25,13 @@ startup_command = "tms ~/repos/a-roh"
 [[session]]
 name = "DeepJudge"
 path = "~/repos/dj2"
-windows = ["LAZYGIT", "CLAUDE"]
+windows = ["EDITOR", "CLAUDE", "GITHUB"]
 startup_command = "~/.dotfiles/.config/sesh/scripts/dj2-window-processes.sh"
 
 [[session]]
 name = "Olfactive Quiz Game Celia"
 path = "~/repos/quiz-olfactif-celia/"
-windows = ["EDITOR", "LAZYGIT"]
+windows = ["EDITOR"]
 startup_command = "pnpm run dev"
 
 [[window]]
@@ -44,9 +44,10 @@ startup_script = "lazygit"
 
 [[window]]
 name = "CLAUDE"
-startup_script = "~/.dotfiles/.config/sesh/scripts/dj2-window-claude.sh"
+startup_script = "claude"
 
-[[obsidian]]
-name = "Obsidian"
-path = "~/repos/obsidian"
+[[window]]
+name = "GITHUB"
+startup_script = "gh dash"
+
 
