@@ -12,7 +12,7 @@
   "blink.compat": { "branch": "main", "commit": "2ed6d9a28b07fa6f3bface818470605f8896408c" },
   "catppuccin": { "branch": "main", "commit": "8edd468af4d63212b84d69b2ddb5ffc9023ef5eb" },
   "cmp-dap": { "branch": "master", "commit": "ea92773e84c0ad3288c3bc5e452ac91559669087" },
-  "copilot.lua": { "branch": "master", "commit": "393fd009c39b24dfc4cb4bf6f632288c64b13258" },
+  "copilot.lua": { "branch": "master", "commit": "e8b9be2e51c393bedc893cef3bd1c5555a4d45f5" },
   "friendly-snippets": { "branch": "main", "commit": "6cd7280adead7f586db6fccbd15d2cac7e2188b9" },
   "gitsigns.nvim": { "branch": "main", "commit": "a462f416e2ce4744531c6256252dee99a7d34a83" },
   "guess-indent.nvim": { "branch": "main", "commit": "84a4987ff36798c2fc1169cbaff67960aed9776f" },
