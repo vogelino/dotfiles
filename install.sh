@@ -164,6 +164,21 @@ fi
 
 
 # -------------------------------------------------------
+# GH EXTENSIONS
+# -------------------------------------------------------
+while IFS= read -r extension || [ -n "$extension" ]; do
+    [[ -z "$extension" || "$extension" == \#* ]] && continue
+    name="${extension##*/}"
+    if gh extension list | grep -q "$extension"; then
+        echo "gh extension $name is already installed. Upgrading..."
+        gh extension upgrade "$name"
+    else
+        echo "Installing gh extension $extension..."
+        gh extension install "$extension"
+    fi
+done < "$DOTFILES_DIR/install/GhExtensions"
+
+# -------------------------------------------------------
 # MACOS SCRIPTS
 # -------------------------------------------------------
 
