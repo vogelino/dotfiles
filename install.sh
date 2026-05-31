@@ -111,6 +111,12 @@ backup_and_symlink_dir "$DOTFILES_DIR/.config/sesh" "$HOME/.config/sesh"
 # YAZI
 backup_and_symlink_dir "$DOTFILES_DIR/.config/yazi" "$HOME/.config/yazi"
 
+# WORKTRUNK
+backup_and_symlink_dir "$DOTFILES_DIR/.config/worktrunk" "$HOME/.config/worktrunk"
+
+# GH-DASH
+backup_and_symlink_dir "$DOTFILES_DIR/.config/gh-dash" "$HOME/.config/gh-dash"
+
 # -------------------------------------------------------
 # OH-MY-ZSH
 # -------------------------------------------------------
