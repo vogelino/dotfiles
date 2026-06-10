@@ -2,6 +2,16 @@
 
 ---@type LazySpec
 return {
+  -- AstroNvim v6 routes all Mason installations through mason-tool-installer;
+  -- mason-lspconfig.ensure_installed is nullified at config time when it is present.
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    opts = {
+      ensure_installed = {
+        "biome",
+      },
+    },
+  },
   -- use mason-lspconfig to configure LSP installations
   {
     "mason-org/mason-lspconfig.nvim",

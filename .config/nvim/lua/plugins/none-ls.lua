@@ -14,10 +14,14 @@ return {
     -- (If you wish to replace, use `opts.sources = {}` instead of the `list_insert_unique` function)
     opts.should_attach = function(bufnr) return vim.bo[bufnr].filetype ~= "toml" end
 
+    local has_biome = function(utils) return utils.root_has_file { "biome.json", "biome.jsonc" } end
+
     opts.sources = require("astrocore").list_insert_unique(opts.sources, {
       -- Set a formatter
       -- null_ls.builtins.formatting.stylua,
-      null_ls.builtins.formatting.prettier,
+      null_ls.builtins.formatting.prettier.with {
+        condition = function(utils) return not has_biome(utils) end,
+      },
       null_ls.builtins.diagnostics.stylelint.with {
         condition = function(utils)
           return utils.root_has_file {

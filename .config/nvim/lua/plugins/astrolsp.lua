@@ -49,7 +49,8 @@ local js_ts_filetypes = {
   typescriptreact = true,
 }
 
-local function apply_ts_source_action(bufnr, action_kind)
+local function apply_ts_source_action(bufnr, action_kind, client_names)
+  client_names = client_names or { "ts_ls", "vtsls" }
   local params = vim.lsp.util.make_range_params(0, "utf-8")
   params.context = {
     diagnostics = {},
@@ -61,7 +62,7 @@ local function apply_ts_source_action(bufnr, action_kind)
 
   for client_id, response in pairs(results) do
     local client = vim.lsp.get_client_by_id(client_id)
-    if client and (client.name == "ts_ls" or client.name == "vtsls") then
+    if client and vim.tbl_contains(client_names, client.name) then
       for _, action in ipairs(response.result or {}) do
         if action.edit then vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding or "utf-8") end
         if action.command then client.request_sync("workspace/executeCommand", action.command, 1000, bufnr) end
@@ -74,8 +75,15 @@ end
 local function js_ts_imports_and_format_on_save(args)
   if not js_ts_filetypes[vim.bo[args.buf].filetype] then return end
 
+  local clients = vim.lsp.get_clients { bufnr = args.buf }
+  local has_biome = vim.iter(clients):any(function(c) return c.name == "biome" end)
+
   apply_ts_source_action(args.buf, "source.removeUnusedImports.ts")
-  apply_ts_source_action(args.buf, "source.organizeImports")
+  if has_biome then
+    apply_ts_source_action(args.buf, "source.organizeImports.biome", { "biome" })
+  else
+    apply_ts_source_action(args.buf, "source.organizeImports")
+  end
 
   local astrolsp = require "astrolsp"
   local autoformat = astrolsp.config.formatting.format_on_save
@@ -90,6 +98,29 @@ return {
   "AstroNvim/astrolsp",
   ---@type AstroLSPOpts
   opts = {
+    config = {
+      eslint = {
+        -- Don't start eslint when biome.json is present; biome handles linting
+        root_dir = function(fname)
+          local util = require "lspconfig.util"
+          if util.root_pattern("biome.json", "biome.jsonc")(fname) then return nil end
+          return util.root_pattern(
+            ".eslintrc",
+            ".eslintrc.js",
+            ".eslintrc.cjs",
+            ".eslintrc.yaml",
+            ".eslintrc.yml",
+            ".eslintrc.json",
+            "eslint.config.js",
+            "eslint.config.mjs",
+            "eslint.config.cjs"
+          )(fname)
+        end,
+      },
+      biome = {
+        root_dir = require("lspconfig.util").root_pattern("biome.json", "biome.jsonc"),
+      },
+    },
     formatting = {
       disabled = { "ts_ls", "vtsls" },
       format_on_save = {
