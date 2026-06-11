@@ -1,5 +1,101 @@
 # vogelino's dotfiles
-Vim, Zsh and other terminal tools, configs and sugar.
+
+Vim, Zsh and other terminal tools, configs and sugar. Managed with [GNU Stow](https://www.gnu.org/software/stow/).
+
+## Quick Start
+
+```bash
+# Clone to ~/.dotfiles (or any location)
+git clone https://github.com/vogelino/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+
+# Run installation
+./install.sh
+```
+
+## Installation Order
+
+The `install.sh` script performs these steps:
+
+1. **Homebrew** - Installs/updates Homebrew, runs `brew bundle` on Brewfile (and Caskfile on macOS)
+2. **GNU Stow** - Ensures stow is installed
+3. **Local overrides** - Creates empty local override files if missing
+4. **Stow packages** - Symlinks all packages to `$HOME`
+5. **Oh-My-Zsh** - Installs or updates oh-my-zsh
+6. **ZSH plugins** - Clones/updates zsh-autosuggestions, zsh-syntax-highlighting, zsh-better-npm-completion
+7. **GitHub CLI extensions** - Installs extensions from `install/GhExtensions`
+8. **macOS defaults** - Applies system preferences (macOS only)
+
+## Package Layout
+
+Each package in `packages/` mirrors the target structure relative to `$HOME`:
+
+```
+packages/
+├── zsh/.zshrc                    → ~/.zshrc
+├── tmux/.tmux.conf               → ~/.tmux.conf
+├── git/
+│   ├── .gitconfig                → ~/.gitconfig
+│   └── .gitconfig.local          → ~/.gitconfig.local
+├── ssh/.ssh/
+│   ├── config                    → ~/.ssh/config
+│   └── config.local              → ~/.ssh/config.local
+├── nvim/.config/nvim/            → ~/.config/nvim/
+├── lazygit/.config/lazygit/      → ~/.config/lazygit/
+├── karabiner/.config/karabiner/  → ~/.config/karabiner/
+├── macos/Library/...             → ~/Library/... (macOS only)
+└── ...
+```
+
+The `macos` package is only stowed on macOS (for apps using non-standard paths like Ghostty).
+
+## Local Overrides
+
+Machine-specific settings go in local override files (gitignored):
+
+| File | Purpose |
+|------|---------|
+| `system/.alias.custom` | Machine-specific aliases (sourced by .zshrc) |
+| `packages/git/.gitconfig.local` | Git user.name, user.email, signing key |
+| `packages/ssh/.ssh/config.local` | Machine-specific SSH hosts |
+
+Example `.gitconfig.local`:
+```ini
+[user]
+    name = Your Name
+    email = you@example.com
+    signingkey = ABC123
+```
+
+## Backup Behavior
+
+When stowing, if a file already exists at the target location:
+- **Regular files**: Backed up to `<filename>.backup_<timestamp>`
+- **Stale symlinks**: Removed automatically
+- **Existing symlinks to our packages**: Skipped (already managed)
+
+## Uninstall
+
+To remove all symlinks:
+
+```bash
+./uninstall.sh
+```
+
+This removes symlinks only (not Homebrew packages, oh-my-zsh, or plugins).
+
+## Adding a New Package
+
+1. Create directory: `mkdir -p packages/myapp/.config/myapp`
+2. Add config files matching the target structure
+3. Run `stow -d packages -t $HOME myapp` or re-run `install.sh`
+
+## Platform Support
+
+- **macOS**: Full support (Homebrew, Casks, macOS defaults, Ghostty)
+- **Linux**: Supported (skips Caskfile and macOS-specific packages)
+
+---
 
 ## Tips
 

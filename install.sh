@@ -4,6 +4,7 @@ set -e
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PACKAGES_DIR="$DOTFILES_DIR/packages"
+BACKUP_TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 
 # ============================================================================
 # UTILITY FUNCTIONS
@@ -13,10 +14,6 @@ log_info() { echo -e "\033[34m[INFO]\033[0m $1"; }
 log_success() { echo -e "\033[32m[OK]\033[0m $1"; }
 log_warning() { echo -e "\033[33m[WARN]\033[0m $1"; }
 log_error() { echo -e "\033[31m[ERROR]\033[0m $1"; }
-
-# ============================================================================
-# HOMEBREW
-# ============================================================================
 
 ask_yes_no() {
     local prompt="$1"
@@ -31,19 +28,53 @@ ask_yes_no() {
     done
 }
 
+is_macos() {
+    [ "$(uname -s)" = "Darwin" ]
+}
+
+is_linux() {
+    [ "$(uname -s)" = "Linux" ]
+}
+
+# ============================================================================
+# HOMEBREW
+# ============================================================================
+
+init_homebrew_path() {
+    # Homebrew doesn't update the current shell's PATH after install
+    # Check common prefixes and initialize if found
+    if command -v brew >/dev/null 2>&1; then
+        return 0
+    fi
+
+    local brew_paths=(
+        "/opt/homebrew/bin/brew"      # Apple Silicon macOS
+        "/usr/local/bin/brew"          # Intel macOS
+        "/home/linuxbrew/.linuxbrew/bin/brew"  # Linuxbrew
+        "$HOME/.linuxbrew/bin/brew"    # Linuxbrew (user install)
+    )
+
+    for brew_path in "${brew_paths[@]}"; do
+        if [ -x "$brew_path" ]; then
+            log_info "Initializing Homebrew from $brew_path..."
+            eval "$("$brew_path" shellenv)"
+            return 0
+        fi
+    done
+
+    return 1
+}
+
 trust_untrusted_formulae() {
     local brewfile="$1"
-    local output
+    local output="$2"
     local untrusted_formulae=()
 
-    # Run brew bundle and capture output to find untrusted formulae
-    output=$(brew bundle --file="$brewfile" 2>&1) || true
-
-    # Extract untrusted formulae from the output
+    # Extract untrusted formulae from error messages
+    # Format: "Refusing to load formula <tap>/<formula> from untrusted tap <tap>"
     while IFS= read -r line; do
-        if [[ "$line" =~ "Refusing to load formula".*"from untrusted tap" ]]; then
-            # Extract the formula name (e.g., "drn/tap/nerd-ls")
-            formula=$(echo "$line" | grep -oE '[a-zA-Z0-9_-]+/[a-zA-Z0-9_-]+/[a-zA-Z0-9_-]+')
+        if [[ "$line" =~ Refusing\ to\ load\ formula\ ([a-zA-Z0-9_-]+/[a-zA-Z0-9_-]+/[a-zA-Z0-9_-]+)\ from\ untrusted ]]; then
+            formula="${BASH_REMATCH[1]}"
             if [[ -n "$formula" ]]; then
                 untrusted_formulae+=("$formula")
             fi
@@ -66,23 +97,19 @@ trust_untrusted_formulae() {
             return 0  # Signal to retry
         else
             log_warning "Skipping untrusted formulae. Some packages may not be installed."
-            return 1  # Signal not to retry
+            return 2  # User declined, but not a fatal error
         fi
     fi
 
-    # Check if brew bundle actually failed for other reasons
-    if echo "$output" | grep -q "^Error:"; then
-        echo "$output"
-        return 1
-    fi
-
-    return 1  # No untrusted formulae found, don't retry
+    return 1  # No untrusted formulae found
 }
 
 run_brew_bundle() {
     local brewfile="$1"
-    local max_retries=10  # Allow up to 10 untrusted taps to be trusted
+    local max_retries=10
     local attempt=1
+    local output
+    local exit_code
 
     while [[ $attempt -le $max_retries ]]; do
         if [[ $attempt -eq 1 ]]; then
@@ -91,35 +118,62 @@ run_brew_bundle() {
             log_info "Retrying $(basename "$brewfile")... (attempt $attempt)"
         fi
 
-        if brew bundle --file="$brewfile" 2>&1; then
+        # Capture both output and exit code
+        output=$(brew bundle --file="$brewfile" 2>&1) && exit_code=0 || exit_code=$?
+
+        if [[ $exit_code -eq 0 ]]; then
             log_success "$(basename "$brewfile") completed successfully"
             return 0
         fi
 
-        # Check for untrusted formulae and ask to trust
-        if trust_untrusted_formulae "$brewfile"; then
+        # Check for untrusted formulae
+        trust_untrusted_formulae "$brewfile" "$output"
+        local trust_result=$?
+
+        if [[ $trust_result -eq 0 ]]; then
+            # Trusted some formulae, retry
             ((attempt++))
             continue
+        elif [[ $trust_result -eq 2 ]]; then
+            # User declined trust, continue without failing
+            log_warning "$(basename "$brewfile") completed with some packages skipped (user declined trust)"
+            return 0
         else
-            # User declined or no untrusted formulae - don't retry
-            break
+            # Real error, not an untrusted tap issue
+            log_error "$(basename "$brewfile") failed with errors:"
+            echo "$output" | grep -E "^Error:|failed" | head -10
+            return 1
         fi
     done
 
-    log_warning "brew bundle completed with some packages possibly skipped"
+    log_error "$(basename "$brewfile") failed after $max_retries attempts"
+    return 1
 }
 
 install_homebrew() {
-    if command -v brew >/dev/null 2>&1; then
-        log_info "Homebrew found. Updating..."
-        brew update
-    else
+    if ! command -v brew >/dev/null 2>&1; then
         log_info "Installing Homebrew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+        # Initialize Homebrew in current shell
+        if ! init_homebrew_path; then
+            log_error "Failed to initialize Homebrew after installation"
+            return 1
+        fi
+    else
+        log_info "Homebrew found. Updating..."
+        brew update
     fi
 
+    # Install formulae (works on both macOS and Linux)
     run_brew_bundle "$DOTFILES_DIR/install/Brewfile"
-    run_brew_bundle "$DOTFILES_DIR/install/Caskfile"
+
+    # Install casks (macOS only)
+    if is_macos; then
+        run_brew_bundle "$DOTFILES_DIR/install/Caskfile"
+    else
+        log_info "Skipping Caskfile on Linux (casks are macOS-only)"
+    fi
 }
 
 # ============================================================================
@@ -165,8 +219,9 @@ backup_conflicts() {
         fi
 
         if [ -e "$dst" ] && [ ! -L "$dst" ]; then
-            log_warning "Backing up existing $dst to ${dst}.bak"
-            mv "$dst" "${dst}.bak"
+            local backup_path="${dst}.backup_${BACKUP_TIMESTAMP}"
+            log_warning "Backing up existing $dst to $backup_path"
+            mv "$dst" "$backup_path"
         elif [ -L "$dst" ]; then
             local current_target
             current_target=$(readlink "$dst")
@@ -199,39 +254,29 @@ stow_package() {
 }
 
 stow_all_packages() {
-    # All packages in alphabetical order
-    local packages=(
-        "gh-dash"
-        "git"
-        "glow"
-        "karabiner"
-        "lazygit"
-        "lf"
-        "npm"
-        "nvim"
-        "opencode"
-        "powerlevel10k"
-        "sesh"
-        "ssh"
-        "surfingkeys"
-        "tmux"
-        "worktrunk"
-        "yazi"
-        "zsh"
-    )
+    # Dynamically get all packages from packages/ directory
+    # Skip macos package here (handled separately for macOS only)
+    local packages=()
+    for pkg_dir in "$PACKAGES_DIR"/*/; do
+        local pkg_name
+        pkg_name=$(basename "$pkg_dir")
+        if [[ "$pkg_name" != "macos" ]]; then
+            packages+=("$pkg_name")
+        fi
+    done
 
     # Ensure target directories exist with correct permissions
     mkdir -p "$HOME/.config"
     mkdir -p "$HOME/.ssh"
     chmod 700 "$HOME/.ssh"
 
-    log_info "Stowing packages..."
+    log_info "Stowing packages: ${packages[*]}"
     for pkg in "${packages[@]}"; do
         stow_package "$pkg"
     done
 
     # Handle macOS-specific package
-    if [ "$(uname -s)" = "Darwin" ]; then
+    if is_macos && [ -d "$PACKAGES_DIR/macos" ]; then
         log_info "Stowing macOS-specific packages..."
         mkdir -p "$HOME/Library/Application Support/com.mitchellh.ghostty"
         stow_package "macos"
@@ -328,7 +373,7 @@ install_gh_extensions() {
 # ============================================================================
 
 apply_macos_defaults() {
-    if [ "$(uname -s)" = "Darwin" ]; then
+    if is_macos; then
         log_info "Applying macOS defaults..."
         /bin/bash "$DOTFILES_DIR/macos/defaults.sh"
         /bin/bash "$DOTFILES_DIR/macos/defaults-chrome.sh"
@@ -342,6 +387,7 @@ apply_macos_defaults() {
 main() {
     log_info "Starting dotfiles installation..."
     log_info "DOTFILES_DIR: $DOTFILES_DIR"
+    log_info "Platform: $(uname -s)"
 
     install_homebrew
     ensure_stow

@@ -19,13 +19,23 @@ else
   OS=$(uname -s)
 fi
 
-# Resolve DOTFILES_DIR (assuming ~/.dotfiles on distros without readlink and/or $BASH_SOURCE/$0)
+# Resolve DOTFILES_DIR dynamically from this script's location
+# Works whether cloned to ~/.dotfiles or elsewhere, as long as it's stowed
 
-READLINK=$(which greadlink || which readlink)
-CURRENT_SCRIPT=$BASH_SOURCE
+READLINK=$(command -v greadlink || command -v readlink)
 
-if [[ -n $CURRENT_SCRIPT && -x "$READLINK" ]]; then
+# Try zsh-specific method first, then bash, then $0
+if [[ -n "${(%):-%x}" ]]; then
+  CURRENT_SCRIPT="${(%):-%x}"
+elif [[ -n "$BASH_SOURCE" ]]; then
+  CURRENT_SCRIPT="$BASH_SOURCE"
+elif [[ -n "$0" ]]; then
+  CURRENT_SCRIPT="$0"
+fi
+
+if [[ -n "$CURRENT_SCRIPT" && -x "$READLINK" ]]; then
   SCRIPT_PATH=$($READLINK -f "$CURRENT_SCRIPT")
+  # Script is at packages/zsh/.zshrc, so 3 levels up to dotfiles root
   DOTFILES_DIR=$(dirname "$(dirname "$(dirname "$SCRIPT_PATH")")")
 elif [ -d "$HOME/.dotfiles" ]; then
   DOTFILES_DIR="$HOME/.dotfiles"
