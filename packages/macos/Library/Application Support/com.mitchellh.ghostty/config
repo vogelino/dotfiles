@@ -1,2 +1,30 @@
 font-family = "Hack"
 confirm-close-surface = false
+
+foreground = #adb0bb
+background = #1a1d23
+cursor-color = #9b9fa9
+cursor-text = #1a1d23
+selection-foreground = #adb0bb
+selection-background = #34363a
+
+palette = 0=#111317
+palette = 1=#ff838b
+palette = 2=#87c05f
+palette = 3=#dfab25
+palette = 4=#5eb7ff
+palette = 5=#dd97f1
+palette = 6=#4ac2b8
+palette = 7=#9b9fa9
+palette = 8=#34363a
+palette = 9=#ffa6ae
+palette = 10=#aae382
+palette = 11=#ffce48
+palette = 12=#81daff
+palette = 13=#ffbaff
+palette = 14=#6de5db
+palette = 15=#d0d3de
+
+# Window navigation (sends Esc+H/L to tmux)
+keybind = super+ctrl+h=text:\x1bH
+keybind = super+ctrl+l=text:\x1bL
