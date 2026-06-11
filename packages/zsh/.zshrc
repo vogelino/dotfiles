@@ -26,7 +26,7 @@ CURRENT_SCRIPT=$BASH_SOURCE
 
 if [[ -n $CURRENT_SCRIPT && -x "$READLINK" ]]; then
   SCRIPT_PATH=$($READLINK -f "$CURRENT_SCRIPT")
-  DOTFILES_DIR=$(dirname "$(dirname "$SCRIPT_PATH")")
+  DOTFILES_DIR=$(dirname "$(dirname "$(dirname "$SCRIPT_PATH")")")
 elif [ -d "$HOME/.dotfiles" ]; then
   DOTFILES_DIR="$HOME/.dotfiles"
 else
@@ -60,6 +60,9 @@ if [ "$OS" = "MacOS" ]; then
 elif [ "$OS" = "Linux" ]; then
   source $HOME/.oh-my-zsh/oh-my-zsh.sh
 fi
+
+# Source after oh-my-zsh so our functions override its aliases
+[ -f "$DOTFILES_DIR/system/.deepjudge" ] && . "$DOTFILES_DIR/system/.deepjudge"
 
 test -e $HOME/.iterm2_shell_integration.zsh && source $HOME/.iterm2_shell_integration.zsh || true
 

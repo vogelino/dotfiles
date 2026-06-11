@@ -23,7 +23,6 @@ cask "proton-drive"
 cask "proton-mail"
 cask "proton-pass"
 cask "protonvpn"
-cask "obidian"
 
 # Messaging Apps
 cask "signal"
@@ -35,7 +34,6 @@ cask "appcleaner"
 cask "hammerspoon"
 cask "karabiner-elements"
 cask "little-snitch"
-cask "numi"
 cask "raycast"
 cask "the-unarchiver"
 
@@ -48,9 +46,3 @@ cask "docker"
 cask "ghostty"
 cask "sourcetree"
 
-# Quick Look Plugins (https://github.com/sindresorhus/quick-look-plugins)
-cask "qlcolorcode"
-cask "qlmarkdown"
-cask "qlstephen"
-cask "qlvideo"
-cask "quicklook-json"

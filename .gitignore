@@ -1,8 +1,11 @@
+# Local overrides (not tracked)
 system/.alias.custom
 system/.deepjudge
+packages/git/.gitconfig.local
+packages/ssh/.ssh/config.local
 
-.config/git/.gitconfig.local
-.config/ssh/config.local
+# Karabiner automatic backups
+packages/karabiner/.config/karabiner/automatic_backups/
 
 # Herdr runtime state
 .config/herdr/*.log
@@ -10,3 +13,6 @@ system/.deepjudge
 .config/herdr/session.json
 .config/herdr/session-history.json
 .config/herdr/scripts/__pycache__/
+
+# OS files
+.DS_Store
