@@ -1,4 +1,6 @@
 system/.alias.custom
+system/.deepjudge
+
 .config/git/.gitconfig.local
 .config/ssh/config.local
 
