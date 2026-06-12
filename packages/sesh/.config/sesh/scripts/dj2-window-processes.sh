@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # DeepJudge dj2 processes window setup
-# Creates a 2x2 grid with 4 panes for monitoring different processes
+# Creates 2 vertical panes: Tilt (with storybook) on the left, venv/alembic setup on the right
 
 # Function to wait for shell responsiveness and execute command
 tmux_exec() {
@@ -30,9 +30,7 @@ tmux_exec() {
   return 1
 }
 
-# Create layout: 2 panes side by side on top, 1 full-width pane on bottom
-tmux split-window -v -p 50
-tmux select-pane -U
+# Create layout: 2 vertical panes side by side
 tmux split-window -h
 
 # Wait for panes to initialize
@@ -41,14 +39,11 @@ sleep 0.5
 # Get pane IDs
 pane_ids=($(tmux list-panes -F '#{pane_id}'))
 
-# Pane 1 (top-left): Tilt
-tmux_exec "${pane_ids[0]}" "tilt up --context docker-desktop -- --config-path config/dev-tilt.local.jsonnet"
+# Pane 1 (left): Tilt (with Tiltfile.local which includes storybook)
+tmux_exec "${pane_ids[0]}" "tilt up -f Tiltfile.local --context docker-desktop -- --config-path config/dev-tilt.local.jsonnet"
 
-# Pane 2 (top-right): Storybook
-tmux_exec "${pane_ids[1]}" "pnpm install && cd web/search && pnpm run storybook"
+# Pane 2 (right): venv + alembic setup
+tmux_exec "${pane_ids[1]}" "bazel run //:venv .venv && source .venv/bin/activate && pip install -e . && alembic upgrade head && clear"
 
-# Pane 3 (bottom, full width): Database or other service
-tmux_exec "${pane_ids[2]}" "bazel run //:venv .venv && source .venv/bin/activate && pip install -e . && alembic upgrade head && clear"
-
-# Select the bottom pane
-tmux select-pane -t "${pane_ids[2]}"
+# Select the right pane
+tmux select-pane -t "${pane_ids[1]}"
