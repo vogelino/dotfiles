@@ -1,53 +1,33 @@
-[default_session]
-startup_command = "k"
+# Sesh configuration
+# Layouts are persisted by tmux-resurrect (Ctrl-s to save, Ctrl-r to restore)
+# First launch: set up your panes manually, then save with Ctrl-s
+# Subsequent launches: layouts are auto-restored by tmux-continuum
 
-[[session]]
-name = "Dotfiles ⚙️"
-path = "~/.dotfiles"
-windows = ["LAZYGIT"]
+[default_session]
 startup_command = "nvim ."
 
 [[session]]
-name = "Downloads 📥"
+name = " Dotfiles"
+path = "~/.dotfiles"
+
+[[session]]
+name = " Downloads"
 path = "~/Downloads"
-startup_command = "k"
+startup_command = "yazi"
 
 [[session]]
 name = "vogelino-portfolio"
 path = "~/repos/vogelino-portfolio"
-startup_command = "zed ."
 
 [[session]]
 name = "a-roh"
 path = "~/repos/a-roh"
-startup_command = "tms ~/repos/a-roh"
 
 [[session]]
 name = "DeepJudge"
 path = "~/repos/dj2"
-windows = ["EDITOR", "CLAUDE", "GITHUB"]
-startup_command = "~/.dotfiles/.config/sesh/scripts/dj2-window-processes.sh"
+startup_script = "~/.config/sesh/scripts/dj2-window-processes.sh"
 
 [[session]]
 name = "Olfactive Quiz Game Celia"
-path = "~/repos/quiz-olfactif-celia/"
-windows = ["EDITOR"]
-startup_command = "pnpm run dev"
-
-[[window]]
-name = "EDITOR"
-startup_script = "nvim ."
-
-[[window]]
-name = "LAZYGIT"
-startup_script = "lazygit"
-
-[[window]]
-name = "CLAUDE"
-startup_script = "claude"
-
-[[window]]
-name = "GITHUB"
-startup_script = "gh dash"
-
-
+path = "~/repos/quiz-olfactif-celia"

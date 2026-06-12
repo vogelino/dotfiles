@@ -97,6 +97,35 @@ This removes symlinks only (not Homebrew packages, oh-my-zsh, or plugins).
 
 ---
 
+## Session Management (sesh + tmux-resurrect)
+
+Sessions are managed with [sesh](https://github.com/joshmedeski/sesh) for portable config and [tmux-resurrect](https://github.com/tmux-plugins/tmux-resurrect) for layout persistence.
+
+### Keybindings
+
+Open the session picker with `prefix + o` (inside tmux) or `Alt + s` (outside tmux).
+
+| Key | Action |
+|-----|--------|
+| `^a` | Show all sessions |
+| `^t` | Show tmux sessions only |
+| `^g` | Show sesh configs only |
+| `^x` | Show zoxide directories |
+| `^f` | Find directories |
+| `^d` | Kill selected session |
+| `^s` | Save current layout (resurrect) |
+| `^r` | Restore saved layout (resurrect) |
+
+### Workflow
+
+1. **New machine**: Select a session from the picker, manually arrange panes/windows
+2. **Save layout**: Press `^s` in the picker to save the current state
+3. **Daily use**: Layouts auto-save every 10 min and auto-restore on tmux start
+
+Session configs are defined in `~/.config/sesh/sesh.toml` (portable). Layout state is saved by resurrect in `~/.tmux/resurrect/` (machine-specific).
+
+---
+
 ## Tips
 
 ### Vim
