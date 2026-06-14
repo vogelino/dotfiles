@@ -2,7 +2,8 @@
 
 # ZSH custom settings
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=4
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# Theme is loaded via Homebrew in .powerlevel10k, not via oh-my-zsh
+ZSH_THEME=""
 COMPLETION_WAITING_DOTS="true"
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor root)
 DEFAULT_USER="lucasvogel"

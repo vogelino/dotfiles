@@ -14,7 +14,7 @@ brew "bat"
 brew "coreutils"
 brew "diff-so-fancy"
 brew "direnv"
-brew "dockutil"
+brew "dockutil" if OS.mac?
 brew "drn/homebrew-tap/nerd-ls"
 brew "eza"
 brew "fd"
@@ -52,6 +52,6 @@ brew "zsh"
 brew "git-delta"
 brew "stow"
 brew "raine/workmux/workmux"
-brew "reattach-to-user-namespace"
+brew "reattach-to-user-namespace" if OS.mac?
 brew "worktrunk"
 
