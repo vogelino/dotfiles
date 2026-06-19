@@ -2,6 +2,7 @@
 NOTES_DIR="$HOME/notes"
 mkdir -p "$NOTES_DIR"
 SESSION=$(tmux display-message -p '#S')
+WIDTH_FILE="$HOME/.local/state/notes-sidebar-width"
 
 # State: space-separated list of notes pane IDs stored in the session env.
 # We verify existence rather than trusting title (nvim overwrites it at startup).
@@ -20,13 +21,14 @@ if notes_are_open; then
   # ── Close ────────────────────────────────────────────────────────────────
   WIN_IDS=$(tmux list-windows -t "$SESSION" -F '#{window_id}' 2>/dev/null | tr '\n' ' ')
 
-  # Save current width as a percentage before the panes disappear
+  # Save current width as a percentage to a file (survives tmux restarts)
   for pid in $STORED_IDS; do
     tmux list-panes -a -F '#{pane_id}' 2>/dev/null | grep -qxF "$pid" || continue
     PANE_W=$(tmux display-message -t "$pid" -p '#{pane_width}' 2>/dev/null)
     WIN_W=$(tmux display-message -t "$pid" -p '#{window_width}' 2>/dev/null)
     if [ -n "$PANE_W" ] && [ -n "$WIN_W" ] && [ "$WIN_W" -gt 0 ]; then
-      tmux set-environment @notes_pane_width_pct $(( PANE_W * 100 / WIN_W ))
+      mkdir -p "$(dirname "$WIDTH_FILE")"
+      printf '%s\n' "$(( PANE_W * 100 / WIN_W ))" > "$WIDTH_FILE"
     fi
     break
   done
@@ -53,7 +55,6 @@ if notes_are_open; then
 
 else
   # ── Open ─────────────────────────────────────────────────────────────────
-  # New notes (created by picker) want visual-select; existing notes want insert mode
   NEW_NOTE=$(tmux show-environment @notes_new_note 2>/dev/null | grep -v '^-' | cut -d= -f2)
   tmux set-environment @notes_new_note ""
 
@@ -64,16 +65,16 @@ else
     tmux set-environment @notes_last_file "$LAST_NOTE"
   fi
 
-  # NVIM_IS_NOTES_PANE is read in polish.lua at module load (before BufEnter fires).
-  # NVIM_NOTES_SELECT triggers VimEnter to visual-select the title (after all plugins load).
+  # --cmd runs before init.lua so globals are available throughout the entire startup.
+  # g:notes_select_title triggers a one-shot BufEnter in polish.lua for new notes.
   if [ "$NEW_NOTE" = "1" ]; then
-    PANE_CMD="NVIM_IS_NOTES_PANE=1 NVIM_NOTES_SELECT=1 nvim -n -c 'set showtabline=0 laststatus=0' '$LAST_NOTE'"
+    PANE_CMD="nvim --cmd 'let g:is_notes_pane=1 | let g:notes_select_title=1' -n -c 'set showtabline=0 laststatus=0' '$LAST_NOTE'"
   else
-    PANE_CMD="NVIM_IS_NOTES_PANE=1 nvim -n -c 'set showtabline=0 laststatus=0' -c 'startinsert' '$LAST_NOTE'"
+    PANE_CMD="nvim --cmd 'let g:is_notes_pane=1' -n -c 'set showtabline=0 laststatus=0' -c 'startinsert' '$LAST_NOTE'"
   fi
 
-  # Restore last-used width percentage; default to 35% on first open
-  PCT=$(tmux show-environment @notes_pane_width_pct 2>/dev/null | grep -v '^-' | cut -d= -f2)
+  # Restore last-used width from file; default to 35% on first open
+  PCT=$(cat "$WIDTH_FILE" 2>/dev/null | grep -E '^[0-9]+$')
   [ -z "$PCT" ] && PCT=35
 
   CURRENT_WIN=$(tmux display-message -p '#{window_id}')

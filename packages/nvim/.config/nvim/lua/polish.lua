@@ -1,24 +1,26 @@
 ---@diagnostic disable: undefined-global
 
--- Read env vars immediately at module load — before BufEnter or any other event fires.
--- notes-toggle.sh sets these when launching the notes sidebar nvim process.
-if vim.env.NVIM_IS_NOTES_PANE == "1" then
-  vim.g.is_notes_pane = true
-end
+-- g:is_notes_pane and g:notes_select_title are set via `nvim --cmd` in notes-toggle.sh.
+-- --cmd runs before init.lua, so these globals are available for the entire startup sequence.
 
 vim.api.nvim_create_augroup("MarkdownSettings", { clear = true })
 
--- Select the H1 title in visual mode for new notes.
--- VimEnter fires after all plugins have loaded, so it won't be clobbered by AstroNvim init.
-vim.api.nvim_create_autocmd("VimEnter", {
-  group = "MarkdownSettings",
-  once = true,
-  callback = function()
-    if vim.env.NVIM_NOTES_SELECT ~= "1" then return end
-    -- gg → line 1 | W → first WORD after "# " | v → visual | g_ → last non-blank
-    vim.cmd("normal! ggWvg_")
-  end,
-})
+-- New notes only: register a one-shot BufEnter that visually selects the H1 title.
+-- --cmd + BufEnter is reliable; VimEnter can be clobbered by AstroNvim plugin init.
+if vim.g.notes_select_title then
+  vim.api.nvim_create_autocmd("BufEnter", {
+    group = "MarkdownSettings",
+    once = true,
+    pattern = vim.fn.expand("~") .. "/notes/*.md",
+    callback = function()
+      vim.g.notes_select_title = nil
+      -- schedule defers until all BufEnter callbacks for this buffer have run
+      vim.schedule(function()
+        vim.cmd("normal! ggWvg_")
+      end)
+    end,
+  })
+end
 
 vim.api.nvim_create_autocmd("FileType", {
   group = "MarkdownSettings",

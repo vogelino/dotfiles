@@ -8,12 +8,14 @@ STORED_IDS=$(tmux show-environment @notes_pane_ids 2>/dev/null | grep -v '^-' | 
 
 SESSION=$(tmux display-message -p '#S')
 WIN_IDS=$(tmux list-windows -t "$SESSION" -F '#{window_id}' 2>/dev/null | tr '\n' ' ')
+WIDTH_FILE="$HOME/.local/state/notes-sidebar-width"
 
-# Save the closing pane's width as a percentage before it disappears
+# Save the closing pane's width as a percentage to a file (survives tmux restarts)
 PANE_W=$(tmux display-message -t "$CURRENT_PANE" -p '#{pane_width}' 2>/dev/null)
 WIN_W=$(tmux display-message -t "$CURRENT_PANE" -p '#{window_width}' 2>/dev/null)
 if [ -n "$PANE_W" ] && [ -n "$WIN_W" ] && [ "$WIN_W" -gt 0 ]; then
-  tmux set-environment @notes_pane_width_pct $(( PANE_W * 100 / WIN_W ))
+  mkdir -p "$(dirname "$WIDTH_FILE")"
+  printf '%s\n' "$(( PANE_W * 100 / WIN_W ))" > "$WIDTH_FILE"
 fi
 
 # Clear state BEFORE sending quit to prevent other panes' VimLeave from looping
