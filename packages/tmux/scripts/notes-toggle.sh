@@ -59,10 +59,12 @@ else
   tmux set-environment @notes_new_note ""
 
   LAST_NOTE=$(tmux show-environment @notes_last_file 2>/dev/null | grep -v '^-' | cut -d= -f2)
+  [ -z "$LAST_NOTE" ] && LAST_NOTE=$(cat "$HOME/.local/state/notes-last-file" 2>/dev/null | tr -d '\n')
   if [ -z "$LAST_NOTE" ] || [ ! -f "$LAST_NOTE" ]; then
     LAST_NOTE="$NOTES_DIR/note.md"
     touch "$LAST_NOTE"
     tmux set-environment @notes_last_file "$LAST_NOTE"
+    mkdir -p "$HOME/.local/state" && printf '%s' "$LAST_NOTE" > "$HOME/.local/state/notes-last-file"
   fi
 
   # --cmd runs before init.lua so globals are available throughout the entire startup.

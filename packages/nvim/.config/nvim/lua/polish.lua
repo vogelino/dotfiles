@@ -68,6 +68,8 @@ vim.api.nvim_create_autocmd("BufEnter", {
     local f = io.open(new_file, "w")
     if f then f:write("# New Note\n\n"); f:close() end
     vim.fn.system("tmux set-environment @notes_last_file " .. vim.fn.shellescape(new_file) .. " 2>/dev/null")
+    local lf = io.open(vim.fn.expand("~/.local/state/notes-last-file"), "w")
+    if lf then lf:write(new_file); lf:close() end
     vim.schedule(function()
       vim.cmd("edit " .. vim.fn.fnameescape(new_file))
       vim.cmd("normal! ggWvg_")
@@ -140,6 +142,8 @@ vim.api.nvim_create_autocmd("BufWritePost", {
       vim.cmd("silent! keepalt file " .. vim.fn.fnameescape(final_path))
       vim.cmd("silent! write")
       vim.fn.system("tmux set-environment -g @notes_last_file " .. vim.fn.shellescape(final_path) .. " 2>/dev/null")
+      local lf = io.open(vim.fn.expand("~/.local/state/notes-last-file"), "w")
+      if lf then lf:write(final_path); lf:close() end
       vim.notify("Note renamed → " .. vim.fn.fnamemodify(final_path, ":t"), vim.log.levels.INFO)
     end
   end,

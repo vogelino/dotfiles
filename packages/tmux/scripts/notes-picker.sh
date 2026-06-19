@@ -25,6 +25,7 @@ if [ "$DISPLAY" = "[+] New note..." ]; then
   printf "# New Note\n\n" > "$NOTE_FILE"
 
   tmux set-environment @notes_last_file "$NOTE_FILE"
+  mkdir -p "$HOME/.local/state" && printf '%s' "$NOTE_FILE" > "$HOME/.local/state/notes-last-file"
 
   STORED_IDS=$(tmux show-environment @notes_pane_ids 2>/dev/null | grep -v '^-' | cut -d= -f2)
   OPEN=0
@@ -52,6 +53,7 @@ else
 fi
 
 tmux set-environment @notes_last_file "$NOTE_FILE"
+mkdir -p "$HOME/.local/state" && printf '%s' "$NOTE_FILE" > "$HOME/.local/state/notes-last-file"
 
 # If sidebar is open, switch every notes pane to the selected file
 STORED_IDS=$(tmux show-environment @notes_pane_ids 2>/dev/null | grep -v '^-' | cut -d= -f2)
