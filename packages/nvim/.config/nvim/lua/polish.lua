@@ -38,7 +38,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
   pattern = vim.fn.expand("~") .. "/notes/*.md",
   callback = function()
     vim.opt_local.autoread = true
-    vim.cmd("silent! checktime")
     vim.opt_local.spell = false
     vim.opt_local.number = false
     vim.opt_local.relativenumber = false
@@ -46,8 +45,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
     if vim.g.is_notes_pane then
       vim.opt.showtabline = 0
       vim.opt.laststatus = 0
-      -- AstroNvim's <leader>c calls :bd, which leaves nvim alive with an empty buffer.
-      -- Override it to :qa so VimLeave fires and the sidebar closes cleanly.
+      vim.opt.confirm = false
       vim.keymap.set("n", "<leader>c", "<cmd>qa<cr>", { buffer = true, silent = true })
     end
   end,
@@ -140,7 +138,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 
     if vim.fn.rename(bufname, final_path) == 0 then
       vim.cmd("silent! keepalt file " .. vim.fn.fnameescape(final_path))
-      vim.cmd("silent! write")
+      vim.bo.modified = false
       vim.fn.system("tmux set-environment -g @notes_last_file " .. vim.fn.shellescape(final_path) .. " 2>/dev/null")
       local lf = io.open(vim.fn.expand("~/.local/state/notes-last-file"), "w")
       if lf then lf:write(final_path); lf:close() end
