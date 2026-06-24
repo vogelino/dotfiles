@@ -1,8 +1,20 @@
 {
-  "lastChangelogVersion": "0.79.10",
+  "lastChangelogVersion": "0.80.1",
   "theme": "light/dark",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.4",
   "defaultThinkingLevel": "medium",
-  "hideThinkingBlock": false
+  "hideThinkingBlock": false,
+  "packages": [
+    "npm:@hypabolic/pi-hypa",
+    "npm:pi-web-access",
+    "npm:context-mode",
+    "npm:@juicesharp/rpiv-todo",
+    "npm:@gotgenes/pi-permission-system",
+    "npm:pi-simplify",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:@ayulab/oh-my-pi",
+    "npm:pi-lens",
+    "npm:pi-openresolve"
+  ]
 }
