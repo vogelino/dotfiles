@@ -434,14 +434,16 @@ EOF
 
     print_step "Configuring local files"
 
-    local ssh_config_local="$PACKAGES_DIR/ssh/.ssh/config.local"
+    mkdir -p "$HOME/.ssh"
+
+    local ssh_config_local="$HOME/.ssh/config.local"
     cat > "$ssh_config_local" << EOF
 Host *
   IdentityFile ~/.ssh/id_ed25519
 EOF
     print_substep "SSH config"
 
-    local git_config_local="$PACKAGES_DIR/git/.gitconfig.local"
+    local git_config_local="$HOME/.gitconfig.local"
     cat > "$git_config_local" << EOF
 [user]
 	email = $email
@@ -518,10 +520,13 @@ EOF
 # ============================================================================
 
 setup_local_overrides() {
+    mkdir -p "$HOME/.ssh" "$HOME/.local/bin"
+
     local files=(
         "$DOTFILES_DIR/system/.alias.custom"
-        "$PACKAGES_DIR/git/.gitconfig.local"
-        "$PACKAGES_DIR/ssh/.ssh/config.local"
+        "$HOME/.gitconfig.local"
+        "$HOME/.ssh/config.local"
+        "$HOME/.local/bin/env"
     )
 
     for file in "${files[@]}"; do

@@ -44,7 +44,14 @@ else
   return # `exit 1` would quit the shell itself
 fi
 
+# Load private environment early if available
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
+
 # Finally we can source the dotfiles (order matters)
+
+if [ -z "$DOTFILES_PRIVATE_DIR" ] && [ -d "$HOME/repos/dotfiles-private" ]; then
+  export DOTFILES_PRIVATE_DIR="$HOME/repos/dotfiles-private"
+fi
 
 for DOTFILE in "$DOTFILES_DIR"/system/.{path,env,fzf,function,function_*,alias,alias.custom,lf,powerlevel10k,nnn,fnm,yvm,custom,keybindings}; do
   [ -f "$DOTFILE" ] && . "$DOTFILE"
@@ -73,6 +80,7 @@ fi
 
 # Source after oh-my-zsh so our functions override its aliases
 [ -f "$DOTFILES_DIR/system/.deepjudge" ] && . "$DOTFILES_DIR/system/.deepjudge"
+[ -n "$DOTFILES_PRIVATE_DIR" ] && [ -f "$DOTFILES_PRIVATE_DIR/system/.deepjudge" ] && . "$DOTFILES_PRIVATE_DIR/system/.deepjudge"
 
 test -e $HOME/.iterm2_shell_integration.zsh && source $HOME/.iterm2_shell_integration.zsh || true
 
@@ -161,7 +169,5 @@ fi
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
 
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
-
-. "$HOME/.local/bin/env"
 
 export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"

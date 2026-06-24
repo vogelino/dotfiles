@@ -11,6 +11,26 @@ local config_defaults = {
 
 M.config = {}
 
+local function get_todo_paths()
+  local root_dir = vim.fs.root(0, { ".git" }) or vim.fn.getcwd()
+  local todo_file = vim.env.TODO_FILE or (root_dir .. "/todo.txt")
+  local done_file = vim.env.DONE_FILE or (root_dir .. "/done.txt")
+
+  return todo_file, done_file
+end
+
+local function ensure_todo_files()
+  if not M.config.create_todo_file then return end
+
+  local todo_file, done_file = get_todo_paths()
+
+  for _, path in ipairs({ todo_file, done_file }) do
+    local dir = vim.fn.fnamemodify(path, ":h")
+    if vim.fn.isdirectory(dir) == 0 then vim.fn.mkdir(dir, "p") end
+    if vim.fn.filereadable(path) == 0 then vim.fn.writefile({}, path) end
+  end
+end
+
 function M.tuxedo()
   if win_id and vim.api.nvim_win_is_valid(win_id) then
     vim.api.nvim_win_close(win_id, true)
@@ -19,12 +39,7 @@ function M.tuxedo()
     return
   end
 
-  local root_dir = vim.fs.root(0, { ".git" }) or vim.fn.getcwd()
-  local todo_path = root_dir .. "/todo.txt"
-
-  if vim.fn.filereadable(todo_path) == 0 and M.config.create_todo_file then
-    vim.fn.writefile({}, todo_path)
-  end
+  ensure_todo_files()
 
   local uis = vim.api.nvim_list_uis()
   if #uis == 0 then return end
