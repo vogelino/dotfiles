@@ -1,5 +1,7 @@
 ---@diagnostic disable: undefined-global
 
+require("tuxedo").setup()
+
 -- g:is_notes_pane and g:notes_select_title are set via `nvim --cmd` in notes-toggle.sh.
 -- --cmd runs before init.lua, so these globals are available for the entire startup sequence.
 
