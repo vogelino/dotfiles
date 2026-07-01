@@ -51,13 +51,14 @@ The `macos` package is only stowed on macOS (for apps using non-standard paths l
 
 ## Local Overrides
 
-Machine-specific settings go in local override files (gitignored):
+Machine-specific settings can live either as local files in `$HOME` or in a separate private companion repo:
 
 | File | Purpose |
 |------|---------|
-| `system/.alias.custom` | Machine-specific aliases (sourced by .zshrc) |
-| `packages/git/.gitconfig.local` | Git user.name, user.email, signing key |
-| `packages/ssh/.ssh/config.local` | Machine-specific SSH hosts |
+| `system/.alias.custom` | Machine-specific aliases kept in this repo (gitignored) |
+| `~/.gitconfig.local` | Git user.name, user.email, signing key |
+| `~/.ssh/config.local` | Private SSH hosts and overrides |
+| `~/.local/bin/env` | Private environment variables sourced by `.zshrc` |
 
 Example `.gitconfig.local`:
 ```ini
@@ -66,6 +67,44 @@ Example `.gitconfig.local`:
     email = you@example.com
     signingkey = ABC123
 ```
+
+## Private Companion Repo
+
+For synced private data, use a separate repo next to this one:
+
+```text
+~/repos/dotfiles
+~/repos/dotfiles-private
+```
+
+Recommended structure:
+
+```text
+~/repos/dotfiles-private/
+├── packages/
+│   └── local-env/
+│       └── .local/bin/env
+├── system/
+│   └── .deepjudge
+└── data/
+    └── todo/
+        ├── todo.txt
+        └── done.txt
+```
+
+Suggested `~/.local/bin/env` content:
+
+```bash
+export DOTFILES_PRIVATE_DIR="$HOME/repos/dotfiles-private"
+export TODO_DIR="$DOTFILES_PRIVATE_DIR/data/todo"
+export TODO_FILE="$TODO_DIR/todo.txt"
+export DONE_FILE="$TODO_DIR/done.txt"
+```
+
+Notes:
+- `system/.alias.custom` stays in this repo as a machine-local, gitignored file.
+- Tuxedo now uses `TODO_FILE`/`DONE_FILE` when set, and falls back to project-local `todo.txt`/`done.txt` otherwise.
+- `install.sh` creates `~/.gitconfig.local`, `~/.ssh/config.local`, and `~/.local/bin/env` if they do not exist.
 
 ## Backup Behavior
 
@@ -89,6 +128,8 @@ This removes symlinks only (not Homebrew packages, oh-my-zsh, or plugins).
 1. Create directory: `mkdir -p packages/myapp/.config/myapp`
 2. Add config files matching the target structure
 3. Run `stow -d packages -t $HOME myapp` or re-run `install.sh`
+
+For the private companion repo, stow its packages separately, e.g. `stow -d ~/repos/dotfiles-private/packages -t $HOME local-env`.
 
 ## Platform Support
 
