@@ -171,3 +171,7 @@ fi
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
 
 export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+
+# FNM
+eval "$(fnm env --use-on-cd --shell zsh)"
+
