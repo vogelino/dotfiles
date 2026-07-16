@@ -100,25 +100,51 @@ return {
   opts = {
     config = {
       eslint = {
-        -- Don't start eslint when biome.json is present; biome handles linting
-        root_dir = function(fname)
-          local util = require "lspconfig.util"
-          if util.root_pattern("biome.json", "biome.jsonc")(fname) then return nil end
-          return util.root_pattern(
+        -- root_dir uses the nvim-lspconfig >=0.11 callback signature: it must call
+        -- on_dir(root) to start the server, and simply return to skip it.
+        root_dir = function(bufnr, on_dir)
+          -- Don't start eslint when biome.json is present; biome handles linting
+          if vim.fs.root(bufnr, { "biome.json", "biome.jsonc" }) then return end
+
+          -- Prefer the project root (lock file / .git) so monorepos resolve correctly
+          local root_markers =
+            { "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lockb", "bun.lock", ".git" }
+          local project_root = vim.fs.root(bufnr, root_markers) or vim.fn.getcwd()
+
+          -- Only start eslint if the buffer actually has an eslint config in its tree
+          local eslint_config_files = {
             ".eslintrc",
             ".eslintrc.js",
             ".eslintrc.cjs",
+            ".eslintrc.mjs",
             ".eslintrc.yaml",
             ".eslintrc.yml",
             ".eslintrc.json",
             "eslint.config.js",
             "eslint.config.mjs",
-            "eslint.config.cjs"
-          )(fname)
+            "eslint.config.cjs",
+            "eslint.config.ts",
+            "eslint.config.mts",
+            "eslint.config.cts",
+          }
+          local fname = vim.api.nvim_buf_get_name(bufnr)
+          local using_eslint = vim.fs.find(eslint_config_files, {
+            path = fname,
+            type = "file",
+            limit = 1,
+            upward = true,
+            stop = vim.fs.dirname(project_root),
+          })[1]
+          if not using_eslint then return end
+
+          on_dir(project_root)
         end,
       },
       biome = {
-        root_dir = require("lspconfig.util").root_pattern("biome.json", "biome.jsonc"),
+        root_dir = function(bufnr, on_dir)
+          local root = vim.fs.root(bufnr, { "biome.json", "biome.jsonc" })
+          if root then on_dir(root) end
+        end,
       },
     },
     formatting = {
