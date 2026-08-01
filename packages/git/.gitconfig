@@ -55,7 +55,8 @@
   prompt = false
 
 [diff]
-  tool = sourcetree
+  tool = difftastic
+  external = difft
   algorithm = histogram
   colorMoved = plain
   mnemonicPrefix = true
@@ -63,6 +64,16 @@
 
 [difftool]
   prompt = false
+
+[difftool "difftastic"]
+  # See `man git-difftool` for a description of MERGED, LOCAL and REMOTE.
+  cmd = difft "$MERGED" "$LOCAL" "abcdef1" "100644" "$REMOTE" "abcdef2" "100644"
+
+[pager]
+  # Use a pager if the difftool output is larger than one screenful,
+  # consistent with the behaviour of `git diff`.
+  difftool = true
+  diff = diffnav
 
 [tag]
   sort = version:refname
