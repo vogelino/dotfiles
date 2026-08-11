@@ -1,11 +1,12 @@
 # tuxedo config
 theme = Muted Slate
-density = comfortable
-sort = priority
+density = compact
+sort = due
 show_left = true
-show_right = false
+show_right = true
 show_line_num = true
 show_status_bar = true
-show_done = false
+show_done = true
 show_future = false
-
+share_token = f20ef673d786b587b6b1348d485cd3a5fdfba3e9c2e6cbbc937ce749f3cc2984
+share_port = 62300

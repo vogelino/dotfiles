@@ -148,3 +148,11 @@ vim.api.nvim_create_autocmd("BufWritePost", {
     end
   end,
 })
+
+-- Jumplist navigation on Ctrl+-/Ctrl+Shift+- (VSCode-style back/forward).
+-- <C--> only arrives when the kitty keyboard protocol is negotiated; without it the
+-- terminal collapses Ctrl+- to the legacy byte 0x1F, which nvim reads as <C-_>.
+-- <C-S--> has no legacy encoding at all, so it only works under the modern protocol.
+vim.keymap.set("n", "<C-->", "<C-o>", { desc = "Jump back" })
+vim.keymap.set("n", "<C-_>", "<C-o>", { desc = "Jump back (legacy encoding)" })
+vim.keymap.set("n", "<C-S-->", "<C-i>", { desc = "Jump forward" })
