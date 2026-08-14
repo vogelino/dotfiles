@@ -29,6 +29,7 @@ prepend-path "$HOME/.local/bin/.env"
 prepend-path "$HOME/.opencode/bin"
 prepend-path "/usr/local/go/bin"
 prepend-path "$GOPATH/bin"
+prepend-path "$HOME/.atuin/bin"
 
 # Remove duplicates (preserving prepended items)
 # Source: http://unix.stackexchange.com/a/40755

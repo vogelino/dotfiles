@@ -175,3 +175,5 @@ export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS
 # FNM
 eval "$(fnm env --use-on-cd --shell zsh)"
 
+# ATUIN
+eval "$(atuin init zsh)"
