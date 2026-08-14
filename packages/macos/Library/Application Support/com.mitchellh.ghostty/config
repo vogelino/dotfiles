@@ -28,3 +28,11 @@ palette = 15=#d0d3de
 # Window navigation (sends Esc+H/L to tmux)
 keybind = super+ctrl+h=text:\x1bH
 keybind = super+ctrl+l=text:\x1bL
+
+# History/list navigation: ctrl+j = Down, ctrl+k = Up
+# Emitted as CSI arrow keys, so this works in the shell, tmux, and any TUI.
+keybind = ctrl+j=csi:B
+keybind = ctrl+k=csi:A
+
+# Clear the terminal (scrollback included)
+keybind = super+k=clear_screen
