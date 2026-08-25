@@ -6,7 +6,6 @@
 
 tap "goles/battery"
 tap "joshmedeski/sesh"
-tap "romkatv/powerlevel10k"
 tap "sachaos/todoist"
 tap "drn/tap"
 
@@ -41,7 +40,6 @@ brew "pyenv"
 brew "qpdf"
 brew "rbenv"
 brew "rg"
-brew "romkatv/powerlevel10k/powerlevel10k"
 brew "tmux"
 brew "tree"
 brew "vercel-cli"
@@ -50,6 +48,7 @@ brew "wget"
 brew "yq"
 brew "zsh"
 brew "git-delta"
+brew "starship"
 brew "stow"
 brew "raine/workmux/workmux"
 brew "reattach-to-user-namespace" if OS.mac?

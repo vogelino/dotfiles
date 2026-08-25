@@ -696,7 +696,7 @@ main() {
 	setup_local_overrides
 	install_oh_my_zsh # Must be before stow so our .zshrc overwrites oh-my-zsh's template
 	install_zsh_plugins
-	stow_all_packages # Now stow our configs (including .zshrc)
+	stow_all_packages # Now stow our configs (including .zshrc and starship.toml)
 	install_gh_extensions
 	apply_macos_defaults
 

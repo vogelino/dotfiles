@@ -2,7 +2,7 @@
 
 # ZSH custom settings
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=4
-# Theme is loaded via Homebrew in .powerlevel10k, not via oh-my-zsh
+# Prompt is starship (see system/.starship), not an oh-my-zsh theme
 ZSH_THEME=""
 COMPLETION_WAITING_DOTS="true"
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor root)

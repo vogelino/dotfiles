@@ -1,0 +1,173 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Lean two-line prompt, ported from the previous powerlevel10k config
+# (p10k-lean, 2 lines, sparse, no frame, few icons, fluent).
+#
+#   ~/repos/dotfiles on main !1 ?2 ─────────────── took 5s at 14:02
+#   ❯
+
+format = """
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$fill\
+$status\
+$cmd_duration\
+$jobs\
+$direnv\
+$conda\
+$python\
+$nodejs\
+$golang\
+$rust\
+$terraform\
+$kubernetes\
+$gcloud\
+$aws\
+$username\
+$hostname\
+$line_break\
+$character"""
+
+# Blank line between prompts (p10k "sparse")
+add_newline = true
+
+# Fill the gap between left and right prompt (p10k MULTILINE_FIRST_PROMPT_GAP_CHAR)
+[fill]
+symbol = "─"
+style = "238"
+
+[character]
+success_symbol = "[❯](bold 76)"
+error_symbol = "[❯](bold 196)"
+vicmd_symbol = "[❮](bold 76)"
+
+[directory]
+style = "31"
+read_only_style = "31"
+read_only = " "
+truncation_length = 3
+truncate_to_repo = true
+truncation_symbol = ""
+# p10k SHORTEN_DIR_LENGTH=1: abbreviate truncated parents to one character
+fish_style_pwd_dir_length = 1
+
+[git_branch]
+symbol = ""
+format = "on [$branch]($style) "
+style = "76"
+
+[git_commit]
+format = "[@$hash$tag]($style) "
+style = "76"
+
+[git_state]
+format = "[$state( $progress_current/$progress_total)]($style) "
+style = "178"
+
+[git_status]
+style = "178"
+format = "([$all_status$ahead_behind]($style))"
+conflicted = "~${count} "
+ahead = "⇡${count} "
+behind = "⇣${count} "
+diverged = "⇕⇡${ahead_count}⇣${behind_count} "
+untracked = "?${count} "
+stashed = "*${count} "
+modified = "!${count} "
+staged = "+${count} "
+renamed = "»${count} "
+deleted = "✘${count} "
+
+[status]
+disabled = false
+symbol = ""
+format = "[$status]($style) "
+style = "160"
+pipestatus = true
+pipestatus_format = "[$pipestatus]($style) "
+
+[cmd_duration]
+min_time = 3_000
+format = "took [$duration]($style) "
+style = "101"
+
+[jobs]
+symbol = ""
+format = "[$symbol$number]($style) "
+style = "70"
+number_threshold = 1
+
+[direnv]
+disabled = false
+format = "[$loaded/$allowed]($style) "
+style = "178"
+loaded_msg = "direnv"
+unloaded_msg = ""
+allowed_msg = ""
+not_allowed_msg = "blocked"
+denied_msg = "denied"
+
+[python]
+format = "[${symbol}${pyenv_prefix}(${version} )(\\($virtualenv\\) )]($style)"
+symbol = ""
+style = "37"
+
+[conda]
+format = "[$symbol$environment]($style) "
+symbol = ""
+style = "37"
+ignore_base = true
+
+[nodejs]
+format = "[${symbol}${version}]($style) "
+symbol = ""
+style = "70"
+
+[golang]
+format = "[${symbol}${version}]($style) "
+symbol = ""
+style = "37"
+
+[rust]
+format = "[${symbol}${version}]($style) "
+symbol = ""
+style = "37"
+
+[terraform]
+disabled = false
+format = "[$symbol$workspace]($style) "
+symbol = ""
+style = "38"
+
+# p10k only showed these while typing a matching command; starship has no such
+# trigger, so they stay off to keep the prompt quiet. Flip `disabled` to use them.
+[kubernetes]
+disabled = true
+format = "at [$context( \\($namespace\\))]($style) "
+style = "134"
+
+[gcloud]
+disabled = true
+format = "on [$account(@$domain)(\\($project\\))]($style) "
+style = "32"
+
+[aws]
+disabled = true
+format = "on [$profile(\\($region\\))]($style) "
+symbol = ""
+style = "208"
+
+# Only shown over SSH / as root (p10k CONTEXT: remote or root only)
+[username]
+format = "with [$user]($style) "
+style_user = "180"
+style_root = "178"
+show_always = false
+
+[hostname]
+ssh_only = true
+format = "[@$hostname]($style) "
+style = "180"

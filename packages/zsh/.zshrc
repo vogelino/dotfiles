@@ -1,10 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # If not running interactively, don't do anything
 
 [ -z "$PS1" ] && return
@@ -53,7 +46,7 @@ if [ -z "$DOTFILES_PRIVATE_DIR" ] && [ -d "$HOME/repos/dotfiles-private" ]; then
   export DOTFILES_PRIVATE_DIR="$HOME/repos/dotfiles-private"
 fi
 
-for DOTFILE in "$DOTFILES_DIR"/system/.{path,env,fzf,function,function_*,alias,alias.custom,lf,powerlevel10k,nnn,fnm,yvm,custom,keybindings}; do
+for DOTFILE in "$DOTFILES_DIR"/system/.{path,env,fzf,function,function_*,alias,alias.custom,lf,nnn,fnm,yvm,custom,keybindings}; do
   [ -f "$DOTFILE" ] && . "$DOTFILE"
 done
 
@@ -77,6 +70,9 @@ if [ "$OS" = "MacOS" ]; then
 elif [ "$OS" = "Linux" ]; then
   source $HOME/.oh-my-zsh/oh-my-zsh.sh
 fi
+
+# Prompt: load after oh-my-zsh so starship owns PROMPT
+[ -f "$DOTFILES_DIR/system/.starship" ] && . "$DOTFILES_DIR/system/.starship"
 
 # Source after oh-my-zsh so our functions override its aliases
 [ -f "$DOTFILES_DIR/system/.deepjudge" ] && . "$DOTFILES_DIR/system/.deepjudge"
@@ -108,9 +104,6 @@ fi
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
@@ -174,6 +167,3 @@ export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS
 
 # FNM
 eval "$(fnm env --use-on-cd --shell zsh)"
-
-# ATUIN
-eval "$(atuin init zsh)"

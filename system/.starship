@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Starship prompt (https://starship.rs)
+# Config lives in packages/starship/.config/starship.toml (stowed to ~/.config).
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+fi
