@@ -245,7 +245,8 @@ backup_conflicts() {
 	local package_dir="$PACKAGES_DIR/$package"
 	local backup_dir="$DOTFILES_DIR/.backups/$BACKUP_TIMESTAMP"
 
-	find "$package_dir" -type f -o -type l | while read -r src; do
+	# Use process substitution instead of pipe to avoid subshell
+	while IFS= read -r src; do
 		local rel_path="${src#$package_dir/}"
 		local dst="$HOME/$rel_path"
 
@@ -282,7 +283,7 @@ backup_conflicts() {
 				rm "$dst"
 			fi
 		fi
-	done
+	done < <(find "$package_dir" \( -type f -o -type l \))
 }
 
 stow_package() {
@@ -542,6 +543,48 @@ setup_local_overrides() {
 }
 
 # ============================================================================
+# MACOS-SPECIFIC SYMLINKS
+# ============================================================================
+
+setup_macos_symlinks() {
+	if ! is_macos; then
+		return 0
+	fi
+
+	print_header "🔗 macOS App Support Symlinks"
+
+	# Lazygit: macOS uses ~/Library/Application Support instead of ~/.config
+	local lazygit_macos="$HOME/Library/Application Support/lazygit"
+	local lazygit_config="$HOME/.config/lazygit/config.yml"
+
+	if [ -f "$lazygit_config" ] || [ -L "$lazygit_config" ]; then
+		print_step "Setting up lazygit config symlink"
+		mkdir -p "$lazygit_macos"
+
+		# Remove existing file if it's not a symlink or points elsewhere
+		if [ -f "$lazygit_macos/config.yml" ] && [ ! -L "$lazygit_macos/config.yml" ]; then
+			rm "$lazygit_macos/config.yml"
+			print_substep "Removed old config file"
+		elif [ -L "$lazygit_macos/config.yml" ]; then
+			local current_target
+			current_target=$(readlink "$lazygit_macos/config.yml")
+			if [ "$current_target" != "$lazygit_config" ]; then
+				rm "$lazygit_macos/config.yml"
+				print_substep "Removed old symlink"
+			fi
+		fi
+
+		# Create symlink if it doesn't exist
+		if [ ! -e "$lazygit_macos/config.yml" ]; then
+			ln -s "$lazygit_config" "$lazygit_macos/config.yml"
+			print_substep "Created symlink"
+		fi
+
+		log_success "Lazygit config symlinked"
+	fi
+}
+
+# ============================================================================
 # OH-MY-ZSH
 # ============================================================================
 
@@ -757,6 +800,7 @@ main() {
 	install_oh_my_zsh # Must be before stow so our .zshrc overwrites oh-my-zsh's template
 	install_zsh_plugins
 	stow_all_packages # Now stow our configs (including .zshrc and starship.toml)
+	setup_macos_symlinks # Create macOS-specific symlinks after stowing
 	install_tmux_plugins # Install TPM and tmux plugins after .tmux.conf is stowed
 	install_gh_extensions
 	apply_macos_defaults

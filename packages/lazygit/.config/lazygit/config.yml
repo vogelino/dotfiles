@@ -1,14 +1,31 @@
 gui:
   theme:
     activeBorderColor:
-      - "#c0caf5"
-      - bold
+      - "#eb8332"
+      - "bold"
     inactiveBorderColor:
-      - "#3b4261"
+      - "#3a3e47"
     selectedLineBgColor:
-      - "#3b4261"
+      - "#26343f"
     selectedRangeBgColor:
-      - "#3b4261"
+      - "#26343f"
+    defaultFgColor:
+      - "#adb0bb"
+    cherryPickedCommitFgColor:
+      - "#1a1d23"
+    cherryPickedCommitBgColor:
+      - "#f8747e"
+    unstagedChangesColor:
+      - "#f8747e"
+    optionsTextColor:
+      - "#5eb7ff"
+    searchingActiveBorderColor:
+      - "#eb8332"
+      - "bold"
+    markedBaseCommitFgColor:
+      - "#1a1d23"
+    markedBaseCommitBgColor:
+      - "#cc83e3"
   showBottomLine: false # for hiding the bottom information line (unless it has important information to tell you)
   showIcons: true
   nerdFontsVersion: "3"
