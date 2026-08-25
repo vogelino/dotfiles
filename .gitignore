@@ -4,6 +4,9 @@ system/.deepjudge
 packages/git/.gitconfig.local
 packages/ssh/.ssh/config.local
 
+# Install script backups
+.backups/
+
 # Karabiner automatic backups
 packages/karabiner/.config/karabiner/automatic_backups/
 

@@ -113,17 +113,18 @@ init_homebrew_path() {
 
 trust_untrusted_taps() {
 	local output="$1"
-	local -A trusted_taps=() # Track what we've already trusted
+	local trusted_taps="" # Track what we've already trusted (newline-separated)
 	local found_untrusted=false
 
 	# Look for "Refusing to load formula X from untrusted tap"
 	while IFS= read -r line; do
 		if [[ "$line" =~ Refusing\ to\ load\ formula\ ([a-zA-Z0-9_-]+/[a-zA-Z0-9_-]+/[a-zA-Z0-9_-]+)\ from\ untrusted ]]; then
 			local formula="${BASH_REMATCH[1]}"
-			if [[ -n "$formula" && -z "${trusted_taps[$formula]}" ]]; then
+			# Check if we've already trusted this formula
+			if [[ -n "$formula" ]] && ! echo "$trusted_taps" | grep -qxF "$formula"; then
 				print_substep "Trusting formula: $formula"
 				brew trust --formula "$formula" 2>/dev/null || true
-				trusted_taps[$formula]=1
+				trusted_taps="$trusted_taps"$'\n'"$formula"
 				found_untrusted=true
 			fi
 		fi
@@ -135,10 +136,11 @@ trust_untrusted_taps() {
 		# Match lines that look like tap names (user/repo format, indented)
 		if [[ "$line" =~ ^[[:space:]]+([a-zA-Z0-9_-]+/[a-zA-Z0-9_-]+)[[:space:]]*$ ]]; then
 			local tap="${BASH_REMATCH[1]}"
-			if [[ -n "$tap" && -z "${trusted_taps[$tap]}" ]]; then
+			# Check if we've already trusted this tap
+			if [[ -n "$tap" ]] && ! echo "$trusted_taps" | grep -qxF "$tap"; then
 				print_substep "Trusting tap: $tap"
 				brew trust "$tap" 2>/dev/null || true
-				trusted_taps[$tap]=1
+				trusted_taps="$trusted_taps"$'\n'"$tap"
 				found_untrusted=true
 			fi
 		fi
@@ -241,6 +243,7 @@ ensure_stow() {
 backup_conflicts() {
 	local package="$1"
 	local package_dir="$PACKAGES_DIR/$package"
+	local backup_dir="$DOTFILES_DIR/.backups/$BACKUP_TIMESTAMP"
 
 	find "$package_dir" -type f -o -type l | while read -r src; do
 		local rel_path="${src#$package_dir/}"
@@ -266,7 +269,9 @@ backup_conflicts() {
 		fi
 
 		if [ -e "$dst" ] && [ ! -L "$dst" ]; then
-			local backup_path="${dst}.backup_${BACKUP_TIMESTAMP}"
+			local backup_path="$backup_dir/$package/$rel_path"
+			local backup_parent=$(dirname "$backup_path")
+			mkdir -p "$backup_parent"
 			log_warning "Backing up $dst"
 			mv "$dst" "$backup_path"
 		elif [ -L "$dst" ]; then
@@ -587,6 +592,56 @@ install_zsh_plugins() {
 }
 
 # ============================================================================
+# TMUX PLUGINS
+# ============================================================================
+
+install_tmux_plugins() {
+	print_header "🖥️  Tmux Plugin Manager"
+
+	local TPM_DIR="$HOME/.tmux/plugins/tpm"
+
+	if [ -d "$TPM_DIR" ]; then
+		print_step "Updating TPM"
+		(cd "$TPM_DIR" && git pull --quiet)
+		log_success "TPM updated"
+	else
+		print_step "Installing TPM"
+		git clone --quiet https://github.com/tmux-plugins/tpm "$TPM_DIR"
+		log_success "TPM installed"
+	fi
+
+	if [ -f "$HOME/.tmux.conf" ]; then
+		echo ""
+		print_step "Installing tmux plugins"
+
+		# Run the plugin installer
+		local plugin_output
+		plugin_output=$("$TPM_DIR/bin/install_plugins" 2>&1)
+
+		# Show relevant output
+		echo "$plugin_output" | grep -E "(Installing|Updating|Already installed|download success)" | sed 's/^/  /' || true
+
+		# Verify plugins were installed
+		local plugin_count
+		plugin_count=$(find "$HOME/.tmux/plugins" -mindepth 1 -maxdepth 1 -type d ! -name "tpm" | wc -l | tr -d ' ')
+
+		if [ "$plugin_count" -gt 0 ]; then
+			log_success "$plugin_count tmux plugins installed"
+
+			# Reload tmux config if tmux is running
+			if tmux list-sessions >/dev/null 2>&1; then
+				print_substep "Reloading tmux configuration"
+				tmux source-file "$HOME/.tmux.conf" >/dev/null 2>&1 || true
+			fi
+		else
+			log_warning "No plugins installed (check .tmux.conf)"
+		fi
+	else
+		log_warning "No .tmux.conf found, skipping plugin installation"
+	fi
+}
+
+# ============================================================================
 # GH EXTENSIONS
 # ============================================================================
 
@@ -686,6 +741,11 @@ EOF
 	echo -e "  ${DIM}├─${RESET} Or run: ${CYAN}exec zsh${RESET}"
 	echo -e "  ${DIM}└─${RESET} Enjoy your new setup! 🎉"
 	echo ""
+
+	if [ -d "$DOTFILES_DIR/.backups/$BACKUP_TIMESTAMP" ]; then
+		echo -e "  ${DIM}Note: Backups saved to ${CYAN}.backups/$BACKUP_TIMESTAMP${RESET}"
+		echo ""
+	fi
 }
 
 main() {
@@ -697,6 +757,7 @@ main() {
 	install_oh_my_zsh # Must be before stow so our .zshrc overwrites oh-my-zsh's template
 	install_zsh_plugins
 	stow_all_packages # Now stow our configs (including .zshrc and starship.toml)
+	install_tmux_plugins # Install TPM and tmux plugins after .tmux.conf is stowed
 	install_gh_extensions
 	apply_macos_defaults
 
