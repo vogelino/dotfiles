@@ -15,6 +15,8 @@ return {
         "tailwindcss-language-server",
         -- formatters/linters
         "biome",
+        "oxfmt",
+        "oxlint",
         "stylelint",
         "stylua",
       },
@@ -35,6 +37,12 @@ return {
     opts = {
       ensure_installed = {
         -- add more arguments for adding more null-ls sources
+      },
+      -- Sources are configured explicitly in plugins/none-ls.lua. Without this
+      -- no-op default handler, every Mason-installed tool (including Biome) is
+      -- also registered with none-ls and bypasses the project-selection logic.
+      handlers = {
+        function() end,
       },
     },
   },

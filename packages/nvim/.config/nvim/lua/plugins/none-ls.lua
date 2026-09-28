@@ -15,12 +15,15 @@ return {
     opts.should_attach = function(bufnr) return vim.bo[bufnr].filetype ~= "toml" end
 
     local has_biome = function(utils) return utils.root_has_file { "biome.json", "biome.jsonc" } end
+    local has_oxfmt = function(utils)
+      return utils.root_has_file { ".oxfmtrc.json", ".oxfmtrc.jsonc", "oxfmt.config.ts" }
+    end
 
     opts.sources = require("astrocore").list_insert_unique(opts.sources, {
       -- Set a formatter
       -- null_ls.builtins.formatting.stylua,
       null_ls.builtins.formatting.prettier.with {
-        condition = function(utils) return not has_biome(utils) end,
+        condition = function(utils) return not has_biome(utils) and not has_oxfmt(utils) end,
       },
       null_ls.builtins.diagnostics.stylelint.with {
         condition = function(utils)

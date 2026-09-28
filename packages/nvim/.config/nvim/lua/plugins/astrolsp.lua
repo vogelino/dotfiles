@@ -49,26 +49,100 @@ local js_ts_filetypes = {
   typescriptreact = true,
 }
 
-local function apply_ts_source_action(bufnr, action_kind, client_names)
-  client_names = client_names or { "ts_ls", "vtsls" }
+local biome_config_files = { "biome.json", "biome.jsonc" }
+local oxlint_config_files = { ".oxlintrc.json", ".oxlintrc.jsonc", "oxlint.config.ts" }
+local oxfmt_config_files = { ".oxfmtrc.json", ".oxfmtrc.jsonc", "oxfmt.config.ts" }
+local eslint_config_files = {
+  ".eslintrc",
+  ".eslintrc.js",
+  ".eslintrc.cjs",
+  ".eslintrc.mjs",
+  ".eslintrc.yaml",
+  ".eslintrc.yml",
+  ".eslintrc.json",
+  "eslint.config.js",
+  "eslint.config.mjs",
+  "eslint.config.cjs",
+  "eslint.config.ts",
+  "eslint.config.mts",
+  "eslint.config.cts",
+}
+
+local function concat_lists(...)
+  local result = {}
+  for _, list in ipairs { ... } do
+    vim.list_extend(result, list)
+  end
+  return result
+end
+
+local function nearest_config(bufnr, config_files)
+  return vim.fs.find(config_files, {
+    path = vim.api.nvim_buf_get_name(bufnr),
+    type = "file",
+    limit = 1,
+    upward = true,
+  })[1]
+end
+
+local function tool_root_dir(config_files, competing_config_files, prefer_repo_root)
+  return function(bufnr, on_dir)
+    local selected_config = nearest_config(bufnr, concat_lists(config_files, competing_config_files))
+    if not selected_config or not vim.tbl_contains(config_files, vim.fs.basename(selected_config)) then return end
+
+    local repo_root = vim.fs.root(bufnr, { ".git" })
+    if prefer_repo_root and repo_root then
+      for _, config_file in ipairs(config_files) do
+        if vim.uv.fs_stat(vim.fs.joinpath(repo_root, config_file)) then
+          on_dir(repo_root)
+          return
+        end
+      end
+    end
+
+    on_dir(vim.fs.dirname(selected_config))
+  end
+end
+
+local function typescript_root_dir(bufnr, on_dir)
+  if vim.fs.root(bufnr, { "deno.json", "deno.jsonc", "deno.lock" }) then return end
+
+  local path = vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr))
+  while path do
+    if vim.uv.fs_stat(vim.fs.joinpath(path, "node_modules", "typescript", "lib", "tsserver.js")) then
+      on_dir(path)
+      return
+    end
+
+    local parent = vim.fs.dirname(path)
+    if parent == path then break end
+    path = parent
+  end
+
+  local fallback_root = vim.fs.root(bufnr, {
+    { "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lockb", "bun.lock" },
+    { ".git" },
+  })
+  on_dir(fallback_root or vim.fn.getcwd())
+end
+
+local function apply_source_action(bufnr, action_kind, client_name)
+  local client = vim
+    .iter(vim.lsp.get_clients { bufnr = bufnr })
+    :find(function(item) return item.name == client_name end)
+  if not client then return end
+
   local params = vim.lsp.util.make_range_params(0, "utf-8")
   params.context = {
     diagnostics = {},
     only = { action_kind },
   }
 
-  local results = vim.lsp.buf_request_sync(bufnr, "textDocument/codeAction", params, 1000)
-  if not results then return end
-
-  for client_id, response in pairs(results) do
-    local client = vim.lsp.get_client_by_id(client_id)
-    if client and vim.tbl_contains(client_names, client.name) then
-      for _, action in ipairs(response.result or {}) do
-        if action.edit then vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding or "utf-8") end
-        if action.command then client.request_sync("workspace/executeCommand", action.command, 1000, bufnr) end
-        return
-      end
-    end
+  local response = client:request_sync("textDocument/codeAction", params, 1000, bufnr)
+  for _, action in ipairs(response and response.result or {}) do
+    if action.edit then vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding or "utf-8") end
+    if action.command then client:request_sync("workspace/executeCommand", action.command, 1000, bufnr) end
+    return
   end
 end
 
@@ -76,21 +150,17 @@ local function js_ts_imports_and_format_on_save(args)
   if not js_ts_filetypes[vim.bo[args.buf].filetype] then return end
 
   local clients = vim.lsp.get_clients { bufnr = args.buf }
-  local has_biome = vim.iter(clients):any(function(c) return c.name == "biome" end)
-
-  apply_ts_source_action(args.buf, "source.removeUnusedImports.ts")
-  if has_biome then
-    apply_ts_source_action(args.buf, "source.organizeImports.biome", { "biome" })
-  else
-    apply_ts_source_action(args.buf, "source.organizeImports")
-  end
+  local has_oxlint = vim.iter(clients):any(function(c) return c.name == "oxlint" end)
+  if has_oxlint then apply_source_action(args.buf, "source.fixAll.oxc", "oxlint") end
 
   local astrolsp = require "astrolsp"
   local autoformat = astrolsp.config.formatting.format_on_save
   local buffer_autoformat = vim.b[args.buf].autoformat
   if buffer_autoformat == nil then buffer_autoformat = autoformat.enabled end
 
-  if buffer_autoformat then vim.lsp.buf.format(vim.tbl_deep_extend("force", astrolsp.format_opts, { bufnr = args.buf })) end
+  if buffer_autoformat then
+    vim.lsp.buf.format(vim.tbl_deep_extend("force", astrolsp.format_opts, { bufnr = args.buf }))
+  end
 end
 
 ---@type LazySpec
@@ -99,52 +169,39 @@ return {
   ---@type AstroLSPOpts
   opts = {
     config = {
+      ts_ls = {
+        -- Start at the nearest package that provides TypeScript so the language
+        -- server uses the project's SDK instead of Mason's bundled version.
+        root_dir = typescript_root_dir,
+      },
       eslint = {
         -- root_dir uses the nvim-lspconfig >=0.11 callback signature: it must call
         -- on_dir(root) to start the server, and simply return to skip it.
         root_dir = function(bufnr, on_dir)
-          -- Don't start eslint when biome.json is present; biome handles linting
-          if vim.fs.root(bufnr, { "biome.json", "biome.jsonc" }) then return end
+          local selected_config =
+            nearest_config(bufnr, concat_lists(eslint_config_files, biome_config_files, oxlint_config_files))
+          if not selected_config or not vim.tbl_contains(eslint_config_files, vim.fs.basename(selected_config)) then
+            return
+          end
 
           -- Prefer the project root (lock file / .git) so monorepos resolve correctly
-          local root_markers =
-            { "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lockb", "bun.lock", ".git" }
+          local root_markers = { "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lockb", "bun.lock", ".git" }
           local project_root = vim.fs.root(bufnr, root_markers) or vim.fn.getcwd()
-
-          -- Only start eslint if the buffer actually has an eslint config in its tree
-          local eslint_config_files = {
-            ".eslintrc",
-            ".eslintrc.js",
-            ".eslintrc.cjs",
-            ".eslintrc.mjs",
-            ".eslintrc.yaml",
-            ".eslintrc.yml",
-            ".eslintrc.json",
-            "eslint.config.js",
-            "eslint.config.mjs",
-            "eslint.config.cjs",
-            "eslint.config.ts",
-            "eslint.config.mts",
-            "eslint.config.cts",
-          }
-          local fname = vim.api.nvim_buf_get_name(bufnr)
-          local using_eslint = vim.fs.find(eslint_config_files, {
-            path = fname,
-            type = "file",
-            limit = 1,
-            upward = true,
-            stop = vim.fs.dirname(project_root),
-          })[1]
-          if not using_eslint then return end
-
           on_dir(project_root)
         end,
       },
       biome = {
-        root_dir = function(bufnr, on_dir)
-          local root = vim.fs.root(bufnr, { "biome.json", "biome.jsonc" })
-          if root then on_dir(root) end
-        end,
+        root_dir = tool_root_dir(
+          biome_config_files,
+          concat_lists(eslint_config_files, oxlint_config_files, oxfmt_config_files),
+          false
+        ),
+      },
+      oxlint = {
+        root_dir = tool_root_dir(oxlint_config_files, concat_lists(eslint_config_files, biome_config_files), true),
+      },
+      oxfmt = {
+        root_dir = tool_root_dir(oxfmt_config_files, biome_config_files, true),
       },
     },
     formatting = {
@@ -166,7 +223,7 @@ return {
         cond = "textDocument/codeAction",
         {
           event = "BufWritePre",
-          desc = "Remove unused imports, organize imports, and format JS/TS files on save",
+          desc = "Apply Oxlint fixes and format JS/TS files on save",
           callback = js_ts_imports_and_format_on_save,
         },
       },
