@@ -50,6 +50,7 @@ brew "zsh"
 brew "git-delta"
 brew "starship"
 brew "stow"
+brew "superfile"
 brew "raine/workmux/workmux"
 brew "reattach-to-user-namespace" if OS.mac?
 brew "worktrunk"
