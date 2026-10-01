@@ -1,0 +1,71 @@
+##############################################
+#                                            #
+#          Lazygit-matched Theme             #
+#                                            #
+##############################################
+
+# Mirrors the palette in packages/lazygit/.config/lazygit/config.yml.
+
+###############################################################################
+#                           Code Syntax Highlighting                          #
+###############################################################################
+
+code_syntax_highlight = "monokai"
+
+###############################################################################
+#                                 Base Colors                                 #
+###############################################################################
+
+#-- Full Screen
+full_screen_fg = "#adb0bb"
+full_screen_bg = "#1b1d22"
+
+#-- Gradient
+gradient_color = ["#eb8332", "#5eb7ff"]
+directory_icon_color = "#5eb7ff"
+
+#-- File Panel
+file_panel_fg = "#adb0bb"
+file_panel_bg = "#1b1d22"
+file_panel_border = "#3a3e47"
+file_panel_border_active = "#eb8332"
+file_panel_top_directory_icon = "#5eb7ff"
+file_panel_top_path = "#eb8332"
+file_panel_item_selected_fg = "#adb0bb"
+file_panel_item_selected_bg = "#26343f"
+
+#-- Footer
+footer_fg = "#adb0bb"
+footer_bg = "#1b1d22"
+footer_border = "#3a3e47"
+footer_border_active = "#eb8332"
+
+#-- Sidebar
+sidebar_fg = "#adb0bb"
+sidebar_bg = "#1b1d22"
+sidebar_title = "#5eb7ff"
+sidebar_border = "#3a3e47"
+sidebar_border_active = "#eb8332"
+sidebar_item_selected_fg = "#adb0bb"
+sidebar_item_selected_bg = "#26343f"
+sidebar_divider = "#3a3e47"
+
+#-- Modals
+modal_fg = "#adb0bb"
+modal_bg = "#1b1d22"
+modal_border_active = "#eb8332"
+modal_cancel_fg = "#1a1d23"
+modal_cancel_bg = "#f8747e"
+modal_confirm_fg = "#1a1d23"
+modal_confirm_bg = "#5eb7ff"
+
+#-- Help Menu
+help_menu_hotkey = "#5eb7ff"
+help_menu_title = "#eb8332"
+
+#-- Special
+cursor = "#eb8332"
+correct = "#7ecc7f"
+error = "#f8747e"
+hint = "#5eb7ff"
+cancel = "#f8747e"
