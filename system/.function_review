@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+greview() {
+  python3 "${DOTFILES_DIR:-$HOME/.dotfiles}/bin/git-review" "$@"
+}
+
+gbase() {
+  greview --base-only "$@"
+}

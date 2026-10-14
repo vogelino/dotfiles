@@ -68,6 +68,42 @@ Example `.gitconfig.local`:
     signingkey = ABC123
 ```
 
+## Local code review
+
+Use `gbase` to print the current branch's review base. Use `greview` to open
+tuicr with committed, staged, unstaged, and untracked changes since the branch
+diverged from that base. These commands need Python 3.9 or later and tuicr 0.27.0.
+
+By default, the base comes from the current GitHub PR through `gh`, then
+`origin/main` or `origin/master`, then local `main` or `master`. Within each
+pair, `main` takes priority. An explicit `--base` or `branch.<name>.reviewBase`
+setting overrides this order. Git does not record which branch a branch was
+created from. For a stacked branch, set its base:
+
+```sh
+git config branch."$(git branch --show-current)".reviewBase feature/parent
+```
+
+You can also use `greview --base origin/main` for one run. The command uses
+local refs and does not fetch them.
+
+Mark files reviewed with `r`. Save with `:w` or `:wq` before quitting.
+When you reopen a review, unchanged file diffs keep their reviewed marks.
+Changed file diffs need another review. This also works after new commits or
+rebases. State stays separate for each checkout, branch, and base ref.
+
+`greview --reset` stops carrying the previous range's state into the current
+range. It keeps any native tuicr review already saved for the current range.
+The wrapper stores a session pointer under the repository's Git directory
+and carries saved state through tuicr's session store. It supports the
+0.27.0 store format and stops on other versions to avoid corrupting state.
+
+To load the commands in an existing shell:
+
+```sh
+source "$HOME/.dotfiles/system/.function_review"
+```
+
 ## Private Companion Repo
 
 For synced private data, use a separate repo next to this one:
