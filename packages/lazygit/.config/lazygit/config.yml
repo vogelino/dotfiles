@@ -26,11 +26,11 @@ gui:
       - "#1a1d23"
     markedBaseCommitBgColor:
       - "#cc83e3"
+    authorColors:
+      'Lucas Vogel': 'red'
   showBottomLine: false # for hiding the bottom information line (unless it has important information to tell you)
   showIcons: true
   nerdFontsVersion: "3"
-  authorColors:
-    'Lucas Vogel': 'red'
 git:
   merging:
     args: '--no-ff'
